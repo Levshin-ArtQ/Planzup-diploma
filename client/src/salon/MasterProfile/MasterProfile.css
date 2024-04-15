@@ -1,0 +1,9 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background: var(--tg-theme-bg-color, var(--main-bg-color));
+}
+
+.fb {
+    display: flex;
+}

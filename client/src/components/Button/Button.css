@@ -1,0 +1,11 @@
+.button {
+    padding: 10px 15px;
+    /* background: var(--tg-theme-button-color, var(--main-peach-color));
+    color: var(--tg-theme-button-text-color, var(--main-font-color)); */
+    background: #606ca2;
+    color:aliceblue;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

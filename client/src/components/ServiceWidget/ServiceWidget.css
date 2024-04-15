@@ -1,0 +1,64 @@
+.service_widget {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background: white;
+    border: solid;
+    border-color: #e0e0e0;
+    color: black;
+    margin-top: 10px;
+}
+.service_icon {
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    background: black;
+    margin-right: 10px;
+}
+.section2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-grow: 1;
+    /* background: green; */
+    flex-wrap: nowrap;
+    /* width: auto; */
+    /* height: auto; */
+}
+.about_service {
+    display: flex;
+    justify-content: space-between;
+}
+.service_title {
+    font-weight: bolder;
+}
+.time {
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+.duration {
+    padding: 3px;
+    border-radius: 3px;
+    background: #ececee;
+    color: #333840;
+    margin-right: 10px;
+}
+.cost {
+    margin-right: 3px;
+    font-weight: 600;
+}
+.closest {
+    color: #333840;
+}
+.book_button {
+    padding: 5px 15px;
+    background: #9bc53a;
+    border-radius: 15px;
+    color: white;
+    margin-left: auto;;
+}
+

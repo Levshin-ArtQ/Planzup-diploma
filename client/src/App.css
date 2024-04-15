@@ -1,12 +1,23 @@
-.header {
-  background: #eee;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.header a {
-  margin-left: 20px;
+body {
+  font-family: Roboto, Helvetica, sans-serif;
+  background: var(--tg-theme-bg-color, var(--main-bg-color));
+  color: var(--tg-theme-text-color, var(--main-font-color));
 }
 
-.main {
-  padding: 10px;
-  background: #ccc;
+.subheading {
+  font-size: clamp(25px, 4vw, 40px);
+}
+
+.heading {
+  font-size: 30px;
+}
+
+.nav-link {
+  text-decoration: none;
 }

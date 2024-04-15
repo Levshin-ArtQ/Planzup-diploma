@@ -1,16 +1,19 @@
 import { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import "./MainComponent.css";
+// import { use } from "../../server/routes/reservations";
 
 const MainComponent = () => {
   const [values, setValues] = useState([]);
   const [value, setValue] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const getAllNumbers = useCallback(async () => {
     // we will use nginx to redirect it to the proper URL
     const data = await axios.get("/api/values/all");
     setValues(data.data.rows.map(row => row.number));
   }, []);
+
 
   const saveNumber = useCallback(
     async event => {
@@ -25,10 +28,32 @@ const MainComponent = () => {
     },
     [value, getAllNumbers]
   );
+  const newReservation = { 
+    userId: '-0', 
+    place: 'Home', 
+    master: 'Elena', 
+    serviceId: null, 
+    serviceName: 'Haircut', 
+    chosenDTime: Date.now(), 
+    tgChat: 'later', 
+    note: "note for future life",
+  }
+
+  const saveReservation = useCallback(
+    async event => {
+      event.preventDefault();
+
+      await axios
+        .post("/api/reservations/", newReservation)
+        .then((response) => setAnswer(response.data));
+    },
+    [newReservation]
+  );
 
   useEffect(() => {
     getAllNumbers();
   }, []);
+  
 
   return (
     <div>
@@ -49,6 +74,11 @@ const MainComponent = () => {
           }}
         />
         <button>Submit</button>
+      </form>
+      <form className="form" onSubmit={saveReservation}>
+      <button>сохрани</button>
+
+      <span className="title">{answer.toString()}</span>
       </form>
     </div>
   );

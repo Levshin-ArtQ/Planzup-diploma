@@ -1,0 +1,48 @@
+.beauty-panel {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.beauty-panel > div {
+  flex: 1 1 100px; /* Разные размеры ячеек */
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.theme-toggle {
+  order: -1; /* Переключатель темы сверху страницы */
+}
+
+.beauty-panel > div {
+    transition: transform 0.3s ease-in-out;
+    background-color: #795548;
+}
+
+.beauty-panel > div:hover {
+    transform: scale(1.1); /* Увеличение элемента при наведении */
+}
+
+.new-appointment {
+    flex: 1 1 200px; /* Больший размер для десктопа */
+  }
+
+/* Медиа-запрос для мобильных устройств */
+
+@media (max-width: 768px) {
+    .beauty-panel {
+      flex-direction: column;
+    }
+  
+    .beauty-panel > div {
+      flex: 1 1 100px; /* Уменьшенные размеры для мобильных устройств */
+      margin-bottom: 10px;
+    }
+  
+    .new-appointment {
+      flex: 1 1 150px; /* Больший размер для мобильных устройств */
+    }
+  }

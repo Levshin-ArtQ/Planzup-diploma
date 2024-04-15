@@ -1,0 +1,40 @@
+.header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: var(--tg-theme-text-color, black)
+}
+
+.backbutton {
+    background-color: #e0e0e0;
+    border-radius: 3px !important;
+}
+.backicon {
+    /* margin: 5px; */
+    font-size: large;
+}
+
+.username {
+    margin-left: auto;
+    margin-right: 10px;
+    font-weight: 800;
+}
+
+.round_icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #606ca2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+@media (display-mode: standalone), 
+       (display-mode: window-controls-overlay) { 
+        .pwa-install-button { 
+          display: none; 
+        } 
+} 

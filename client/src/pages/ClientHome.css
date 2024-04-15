@@ -1,0 +1,73 @@
+.df, .dfc {
+    display: flex;
+}
+.dfc {
+    flex-direction: column;
+}
+/* .wrapper {
+    padding: 0 20px;
+} */
+.greeting {
+    font-weight: bolder;
+    margin-bottom: 20px;
+    color:#fff;
+}
+.count_text {
+    color: #fff;
+    font-weight: bold;
+}
+.peek {
+    padding: 10px;
+    align-self: center;
+    font-weight: bold;
+    display: flex;
+}
+.peek-link {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #616da3 !important;
+    margin-left: auto;
+}
+.client_hat {
+    /* height: 200px; */
+    background: #616da3;
+    padding: 20px;
+    font-size: larger;
+    margin: 20px 5px;
+    border-radius: 20px;
+}
+.filter_block {
+    margin: 20px;
+}
+.progress_container {
+    justify-content: space-between;
+    margin: 0 10px;
+}
+.map_wrapper {
+    border-radius: 20px;
+    margin: auto
+}
+.button_str {
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-right: 70px;
+}
+.filter_button {
+    font-size: medium;
+}
+
+.widgets_list {
+    justify-content: space-between;
+
+}
+.widget {
+    margin-bottom: 10px;
+}
+.group {
+    align-self: center;
+}
+.sub_map {
+    margin: auto;
+    margin-top: 20px;
+}

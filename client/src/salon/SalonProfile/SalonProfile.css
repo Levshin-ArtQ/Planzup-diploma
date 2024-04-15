@@ -1,0 +1,26 @@
+
+.salon_wallpaper {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 5/3;
+    background: var(--main-peach-color);
+    background-image:  url('/src/img/salon0.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-self: start;
+    padding: 5px;
+}
+.slogan {
+    align-self: flex-end;
+}
+.menu_options {
+    display: flex;
+    padding: 10px;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+.booking_button {
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: atuo;
+}
