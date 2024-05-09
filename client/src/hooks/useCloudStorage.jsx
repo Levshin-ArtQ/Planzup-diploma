@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
+import WebApp from '@twa-dev/sdk';
 
 
 const useCloudStorage = () => {
-  const cloudStorage = window.Telegram.WebApp?.CloudStorage;
+  const cloudStorage = WebApp?.CloudStorage;
 
   const getItem = useCallback(
     key =>

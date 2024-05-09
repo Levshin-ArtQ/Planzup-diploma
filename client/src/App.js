@@ -1,6 +1,5 @@
 import './App.css';
-import {useEffect} from "react";
-import {useTelegram} from "./hooks/useTelegram";
+import dayjs from 'dayjs';
 import Header from "./components/Header/Header";
 import {Route, Routes, Router, useHistory} from 'react-router-dom';
 import ProductList from "./components/ProductList/ProductList";
@@ -9,7 +8,7 @@ import './variables.css';
 import LoginPage from './authorization/LoginPage1';
 import RegisterPage from './authorization/RegisterPage';
 // import SalonProfile from './components/SalonProfile/SalonProfile';
-// import MasterProfile from './components/MasterProfile/MasterProfile';
+import MasterProfile from './salon/MasterProfile/MasterProfile';
 import ReservationForm from './components/ReservationForm/ReservationForm';
 import ServiceWidget from './components/ServiceWidget/ServiceWidget'
 import ClientHome from './pages/ClientHome';
@@ -18,24 +17,22 @@ import Experimental from './pages/Experimental/Experimental';
 import Settings from './pages/Settings';
 import BentoboxMenu from './components/BentoboxMenu/BentoboxMenu';
 import Profile from './salon/Profile';
+import WebApp from '@twa-dev/sdk';
+import PrettyJson from './devutils/PrettyJson';
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
-// <Route path={'/master'} element={<MasterProfile/>}/>
+
+
+
 
 function App() {
-    // const {onToggleButton, tg} = useTelegram();
     const queryParameters = new URLSearchParams(window.location.search);
     const master = queryParameters.get("master");
     console.log('master' + master);
-    const {user, onClose} = useTelegram();
-
-    // useEffect(() => {
-    //     tg?.ready();
-        
-    // }, [])
 
     return (
         <div className="App">
             <Header />
+            {WebApp && <PrettyJson json={WebApp?.WebAppUser}/>}
             <Routes>
                 
                 <Route index element={<ClientHome/>}/>
@@ -48,6 +45,7 @@ function App() {
                 <Route path={'/sandbox'} element={<Experimental/>}></Route>
                 <Route path={'/settings'} element={<Settings/>}></Route>
                 <Route path={'/bento'} element={<BentoboxMenu/>}></Route>
+                <Route path={'/master'} element={<MasterProfile/>}></Route>
             </Routes>
         </div>
     );

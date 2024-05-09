@@ -23,7 +23,8 @@ const Reservation = db.define('reservation', {
             defaultValue: 'notg',
 
         },
-        note: DataTypes.STRING
+        note: DataTypes.STRING,
+
     },
     {   
         // Делает неполное удаление, добавляя deletedAt

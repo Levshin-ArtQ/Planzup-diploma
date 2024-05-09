@@ -8,6 +8,8 @@ import Button from '../Button/Button';
 import { FaStar } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa";
+import WebApp from '@twa-dev/sdk';
+import useCloudStorage from '../../hooks/useCloudStorage';
 
 
 function getWeekDay(date) {
@@ -68,6 +70,7 @@ const BookingTable = ({ serviceName, serviceRate, serviceDuration }) => {
     const [selected, setSelected] = useState(initPoint)
     const [selectedValue, setSelectedValue] = useState('')
     const [answer, setAnswer] = useState('')
+    const { setItem, getItem } = useCloudStorage();
     const handleClick = (rowIndex, cellIndex) => {
         const cellData =
           seanceHours[rowIndex][Object.keys(seanceHours[rowIndex])[cellIndex]]; //TODO: another way of parsing id time
@@ -155,7 +158,7 @@ const BookingTable = ({ serviceName, serviceRate, serviceDuration }) => {
           </table>
           <div className="booking_line">
             <span className="booking_date">{selectedValue}</span>
-            <Button className="complete_button" onClick={saveReservation}>Записаться</Button>
+            <Button className="complete_button" onClick={()=> {setItem('reservation', selectedValue)}}>Записаться</Button>
           </div>
         </div>
       );

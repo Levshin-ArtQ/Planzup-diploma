@@ -1,7 +1,13 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    background: var(--tg-theme-bg-color, var(--main-bg-color));
+    background: var(--main-bg-color);
+    /* background: var(--tg-theme-bg-color, var(--main-bg-color)); */
+}
+
+.profile_wrapper {
+    /* display: flex; */
+    background: #dcddd7 !important;
 }
 
 .fb {

@@ -59,6 +59,18 @@ db.user.hasMany(db.salon, {
   foreignKey: "userId",
   otherKey: "salonId"
 });
+
+// users to notifications many-to-many
+db.notification.belongsToMany(db.user, {
+  through: "user_notifications", // notification belongs to many users through user_notifications junctions table
+  foreignKey: "notificationId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.notification, {
+  through: "user_notifications", // user belongs to many notifications through user_notifications junctions table
+  foreignKey: "userId",
+  otherKey: "notificationId"
+});
 // salons to clients many-to-many
 db.salon.belongsToMany(db.user, {
   through: "clients_salons",

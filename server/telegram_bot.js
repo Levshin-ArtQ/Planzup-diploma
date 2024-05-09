@@ -28,6 +28,13 @@ bot.setMyCommands([
   {command: '/info', description: 'Информация о боте'}
 ])
 
+bot.on('web_app_data', (data) => {
+  console.log(data.web_app_data.data);
+
+
+})
+
+
 // bot.setChatMenuButton
 
 // Костыль помогает менять текст в сообщении с результатами голосования

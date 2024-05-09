@@ -8,7 +8,7 @@ verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({
-      message: "No token provided!"
+      message: "Токен авторизации не был предоставлен!"
     });
   }
 
@@ -17,14 +17,14 @@ verifyToken = (req, res, next) => {
             (err, decoded) => {
               if (err) {
                 return res.status(401).send({
-                  message: "Unauthorized!",
+                  message: "Пользователь не авторизован!",
                 });
               }
               req.userId = decoded.id;
               next();
             });
 };
-
+// TODO: Проверку на роль изменить на свои сущности
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {

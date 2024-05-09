@@ -1,3 +1,5 @@
+const {Sequelize, DataTypes} = require('sequelize');
+const db = require('../util/database');
 // create a sequelize model client inherited from user model additional attributes: reservations, occupation, address and phone number, loyalty points, favorite masters, etc
 const Client = db.define('clients', {
     // inherit from user model
@@ -37,5 +39,4 @@ const Client = db.define('clients', {
     paranoid: true,
 
 })
-import { Sequelize, DataTypes } from 'sequelize';
-import db from '../util/database';
+

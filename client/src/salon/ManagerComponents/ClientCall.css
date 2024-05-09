@@ -1,0 +1,31 @@
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.client_call {
+  
+}
+
+.services-radio {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+  /* width: auto; */
+  /* height: auto; */
+}
+
+.service-radio {
+  background: #f2f1eb;
+  border-radius: 20px;
+  padding: 5px;
+  margin: 5px;
+  justify-content: space-around;
+}
+
+.service-radio:focus {
+  outline-color: #296DBC;
+}

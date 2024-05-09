@@ -11,6 +11,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import Pie from '../components/Pie.jsx'
 import ProgressBar from '../components/ProgressBar/ProgressBar.jsx';
 import axios from 'axios';
+import WebApp from '@twa-dev/sdk';
 
 // import YandMaps from '../components/YandMaps/YandMaps.jsx';
 
@@ -31,7 +32,9 @@ const products = [
 const group = {id: '4', count1: 4, count2: 3, master_type: 'Визажист', master_name: 'Ирина', address: 'Ленина 85А', time: '20:00'};
 const count = 3;
 const ClientHome = () => {
-    const { user } = useTelegram();
+    // const { user } = useTelegram();
+
+    const { user } = WebApp.initDataUnsafe;
     const [produts, setServices] = useState([])
     const getAllServices = useCallback(async () => {
         // we will use nginx to redirect it to the proper URL
@@ -56,7 +59,7 @@ const ClientHome = () => {
         <div className='wrapper'>
 
             <div className="hat dfc client_hat">
-                <span className="greeting heading">Добрый вечер{user ? ', ' + user?.first_name : 'рфе'}</span>
+                <span className="greeting heading">Добрый вечер{user ? ', ' + user?.first_name : ''}</span>
                 <div className="count_line dfс">
                     <span className="subheading count_text">Предстоящих записей: {count}</span>
                     <div className="peek">
@@ -112,6 +115,7 @@ const ClientHome = () => {
                     </div>
                 </div>
             </YMaps>
+            <Link to='/master'>Стать мастером</Link>
             
         </div>
     );

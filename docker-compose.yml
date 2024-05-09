@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./nginx
     ports:
-      - "3051:80"
+      - "3052:80"
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -28,6 +28,20 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
       - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4
+  bot:
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./bot"
+    volumes:
+      - /app/node_modules
+      - ./bot:/app
+    environment: 
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+      - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4 
   client:
     stdin_open: true
     environment:
