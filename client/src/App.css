@@ -7,7 +7,7 @@
 body {
   font-family: Roboto, Helvetica, sans-serif;
   background: var(--main-bg-color);
-  /* background: var(--tg-theme-bg-color, var(--main-bg-color)); */
+  background: var(--tg-theme-bg-color, var(--main-bg-color));
   color: var(--tg-theme-text-color, var(--main-font-color));
 }
 

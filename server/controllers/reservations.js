@@ -8,6 +8,15 @@ exports.getReservations = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
+exports.getReservationsByMasterId = (req, res, next) => {
+    const masterId = req.params.masterId;
+    Reservation.findAll({where: {master: masterId}})
+        .then(reservations => {
+            res.status(200).json({ reservations: reservations });
+        })
+        .catch(err => console.log(err));
+}
+
 exports.getReservation = (req, res, next) => {
     const reservationId = req.params.reservationId;
     Reservation.findByPk(reservationId)

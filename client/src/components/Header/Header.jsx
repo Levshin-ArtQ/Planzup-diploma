@@ -61,7 +61,7 @@ const Header = () => {
       )}
 
       <span className={"username"}>
-        {user?.first_name} {user?.last_name}
+        {user} 
       </span>
 
       <Link to="/profile">

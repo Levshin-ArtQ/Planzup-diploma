@@ -75,30 +75,30 @@ function initial() {
 //   res.send('Planzup listening');
 // });
 
-//error handling
-app.use((error, req, res, next) => {
-  console.log(error);
-  const status = error.statusCode || 500;
-  const message = error.message;
-  res.status(status).json({ message: message });
-});
+// //error handling
+// app.use((error, req, res, next) => {
+//   console.log(error);
+//   const status = error.statusCode || 500;
+//   const message = error.message;
+//   res.status(status).json({ message: message });
+// });
 
 
-// get the values
-app.get("/values/all", async (req, res) => {
-  const values = await pgClient.query("SELECT * FROM values");
+// // get the values
+// app.get("/values/all", async (req, res) => {
+//   const values = await pgClient.query("SELECT * FROM values");
 
-  res.send(values);
-});
+//   res.send(values);
+// });
 
-// now the post -> insert value
-app.post("/values", async (req, res) => {
-  if (!req.body.value) res.send({ working: false });
+// // now the post -> insert value
+// app.post("/values", async (req, res) => {
+//   if (!req.body.value) res.send({ working: false });
 
-  pgClient.query("INSERT INTO values(number) VALUES($1)", [req.body.value]);
+//   pgClient.query("INSERT INTO values(number) VALUES($1)", [req.body.value]);
 
-  res.send({ working: true });
-});
+//   res.send({ working: true });
+// });
 
 
 // app.listen(5000, err => {

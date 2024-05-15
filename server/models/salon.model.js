@@ -2,6 +2,7 @@
 // const { Sequelize, DataTypes } = require('sequelize')
 
 // здесь задается модель салона, она соединяет в себе все параметры салона, мастеров и клиентов
+// TODO: EDIT FIELDS
 module.exports = (sequelize, DataTypes) => {
   const Salon = sequelize.define(
       'salons',
@@ -32,4 +33,4 @@ module.exports = (sequelize, DataTypes) => {
   return Salon;
 }
 
-// TODO: EDIT FIELDS
+
