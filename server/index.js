@@ -9,6 +9,7 @@ const app = express();
 // routes
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/appointment.routes')(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/reservations', require('./routes/reservations'))
@@ -37,7 +38,7 @@ db.sequelize
   .catch(err => console.log(err));
 
   
-  
+
 function initial() {
   Role.create({
     id: 1,
@@ -53,6 +54,8 @@ function initial() {
     id: 3,
     name: "admin"
   });
+  const {init} = require("./test/init.test");
+  init();
 }
 // Postgres client setup
 // const { Pool } = require("pg");
@@ -71,9 +74,9 @@ function initial() {
 // });
 
 // //test route
-// app.get('/', (req, res, next) => {
-//   res.send('Planzup listening');
-// });
+app.get('/', (req, res, next) => {
+  res.send('Planzup listening');
+});
 
 // //error handling
 // app.use((error, req, res, next) => {

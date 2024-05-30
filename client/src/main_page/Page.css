@@ -1,0 +1,36 @@
+.page {
+  font-family: 'Lato', sans-serif;
+  width: 100%;
+}
+body {
+  margin: 0;
+}
+/* .stories_line {
+  scroll-snap-type: mandatory;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  height: 32vh;
+  gap: 20px;
+  align-items: center;
+  margin: 20px 0;
+} */
+/* .stories_section {
+  width: 32vw;
+  min-width: 32vw;
+  height: 32vh;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  display: flex;
+  scroll-snap-align: start;
+} */
+
+/* .image-title {
+  margin-top: auto;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+} */

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.3",
+    "i18next": "^23.11.4",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "react-bootstrap": "^2.10.2",
+    "react-chartjs-2": "^5.2.0",
+    "react-i18next": "^14.1.1",
     "sequelize": "^6.37.1"
   }
 }

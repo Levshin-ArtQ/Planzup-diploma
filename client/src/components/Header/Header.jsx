@@ -35,7 +35,8 @@ const Header = () => {
         //if your PWA exists in the array it is installed
         console.log(app.platform, app.url);
         if (
-          app.url === "https://reference-tg-web-app.vercel.app/manifest.json"
+          // check if platform is web not standalone and not ios and safari
+          app.url === "https://planz-up-sample.vercel.app/manifest.json"
         ) {
           //FIXME: change link
           installed = true;
@@ -66,7 +67,7 @@ const Header = () => {
 
       <Link to="/profile">
         <div className="user_icon round_icon df">
-          <span style={{ margin: "auto" }}>{user?.username.charAt(0)}</span>
+          <span style={{ margin: "auto" }}>{user?.charAt(0)}</span>
         </div>
       </Link>
       <Flex align="center">

@@ -24,18 +24,27 @@ import WebApp from '@twa-dev/sdk';
 //TODO: to database
 // const services = axios.get('/')
 const products = [
-    {id: '1', title: 'Маникюр и педикюр в 4 руки', duration: 50, cost: 1500, closest: 'через 5 часов'},
-    {id: '2', title: 'Стрижка женская', duration: 50, cost: 1200, closest: 'Завтра утром'},
-    {id: '3', title: 'Педикюр', duration: 60, cost: 500, closest: 'Завтра вечером'},
-    {id: '4', title: 'Брови', duration: 60, cost: '700-1220', closest: 'через час'},
+    {id: '1', title: 'Маникюр и педикюр в 4 руки', duration: 50, cost: 1500, closest: 'через 5 часов', service_type: 'nails'},
+    {id: '2', title: 'Стрижка женская', duration: 50, cost: 1200, closest: 'Завтра утром', service_type: 'hair'},
+    {id: '3', title: 'Педикюр', duration: 60, cost: 500, closest: 'Завтра вечером', service_type: 'nails'},
+    {id: '4', title: 'Брови', duration: 60, cost: '700-1220', closest: 'через час', service_type: 'eyebrows'},
+    {id: '5', title: 'Макияж', duration: 45, cost: 1000, closest: 'послезавтра', service_type: 'makeup'},
+    {id: '6', title: 'Укладка волос', duration: 30, cost: 800, closest: 'сегодня вечером', service_type: 'hair'},
+    {id: '7', title: 'Спа-процедуры', duration: 90, cost: 2500, closest: 'через 2 дня', service_type: 'spa'},
+    {id: '8', title: 'Массаж лица', duration: 40, cost: 900, closest: 'через 3 дня', service_type: 'facial-massage'},
+    {id: '9', title: 'Окрашивание волос', duration: 120, cost: 2000, closest: 'на следующей неделе', service_type: 'hair-coloring'},
 ]
 const group = {id: '4', count1: 4, count2: 3, master_type: 'Визажист', master_name: 'Ирина', address: 'Ленина 85А', time: '20:00'};
 const count = 3;
 const ClientHome = () => {
     // const { user } = useTelegram();
-
     const { user } = WebApp.initDataUnsafe;
     const [produts, setServices] = useState([])
+    const [shownProducts, setShownProducts] = useState([])
+
+    const filterServices = (service_type) => {
+        setShownProducts(products.filter(service => service.service_type === service_type));
+    }
     const getAllServices = useCallback(async () => {
         // we will use nginx to redirect it to the proper URL
         console.log('requesting services')
@@ -67,17 +76,22 @@ const ClientHome = () => {
                     </div>
                 </div>
             </div>
+            <div className='progress_container'>
+                <span className="subheading">Прогресс ваших занятий</span>
+
+            </div>
             <div className="progress_container df">
                 <ProgressBar size={100} progress={50} indicatorColor='#4f5892' label='Красота' labelColor='#4f5892' />
                 <ProgressBar size={100} progress={70} indicatorColor='#8bbd2d' label='Зоровье' labelColor='#8bbd2d' />
-                <ProgressBar size={100} progress={30} indicatorColor='#da565a' label='Менталочка' labelColor='#da565a' />
+                <ProgressBar size={100} progress={30} indicatorColor='#da565a' label='Фитнес' labelColor='#da565a' />
             </div>
             <div className="filter_block dfc">
                 <span className="subheading">Какая услуга вам нужна?</span>
                 <div className="button_str df">
-                    <Button className="filter_button" onClick={getAllServices}>Маникюр</Button>
-                    <Button className="filter_button">Педикюр</Button>
-                    <Button className="filter_button">Стрижка</Button>
+                    <Button className="filter_button" onClick={() => filterServices()}>Все</Button>
+                    <Button className="filter_button" onClick={getAllServices}>Уход</Button>
+                    <Button className="filter_button">Ногти</Button>
+                    <Button className="filter_button">Парикмахер</Button>
                 </div>
                 <div>{console.log(toString(produts))}</div>
             </div>

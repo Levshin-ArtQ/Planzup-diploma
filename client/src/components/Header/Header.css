@@ -4,7 +4,8 @@
     display: flex;
     align-items: center;
     padding: 0 20px;
-    color: var(--tg-theme-text-color, black)
+    background-color: white;
+    /* color: var(--tg-theme-text-color, black) */
 }
 
 .backbutton {
@@ -18,7 +19,7 @@
 
 .username {
     margin-left: auto;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     font-weight: 800;
 }
 

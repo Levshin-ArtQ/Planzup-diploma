@@ -1,54 +1,75 @@
-import './App.css';
-import dayjs from 'dayjs';
+import "./App.css";
+import { lazy, Suspense } from "react";
 import Header from "./components/Header/Header";
-import {Route, Routes, Router, useHistory} from 'react-router-dom';
+import { Route, Routes, Router, useHistory } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
 import Form from "./components/Form/Form";
-import './variables.css';
-import LoginPage from './authorization/LoginPage1';
-import RegisterPage from './authorization/RegisterPage';
+import "./variables.css";
+import LoginPage from "./authorization/LoginPage1";
+import RegisterPage from "./authorization/RegisterPage";
 // import SalonProfile from './components/SalonProfile/SalonProfile';
-import MasterProfile from './salon/MasterProfile/MasterProfile';
-import ReservationForm from './components/ReservationForm/ReservationForm';
-import ServiceWidget from './components/ServiceWidget/ServiceWidget'
-import ClientHome from './pages/ClientHome';
-import BookingTable from './components/BookingTable/BookingTable';
-import Experimental from './pages/Experimental/Experimental';
-import Settings from './pages/Settings';
-import BentoboxMenu from './components/BentoboxMenu/BentoboxMenu';
-import Profile from './salon/Profile';
-import WebApp from '@twa-dev/sdk';
-import PrettyJson from './devutils/PrettyJson';
+import MasterProfile from "./salon/MasterProfile/MasterProfile";
+import ReservationForm from "./components/ReservationForm/ReservationForm";
+import ServiceWidget from "./components/ServiceWidget/ServiceWidget";
+import ClientHome from "./pages/ClientHome";
+import BookingTable from "./components/BookingTable/BookingTable";
+import Experimental from "./pages/Experimental/Experimental";
+import Settings from "./pages/Settings";
+import BentoboxMenu from "./components/BentoboxMenu/BentoboxMenu";
+import Profile from "./salon/Profile";
+import WebApp from "@twa-dev/sdk";
+import PrettyJson from "./devutils/PrettyJson";
+import ManagerSchedule from "./schedules/ManagerSchedule";
+import { ConfigProvider } from "antd";
+import ruRU from "antd/locale/ru_RU";
+import WeatherApp from "./testComponents/WeatherApp";
+import Page from "./main_page/Page";
+import SampleFetching from "./testComponents/SampleFetching";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
-
-
-
 function App() {
-    const queryParameters = new URLSearchParams(window.location.search);
-    const master = queryParameters.get("master");
-    console.log('master' + master);
+  const queryParameters = new URLSearchParams(window.location.search);
+  const master = queryParameters.get("master");
+  console.log("master" + master);
 
-    return (
-        <div className="App">
-            <Header />
-            {/*WebApp && <PrettyJson json={WebApp?.WebAppUser}/>*/}
-            <Routes>
-                
-                <Route index element={<ClientHome/>}/>
-                <Route path={'/form'} element={<Form />}/>
-                <Route path={'/login'} element={<LoginPage />}/>
-                <Route path={'/register'} element={<RegisterPage />}/>
-                <Route path={'/profile'} element={<Profile />}/>
-                <Route path={'/home'} element={<ClientHome/>}></Route>
-                <Route path={'/booking'} element={<BookingTable/>}></Route>
-                <Route path={'/sandbox'} element={<Experimental/>}></Route>
-                <Route path={'/settings'} element={<Settings/>}></Route>
-                <Route path={'/bento'} element={<BentoboxMenu/>}></Route>
-                <Route path={'/master'} element={<MasterProfile/>}></Route>
-            </Routes>
-        </div>
-    );
+  return (
+    <div className="App">
+      <Header />
+      {/*WebApp && <PrettyJson json={WebApp?.WebAppUser}/>*/}
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <ConfigProvider locale={ruRU}>
+          <Routes>
+            {/* общая */}
+            <Route path={"/login"} element={<LoginPage />} />
+            <Route path={"/register"} element={<RegisterPage />} />
+            <Route path={"/sample"} element={<SampleFetching />} />
+            {/* менеджер */}
+            <Route path={"manager/dashboard"} element={<ManagerSchedule />} />
+            <Route path={"/fast_book"} element={<ManagerSchedule />}></Route>
+            <Route path={"/salon_register"} element={<ServiceWidget />}></Route>
+            {/* мастер */}
+            {/* клиентская сторона */}
+            <Route path={"/page"} element={<Page />}></Route>
+            <Route path={"/home"} element={<ClientHome />}></Route>
+            <Route index element={<ClientHome />} />
+            <Route path={"/booking"} element={<BookingTable />}></Route>
+            <Route path={"/form"} element={<Form />} />
+            <Route path={"/register"} element={<RegisterPage />} />
+            <Route path={"/profile"} element={<Profile />} />
+            
+            
+            <Route path={"/sandbox"} element={<Experimental />}></Route>
+            <Route path={"/settings"} element={<Settings />}></Route>
+            <Route path={"/bento"} element={<BentoboxMenu />}></Route>
+            <Route path={"/master"} element={<MasterProfile />}></Route>
+            {/*test directories*/}
+            <Route path={"/weather"} element={<WeatherApp />}></Route>
+          </Routes>
+        </ConfigProvider>
+      </Suspense>
+    </div>
+  );
 }
 
 export default App;
@@ -63,7 +84,6 @@ export default App;
 
 // import OtherPage from './OtherPage';
 // import MainComponent from './MainComponent';
-
 
 // function App() {
 //   return (

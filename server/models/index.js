@@ -109,6 +109,12 @@ db.scehdule.belongsTo(db.master);
 // schedule to appointments many-to-many
 // db.scehdule.hasMany(db.appointment);
 // db.appointment.belongsTo(db.scehdule);
+// user to appointments many-to-many
+db.user.hasMany(db.appointment);
+db.appointment.belongsTo(db.user);
+// appointment to user many-to-many
+db.appointment.hasMany(db.user);
+db.user.belongsTo(db.appointment);
 
 
 

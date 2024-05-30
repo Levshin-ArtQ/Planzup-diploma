@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Appointment = sequelize.define("appointments", {
+    version: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+    },
     UID: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -7,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATE,
     },
+
     time: {
       type: DataTypes.TIME,
     },
@@ -20,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   });
+
+  return Appointment;
 };
 
 // TODO:

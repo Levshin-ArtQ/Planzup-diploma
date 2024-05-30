@@ -3,9 +3,17 @@ module.exports = (sequelize, DataTypes) => {
       'services',
       {
         // Здесь определяются атрибуты модели
-        UID:{
+        UID: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4
+          defaultValue: DataTypes.UUIDV4,
+          allowNull: false,
+          primaryKey: true
+        },
+        main_image: {
+          type: DataTypes.STRING
+        },
+        images: {
+          type: DataTypes.ARRAY(DataTypes.STRING),
         },
         name: {
           type: DataTypes.STRING,

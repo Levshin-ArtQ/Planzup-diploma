@@ -1,0 +1,107 @@
+{
+  "navbar": {
+    "home": "Home",
+    "features": "Features",
+    "benefits": "Benefits",
+    "statistics": "Statistics",
+    "pricing": "Pricing",
+    "team": "Team",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Welcome to PlanzUp",
+    "description": "Your Modern Online Booking Service",
+    "button": "Learn More"
+  },
+  "features": {
+    "title": "Features",
+    "description": "Discover the amazing features of PlanzUp.",
+    "feature1": {
+      "title": "Automated Booking 🪄",
+      "description": "Slots will be picked according to the schedule of both the masters and the clients.",
+      "button": "Try right here!"
+    },
+    "feature2": {
+      "title": "Marketplace for Masters 🛍️",
+      "description": "Masters will be showcased in a marketplace format, allowing more people to see their offers.",
+      "button": "Preview now!"
+    },
+    "feature3": {
+      "title": "Reminders Customization 🔔",
+      "description": "Clients can choose when and how to be reminded of their sessions.",
+      "button": "How it works?"
+    },
+    "feature4": {
+      "title": "Recommendation System ⭐",
+      "description": "The system adapts to the consumer's time preferences, offering suggestions for both masters and specific slots.",
+      "button": "How it works?"
+    }
+  },
+  "benefits": {
+    "title": "Benefits",
+    "description": "See the advantages of using PlanzUp.",
+    "benefit1": {
+      "title": "Efficient Scheduling",
+      "description": "Reduces the management load on masters and salon managers."
+    },
+    "benefit2": {
+      "title": "Better Time Utilization",
+      "description": "Balances the working hours of specialists."
+    },
+    "benefit3": {
+      "title": "Improved Client Communication",
+      "description": "Facilitates clear service demonstrations and fast response to booking inquiries."
+    },
+    "benefit4": {
+      "title": "Smart Recommendations",
+      "description": "Provides time slot and master recommendations based on user preferences."
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "description": "Our revenue is planned through a subscription fee of 2000 rubles, on average, depending on the size of the enterprise. Additional revenue can be obtained from subscriptions paid by salons for their special clients.",
+    "choosePlan": "Choose Plan",
+    "basicPlan": {
+      "title": "Basic Plan",
+      "feature1": "Feature 1",
+      "feature2": "Feature 2",
+      "feature3": "Feature 3"
+    },
+    "standardPlan": {
+      "title": "Standard Plan",
+      "feature1": "Feature 1",
+      "feature2": "Feature 2",
+      "feature3": "Feature 3",
+      "feature4": "Feature 4"
+    },
+    "premiumPlan": {
+      "title": "Premium Plan",
+      "feature1": "Feature 1",
+      "feature2": "Feature 2",
+      "feature3": "Feature 3",
+      "feature4": "Feature 4",
+      "feature5": "Feature 5"
+    },
+    "enterprisePlan": {
+      "title": "Enterprise Plan",
+      "feature1": "Feature 1",
+      "feature2": "Feature 2",
+      "feature3": "Feature 3",
+      "feature4": "Feature 4",
+      "feature5": "Feature 5",
+      "feature6": "Feature 6"
+    }
+  },
+  "statistics": {
+    "title": "Statistics",
+    "description": "Explore our market potential and customer insights"
+  },
+  "team": {
+    "title": "Team",
+    "description": "Meet the dedicated team behind PlanzUp."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "followUs": "Follow us on social media."
+  }
+}

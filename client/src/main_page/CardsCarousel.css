@@ -1,0 +1,118 @@
+.Carousel {
+  font-family: sans-serif;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  /* remove scroll bar */
+  
+}
+
+.images-container {
+  display: flex;
+  max-width: 100%;
+  gap: 20px;
+  overflow: scroll;
+  /* Add the following lines for smooth scrolling */
+  scroll-behavior: smooth;
+  transition: scroll 0.3s ease-in-out;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* make slight stops between images */
+  /* & > * {
+    flex-shrink: 0;
+    width: 32vh;
+    min-width: 32vh;
+    height: 32vh;
+  } */
+
+  & > *:not(:last-child) {
+    margin-right: 20px;
+  }
+
+}
+
+.image {
+  /* width: 200px;
+  height: 200px; */
+  margin: 5px;
+  border-radius: 8px;
+}
+
+.image-fluid {
+  width: 32vh;
+  min-width: 32vh;
+  height: 32vh;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+}
+
+.card-fluid {
+  margin: 8px;
+  width: 24vh;
+  min-width: 24vh;
+  flex: 1;
+}
+
+div .ant-card { 
+  :global {
+    .ant-card-body {
+        padding: 3px; 
+    }
+  }
+}
+
+/* media query to decrease the size of the image on mobile */
+@media (max-width: 768px) {
+  .image-fluid {
+    width: 24vh;
+    min-width: 24vh;
+    height: 24vh;
+  }
+}
+
+.image-fluid:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.image-title {
+  margin-top: auto;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav-btn-container {
+  display: flex;
+  align-self: stretch;
+  opacity: 0.5;
+  justify-content: center;
+  align-items: center;
+}
+.nav-btn {
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  background-color: transparent;
+  border-radius: 6px;
+  /* height: 200px;
+  width: 30px; */
+  margin: 5px;
+  padding: 4px;
+}
+
+.nav-btn:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}

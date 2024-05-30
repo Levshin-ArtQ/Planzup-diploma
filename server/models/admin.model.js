@@ -1,4 +1,4 @@
-// TODO: edit fields
+// TODO: edit fields 
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
   const Admin = sequelize.define(
@@ -18,11 +18,8 @@ module.exports = (sequelize, Sequelize) => {
       phone: {
         type: DataTypes.STRING,
       },
-      occupation: {
-        type: DataTypes.STRING, 
-      },
       rights: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
       address: {
         // type: DataTypes.GEOMETRY("POINT"),
