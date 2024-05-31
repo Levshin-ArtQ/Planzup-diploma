@@ -17,15 +17,19 @@ module.exports = (sequelize, Sequelize) => {
       lastName: {
         type: DataTypes.STRING,
       },
+      //  отчество
+      patronymic: {
+        type: DataTypes.STRING,
+      },
       phone: {
         type: DataTypes.STRING,
       },
       email: {
         type: DataTypes.STRING,
       },
-      password: {
-        type: DataTypes.STRING,
-      },
+      // password: {
+      //   type: DataTypes.STRING,
+      // },
       telegram: {
         type: DataTypes.STRING,
       },
@@ -37,18 +41,21 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.STRING,
         // https://sequelize.org/api/v6/class/src/data-types.js~geometry
       },
+      notification_settings: {
+        type: DataTypes.JSON
+      }
     },
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
-      defaultScope: {
-        attributes: { exclude: ["password"] },
-      },
-      scope: {
-        withPassword: {
-          attributes: { include: ["password"] },
-        },
-      },
+      // defaultScope: {
+      //   attributes: { exclude: ["password"] },
+      // },
+      // scope: {
+      //   withPassword: {
+      //     attributes: { include: ["password"] },
+      //   },
+      // },
     } 
   );
   return Admin;

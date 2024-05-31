@@ -21,7 +21,7 @@ verifyToken = (req, res, next) => {
                 });
               }
               req.userId = decoded.id;
-              next();
+              next(req, res);
             });
 };
 // TODO: Проверку на роль изменить на свои сущности

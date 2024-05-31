@@ -1,4 +1,5 @@
 const config = require("../config/db.config.js");
+const bcrypt = require("bcryptjs");
 
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(
@@ -13,8 +14,10 @@ const sequelize = new Sequelize(
             min: config.pool.min,
             acquire: config.pool.acquire,
             idle: config.pool.idle
-        }
-    }
+        },
+        logging: false
+    },
+  
 );
 
 const db = {};
@@ -39,6 +42,7 @@ db.appointment = require("../models/appointment.model.js")(sequelize, Sequelize)
 // products/services
 db.service = require("../models/service.model.js")(sequelize, Sequelize);
 db.post = require("../models/post.model.js")(sequelize, Sequelize);
+db.settings = require("../models/settings.model.js")(sequelize, Sequelize);
 // db.product = require("../models/product.model.js")(sequelize, Sequelize);
 db.report = require("../models/report.model.js")(sequelize, Sequelize);
 // associations docs: https://sequelize.org/docs/v6/core-concepts/assocs/
@@ -79,6 +83,9 @@ db.client.belongsToMany(db.service, {
 // client to schedule one-to-many
 db.client.hasMany(db.scehdule);
 db.scehdule.belongsTo(db.client);
+// client to settings one-to-one
+db.client.hasOne(db.settings);
+db.settings.belongsTo(db.client);
 
 
 // MASTER ASSOCIATIONS
@@ -125,6 +132,9 @@ db.notification.belongsTo(db.master, {
   foreignKey: "masterId",
   as: "Master"
 });
+// master to settings one-to-one
+db.master.hasOne(db.settings);
+db.settings.belongsTo(db.master);
 
 // ADMIN ASSOCIATIONS
 // admin to salon many-to-many
@@ -144,6 +154,9 @@ db.notification.belongsTo(db.admin, {
   foreignKey: "adminId",
   as: "Admin"
 });
+// admin to settings one-to-one
+db.admin.hasOne(db.settings);
+db.settings.belongsTo(db.admin);
 
 // MANAGER ASSOCIATIONS
 // manager to master many-to-many
@@ -174,6 +187,9 @@ db.manager.belongsToMany(db.salon, {
   foreignKey: "managerId",
   otherKey: "salonId"
 });
+// manager to settings one-to-one
+db.manager.hasOne(db.settings); 
+db.settings.belongsTo(db.manager);
 
 // SALON ASSOCIATIONS
 // salon to schedule many-to-many
@@ -283,8 +299,12 @@ db.user.belongsToMany(db.notification, {
 
 
 // schedule to appointments many-to-many
-// db.scehdule.hasMany(db.appointment);
-// db.appointment.belongsTo(db.scehdule);
+db.scehdule.belongsToMany(db.appointment, {
+  through: "schedule_appointments",
+});
+db.appointment.belongsToMany(db.scehdule, {
+  through: "schedule_appointments",
+});
 // user to appointments many-to-many
 db.user.hasMany(db.appointment);
 db.appointment.belongsTo(db.user);
@@ -295,5 +315,15 @@ db.user.belongsTo(db.appointment);
 
 
 db.ROLES = ["user", "admin", "moderator", "master"];
+db.settings.prototype.validPassword = async function (password) {
+  return await bcrypt.compare(password, this.password)
+    .then(result => {
+      console.log(this.password);
+      console.log(password);
+      return result
+    }).catch(err => {
+      console.log(err);
+    });
+};
 
 module.exports = db;
