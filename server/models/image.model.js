@@ -4,15 +4,23 @@ export default (sequelize) => {
   const imageModel = sequelize.define(
     'images',
     {
-      id: {
+      UID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-      image: { 
-        type: DataTypes.BLOB('long'), // <- type for image ( database :postgresql )
-        allowNull: true 
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      path: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      where_from: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     { schema: 'imageSchema' },

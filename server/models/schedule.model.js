@@ -2,13 +2,17 @@
 //  модель расписания
 module.exports = (sequelize, Sequelize) => {
   const Schedule = sequelize.define("schedules", {
-    id: {
+    UID: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
-      primaryKey: true 
+      primaryKey: true,
+      allowNull: false
     },
     name: {
       type: Sequelize.STRING
+    },
+    type : {
+      type: Sequelize.ENUM('master', 'client', 'salon')
     }
   });
 

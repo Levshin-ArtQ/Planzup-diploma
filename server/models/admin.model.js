@@ -7,6 +7,8 @@ module.exports = (sequelize, Sequelize) => {
       UID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false
       },
       firstName: {
         type: DataTypes.STRING,
@@ -16,6 +18,15 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.STRING,
       },
       phone: {
+        type: DataTypes.STRING,
+      },
+      email: {
+        type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING,
+      },
+      telegram: {
         type: DataTypes.STRING,
       },
       rights: {
@@ -30,6 +41,14 @@ module.exports = (sequelize, Sequelize) => {
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
+      defaultScope: {
+        attributes: { exclude: ["password"] },
+      },
+      scope: {
+        withPassword: {
+          attributes: { include: ["password"] },
+        },
+      },
     } 
   );
   return Admin;

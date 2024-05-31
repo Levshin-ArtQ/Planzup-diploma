@@ -3,10 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const Client = sequelize.define(
     "clients",
     {
-      // inherit from user model
       UID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false
       },
       firstName: {
         type: DataTypes.STRING,
@@ -21,6 +22,15 @@ module.exports = (sequelize, DataTypes) => {
       occupation: {
         type: DataTypes.STRING,
       },
+      email: {
+        type: DataTypes.STRING,
+      },
+      telegram: {
+        type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING, // TODO: add hashing here, allowNull: false,
+      },
       address: {
         // type: DataTypes.GEOMETRY,
         type: DataTypes.STRING,
@@ -33,12 +43,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       favoriteServices: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
     },
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
+      defaultScope: {
+        attributes: { exclude: ["password"] },
+      },
+      scope: {
+        withPassword: {
+          attributes: { include: ["password"] },
+        },
+      },
     }
   );
   return Client;

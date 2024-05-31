@@ -1,13 +1,14 @@
-// TODO: EDIT FIELDS
+// create a sequelize model client inherited from user model additional attributes: reservations, occupation, address and phone number, loyalty points, favorite masters, etc
 module.exports = (sequelize, DataTypes) => {
-  const Master = sequelize.define(
-    "masters",
+  const ClientCard = sequelize.define(
+    "clientcards",
     {
+      // inherit from user model
       UID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        allowNull: false,
+        allowNull: false
       },
       firstName: {
         type: DataTypes.STRING,
@@ -22,10 +23,16 @@ module.exports = (sequelize, DataTypes) => {
       occupation: {
         type: DataTypes.STRING,
       },
-      service_count: {
-        type: DataTypes.INTEGER,
+      email: {
+        type: DataTypes.STRING,
       },
-      rights: {
+      telegram: {
+        type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING, // TODO: add hashing here, allowNull: false,
+      },
+      tags: {
         type: DataTypes.ARRAY(DataTypes.STRING),
       },
       address: {
@@ -33,19 +40,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         // https://sequelize.org/api/v6/class/src/data-types.js~geometry
       },
+      loyaltyPoints: {
+        type: DataTypes.INTEGER,
+      },
+      favoriteMasters: {
+        type: DataTypes.STRING,
+      },
+      favoriteServices: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
     },
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
-      defaultScope: {
-        attributes: { exclude: ["password"] },
-      },
-      scope: {
-        withPassword: {
-          attributes: { include: ["password"] },
-        },
-      },
-    } 
+    }
   );
-  return Master;
-}
+  return ClientCard;
+};

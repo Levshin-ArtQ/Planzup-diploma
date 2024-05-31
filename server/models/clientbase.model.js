@@ -1,4 +1,3 @@
-// create a sequelize model client inherited from user model additional attributes: reservations, occupation, address and phone number, loyalty points, favorite masters, etc
 module.exports = (sequelize, DataTypes) => {
   const ClientBase = sequelize.define(
     "clientbases",
@@ -30,13 +29,18 @@ module.exports = (sequelize, DataTypes) => {
       telegram: {
         type: DataTypes.STRING,
       },
-      favoriteServices: {
-        type: DataTypes.STRING,
-      },
     },
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
+      defaultScope: {
+        attributes: { exclude: ["password"] },
+      },
+      scope: {
+        withPassword: {
+          attributes: { include: ["password"] },
+        },
+      },
     }
   );
   return ClientBase;

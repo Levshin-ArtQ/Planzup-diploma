@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         // Здесь определяются атрибуты модели
         UID:{
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4
+          defaultValue: DataTypes.UUIDV4,
+          primaryKey: true,
+          allowNull: false
         },
         firstName: {
           type: DataTypes.STRING,

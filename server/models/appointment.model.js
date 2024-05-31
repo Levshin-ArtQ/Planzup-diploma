@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     UID: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      alllowNull: false,
     },
     date: {
       type: DataTypes.DATE,
