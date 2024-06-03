@@ -2,6 +2,7 @@ const { verifySignUp } = require("../middleware");
 const controller = require("../controllers/auth.controller");
 
 module.exports = function (app) {
+  console.log("auth routes")
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
@@ -11,10 +12,9 @@ module.exports = function (app) {
   });
 
   app.post(
-    "/api/auth/signup",
+    "/auth/signup/:userType",
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
-      verifySignUp.checkRolesExisted,
     ],
     controller.signup
   );

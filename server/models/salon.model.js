@@ -30,9 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         description: {
           type: DataTypes.STRING,
         },
-        password: {
-          type: DataTypes.STRING,
-        },
         address: {
           type: DataTypes.STRING
         },
@@ -74,17 +71,54 @@ module.exports = (sequelize, DataTypes) => {
         // Делает неполное удаление, добавляя deletedAt
         paranoid: true,
         // убираем пароль в ответе от бд по умолчанию
-        defaultScope: {
-          attributes: { exclude: ["password"] },
-        },
-        // пароль доступен только внутри .scope('withPassword')
-        scope: {
-          withPassword: {
-            attributes: { include: ["password"] },
-          },
-        },
+        // defaultScope: {
+        //   attributes: { exclude: ["password"] },
+        // },
+        // // пароль доступен только внутри .scope('withPassword')
+        // scope: {
+        //   withPassword: {
+        //     attributes: { include: ["password"] },
+        //   },
+        // },
+        
       }
   );
+  // Salon.associate = async (models) => {
+  //   await Salon.belongsToMany(models.Appointment, {
+  //     through: "salon_appointments",
+
+
+
+  //     foreignKey: "salonId",
+  //     as: "appointments",
+  //   });
+
+  //   Salon.belongsToMany(models.Master, {
+  //     through: "salon_masters",
+  //     foreignKey: "salonId",
+  //     as: "masters",
+  //   });
+  //   Salon.belongsToMany(models.Service, {
+  //     through: "salon_services",
+  //     foreignKey: "salonId",
+  //     as: "services",
+  //   });
+  //   Salon.belongsToMany(model.Manager, {
+  //     through: "salon_managers",
+  //     foreignKey: "salonId",
+  //     as: "managers",
+  //   })
+  //   Salon.belongsToMany(models.Admin, {
+  //     through: "salon_admins",
+  //     foreignKey: "salonId",
+  //     as: "admins",
+  //   });
+  //   Salon.belongsToMany(models.ClientBase, {
+  //     through: "salon_clients",
+  //     foreignKey: "salonId",
+  //     as: "clients",  
+  //   });
+  // };
   return Salon;
 }
 

@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { Button, TimePicker, Select, DatePicker, Modal, Spin } from "antd";
 import { useState } from "react";
 import useLocation from "../hooks/useLocation";
-import { YMaps, Map, Circle, GeolocationControl } from "@pbe/react-yandex-maps";
+import { YMaps, Map as YMap2, Circle, GeolocationControl } from "@pbe/react-yandex-maps";
+
 import "./Search.css";
 
-const Search = () => {
+const Search = ({handleFilters}) => {
   const [openModal, setOpenModal] = useState(false);
   const [serviceOptions, setServiceOptions] = useState([]);
   const [serviceValue, setServiceValue] = useState("");
@@ -18,9 +19,21 @@ const Search = () => {
     console.log(location);
     handleLocationClick();
     setOpenModal(!openModal);
+    handleFilters({location: location})
   };
   const onServiceChange = (value) => {
     setServiceValue(value);
+    handleFilters({service: value})
+  };
+
+  const onDateChange = (value) => {
+    setDateValue(value);
+    handleFilters({date: value})
+  };
+
+  const onTimeChange = (value) => {
+    setTimeValue(value);
+    handleFilters({time: value})
   };
   const handleOk = () => {
     setOpenModal(!openModal);
@@ -109,7 +122,7 @@ const Search = () => {
                     Здесь скоро найдутся мастера поблизости:
                   </span>
                   <div className="map_wrapper">
-                    <Map
+                    <YMap2
                       defaultState={{
                         center: [location?.latitude, location?.longitude],
                         zoom: 15,
@@ -126,7 +139,7 @@ const Search = () => {
                           strokeWidth: 5,
                         }}
                       />
-                    </Map>
+                    </YMap2>
                   </div>
                 </div>
               </YMaps>
@@ -163,9 +176,9 @@ const Search = () => {
       <Button type="text" onClick={handleLocation}>
         По месту
       </Button>
-      <DatePicker placeholder="На удобную дату" variant="borderless" />{" "}
+      <DatePicker onChange={onDateChange} placeholder="На удобную дату" variant="borderless" />{" "}
       {/* TODO: validate date, placeholder color */}
-      <TimePicker placeholder="На удобное время" variant="borderless" />
+      <TimePicker onChange={onTimeChange} placeholder="На удобное время" variant="borderless" />
     </div>
   );
 };

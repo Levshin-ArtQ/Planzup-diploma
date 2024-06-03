@@ -1,30 +1,35 @@
 const db = require("../models");
-const ROLES = db.ROLES;
-const User = db.user;
+const Settings = db.settings;
+const Manager = db.manager;
+const Master = db.master;
+const Client = db.client;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
+  console.log(req);
   // Username
-  User.findOne({
+  Settings.findOne({
     where: {
-      username: req.body.username
-    }
-  }).then(user => {
+      username: req.body?.username,
+    },
+  }).then((user) => {
     if (user) {
       res.status(400).send({
-        message: "Пользователь с именем " + req.body.username + " уже существует!"
+        message:
+          "Пользователь с именем " + req.body.username + " уже существует!",
       });
       return;
     }
 
     // Email
-    User.findOne({
+    Settings.findOne({
       where: {
-        email: req.body.email
-      }
-    }).then(user => {
+        email: req.body.email,
+      },
+    }).then((user) => {
       if (user) {
         res.status(400).send({
-          message: "Этот email уже используется! Попробуйте войти под ним или зарегистрируйтесь под другой почтой"
+          message:
+            "Этот email уже используется! Попробуйте войти под ним или зарегистрируйтесь под другой почтой",
         });
         return;
       }
@@ -39,19 +44,19 @@ checkRolesExisted = (req, res, next) => {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {
         res.status(400).send({
-          message: "Failed! Role does not exist = " + req.body.roles[i]
+          message: "Failed! Role does not exist = " + req.body.roles[i],
         });
         return;
       }
     }
   }
-  
+
   next();
 };
 
 const verifySignUp = {
   checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-  checkRolesExisted: checkRolesExisted
+  checkRolesExisted: checkRolesExisted,
 };
 
 module.exports = verifySignUp;

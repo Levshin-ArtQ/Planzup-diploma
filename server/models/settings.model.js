@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
       },
+      email: {
+        type: DataTypes.STRING,
+      },
       usertype: {
         type: DataTypes.ENUM("master", "client", "manager", "admin", "администратор", "менеджер", "мастер"),
       },

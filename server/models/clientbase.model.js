@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      password: {
-        type: DataTypes.STRING,
-        // TODO: add hashing here, allowNull: false,
-      },
       phone: {
         type: DataTypes.STRING,
       },
@@ -33,14 +29,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
-      defaultScope: {
-        attributes: { exclude: ["password"] },
-      },
-      scope: {
-        withPassword: {
-          attributes: { include: ["password"] },
-        },
-      },
+      // associate: function(models) {
+      //   models.hasOne(models.Schedule, { as: "schedule" });
+      // }
+      // defaultScope: {
+      //   attributes: { exclude: ["password"] },
+      // },
+      // scope: {
+      //   withPassword: {
+      //     attributes: { include: ["password"] },
+      //   },
+      // },
     }
   );
   return ClientBase;

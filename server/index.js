@@ -4,58 +4,83 @@ const keys = require("./keys");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const associations = require("./models/associations");
 const app = express();
-// routes
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
-require('./routes/appointment.routes')(app);
 app.use(cors());
+// parse requests of content-type - application/json
 app.use(bodyParser.json());
-app.use('/reservations', require('./routes/reservations'))
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+// routes
 
 
-app.use(bodyParser.urlencoded({ extended: false })); 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    next();
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  
+  next();
 });
+
+// routes
+require("./routes/auth.routes")(app);
+require("./routes/user.routes")(app);
+require("./routes/appointment.routes")(app);
+require("./routes/super.routes")(app);
+require("./routes/service.routes")(app);
+app.use("/reservations", require("./routes/reservations"));
 
 
 const db = require("./models");
+const main = async () => {
+  const associationsAnswer = await associations()
+    .then(() => {
+      console.log("associations done");
+    })
+    .catch((err) => {
+      console.log("associations failed");
+      console.log(err);
+    });
+    
+  
+}
+main();
+// async part of code
+
 const Role = db.role;
-const sequelize = require('./util/database');
+const sequelize = require("./util/database");
 //sync database
 db.sequelize
-  .sync({force: true})
-  .then(result => {
+  .sync({ force: true })
+  .then((result) => {
     console.log("Database dropped resynced and connected");
     initial();
     app.listen(5000);
-    console.log("Listening port 5000")
+    console.log("Listening port 5000");
   })
-  .catch(err => console.log(err));
-
-  
+  .catch((err) => console.log(err));
 
 function initial() {
   Role.create({
     id: 1,
-    name: "user"
+    name: "user",
   });
-  
+
   Role.create({
     id: 2,
-    name: "moderator"
+    name: "moderator",
   });
-  
+
   Role.create({
     id: 3,
-    name: "admin"
+    name: "admin",
   });
-  const {init} = require("./test/init.test");
-  init();
+  const { init } = require("./test/init.test");
+  init().catch((err) => console.log(err));
 }
 // Postgres client setup
 // const { Pool } = require("pg");
@@ -74,8 +99,8 @@ function initial() {
 // });
 
 // //test route
-app.get('/', (req, res, next) => {
-  res.send('Planzup listening');
+app.get("/", (req, res, next) => {
+  res.send("Planzup listening");
 });
 
 // //error handling
@@ -85,7 +110,6 @@ app.get('/', (req, res, next) => {
 //   const message = error.message;
 //   res.status(status).json({ message: message });
 // });
-
 
 // // get the values
 // app.get("/values/all", async (req, res) => {
@@ -102,7 +126,6 @@ app.get('/', (req, res, next) => {
 
 //   res.send({ working: true });
 // });
-
 
 // app.listen(5000, err => {
 //   console.log("Listening");

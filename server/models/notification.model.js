@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'pending'
     },
 
+  },
+  {
+    classMethods: {
+      associate: function(models) {
+        models.Notification.belongsToMany(models.Client, { through: 'client_notifications' });
+      }
+    }
   })
 
   return Notification;

@@ -286,18 +286,7 @@ const CardsCarousel = ({items, regime}) => {
               <Meta
               style={{ textAlign: "center", marginTop: "10px", padding: '0 10px' }}
               title={service.title}
-              description={
-                <div>
-                  <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{service.price}</div>
-                  <div style={{ marginTop: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Rate disabled defaultValue={parseFloat(service.rating)} style={{ fontSize: '14px' }} />
-                    <span style={{ marginLeft: '5px', fontSize: '12px' }}>({service.rating})</span>
-                  </div>
-                  {/*<div style={{ marginTop: '10px', fontSize: '14px' }}>Мастер: {service.master}</div>*/}
-                  <div style={{ marginTop: '5px', fontSize: '14px' }}>До ближайшего сеанса: {service.time_until}</div>
-                  <Button type="primary" style={{ marginTop: '10px', width: '100%' }}>Записаться</Button>
-                </div>
-              }
+              
             />
               </Card>
             ))}

@@ -6,5 +6,19 @@ exports.create = (req, res) => {
       message: "Content can not be empty!"
     });
   }
+
+  const schedule = new Schedule({
+    name: req.body.name,
+    description: req.body.description
+  });
+
+  Schedule.create(schedule, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Schedule."
+      });
+    else res.send(data);
+  });
   
 }

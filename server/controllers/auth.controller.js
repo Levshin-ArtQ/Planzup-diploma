@@ -2,6 +2,11 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
+const Settings = db.settings;
+const Manager = db.manager;
+const Master = db.master;
+const Client = db.client;
+const Schedule = db.schedule;
 
 const Op = db.Sequelize.Op;
 
@@ -9,31 +14,42 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
+  console.log(req.body);
+  const userType = req.body.userType;
+  const userModel = userType === "master" ? Master : userType === "manager" ? Manager : Client;
   // Save User to Database
-  User.create({
+  Settings.create({
+    name: req.body.username,
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: req.body.password
   })
-    .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
-          });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully!" });
-        });
-      }
+    .then(settings => {
+      userModel.create({
+        name: req.body.name,
+        firstName: req.body.firstName,
+        email: req.body.email,
+      }).then(user => {
+        user.setSettings(settings);
+        if (userType === "manager") {
+          res.send({ message: "Поздравляем, " + req.body.username + " вы успешно зарегистрировались как " + userType + "!" });
+          console.log(userType + " " + req.body.username + " created");
+        }
+        Schedule.create({
+          name: req.body.username,
+          type: userType,
+          description: "рассписание " + req.body.username
+        }).then(schedule => {
+          user.setSchedule(schedule);
+          res.send({ message: "Поздравляем, " + req.body.username + " вы успешно зарегистрировались как " + userType + "!" });
+          console.log(userType + " " + req.body.username + " created");
+        })
+        
+      }).catch(err => {
+        res.status(500).send({ 'Ошибка при установке настоек': err.message });
+      });
+
+
     })
     .catch(err => {
       res.status(500).send({ message: err.message });

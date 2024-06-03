@@ -1,5 +1,4 @@
-// import DataTypes from "sequelize";
-//  модель расписания
+//  Модель расписания
 module.exports = (sequelize, Sequelize) => {
   const Schedule = sequelize.define("schedules", {
     UID: {
@@ -13,7 +12,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     type : {
       type: Sequelize.ENUM('master', 'client', 'salon')
-    }
+    },
+    description: {
+      type: Sequelize.STRING
+    },
   });
 
   return Schedule;

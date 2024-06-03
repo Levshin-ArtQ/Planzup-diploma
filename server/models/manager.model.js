@@ -37,14 +37,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
-      defaultScope: {
-        attributes: { exclude: ["password"] },
-      },
-      scope: {
-        withPassword: {
-          attributes: { include: ["password"] },
-        },
-      },
+      // defaultScope: {
+      //   attributes: { exclude: ["password"] },
+      // },
+      // scope: {
+      //   withPassword: {
+      //     attributes: { include: ["password"] },
+      //   },
+      // },
     } 
   );
   return Manager;

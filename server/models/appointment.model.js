@@ -27,8 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     client: {
       type: DataTypes.STRING,
     },
+    
   });
-
+  
   return Appointment;
 };
 

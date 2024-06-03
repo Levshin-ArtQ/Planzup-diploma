@@ -7,13 +7,14 @@ exports.create = (req, res) => {
     res.status(400).send({
       message: "Content can not be empty!",
     });
+    return;
   }
   const newappointment ={
-    date: req.body.date ? req.body.date : null,
-    time: req.body.time ? req.body.time : null,
-    service: req.body.service ? req.body.service : null,
-    master: req.body.master ? req.body.master : null,
-    client: req.body.client ? req.body.client : null,
+    date: req?.body?.date ? req.body.date : null,
+    time: req?.body?.time ? req.body.time : null,
+    service: req?.body?.service ? req.body.service : null,
+    master: req?.body?.master ? req.body.master : null,
+    client: req?.body?.client ? req.body.client : null,
   };
 
   Appointment.create(newappointment)
@@ -128,14 +129,14 @@ exports.update = (req, res) => {
       message: "Content can not be empty!",
     });
   }
-  const appointmentId = req.params.reservationId;
+  const appointmentId = req?.params?.reservationId;
   const appointment = new Appointment({
-    date: req.body.date ? req.body.date : null,
-    time: req.body.time ? req.body.time : null,
-    service: req.body.service ? req.body.service : null,
-    master: req.body.master ? req.body.master : null,
-    client: req.body.client ? req.body.client : null,
-    version: req.body.version
+    date: req?.body?.date ? req.body.date : null,
+    time: req?.body?.time ? req.body.time : null,
+    service: req?.body?.service ? req.body.service : null,
+    master: req?.body?.master ? req.body.master : null,
+    client: req?.body?.client ? req.body.client : null,
+    version: req?.body?.version
   });
 
   Appointment.findById(appointmentId, (err, data) => {

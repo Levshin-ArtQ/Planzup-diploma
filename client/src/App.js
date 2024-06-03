@@ -25,6 +25,7 @@ import ruRU from "antd/locale/ru_RU";
 import WeatherApp from "./testComponents/WeatherApp";
 import Page from "./main_page/Page";
 import SampleFetching from "./testComponents/SampleFetching";
+import ServicePage from "./components/BookingPages/ServicePage";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
             <Route path={"/form"} element={<Form />} />
             <Route path={"/register"} element={<RegisterPage />} />
             <Route path={"/profile"} element={<Profile />} />
+            <Route path={"/service/:id"} element={<ServicePage />}></Route>
+            
             
             
             <Route path={"/sandbox"} element={<Experimental />}></Route>

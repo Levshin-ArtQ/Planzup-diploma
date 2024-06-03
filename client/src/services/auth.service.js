@@ -5,10 +5,10 @@ const API_URL = "/api/auth/";
 class AuthService {
   async login(username, password) {
     const response = await axios
-      .post(API_URL + "signin", {
-        username,
-        password
-      });
+      .post(API_URL + "signin", [{
+        username: username,
+        password: password,
+      }]);
     if (response.data.accessToken) {
       // записываем данные пользователя в локальное хранилище
       localStorage.setItem("user", JSON.stringify(response.data));
@@ -21,16 +21,22 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  register(username, email, password) {
-    return axios.post(API_URL + "signup", {
-      username,
-      email,
-      password
-      // password: hashPassword(password)
+  register(username, email, password, serviceType) {
+    console.log("serviceType: " + serviceType)
+    return axios.post(API_URL + "signup/" + serviceType, 
+    {
+      username: username,
+      email: email,
+      password: password
       // TODO: добавить поля с другими данными
+    },
+    {
+      headers: {
+        'content-type': 'application/json'
+      }
     });
   }
-
+  
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }

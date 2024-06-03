@@ -1,7 +1,6 @@
 // create a sequelize model client inherited from user model additional attributes: reservations, occupation, address and phone number, loyalty points, favorite masters, etc
 module.exports = (sequelize, DataTypes) => {
-  const Client = sequelize.define(
-    "clients",
+  const Client = sequelize.define("clients",
     {
       UID: {
         type: DataTypes.UUID,
@@ -42,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
       favoriteMasters: {
         type: DataTypes.STRING,
       },
+      appointments: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
       favoriteServices: {
         type: DataTypes.ARRAY(DataTypes.STRING),
       },
@@ -49,14 +51,20 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Делает неполное удаление, добавляя deletedAt
       paranoid: true,
-      defaultScope: {
-        attributes: { exclude: ["password"] },
-      },
-      scope: {
-        withPassword: {
-          attributes: { include: ["password"] },
-        },
-      },
+
+      // defaultScope: {
+      //   attributes: {include: ["Appointments"]},
+      // },
+      // scope: {
+      //   'nopassword': {
+      //     attributes: { exclude: ["password"] },
+      //   }
+      // },
+      // scope: {
+      //   withPassword: {
+      //     attributes: { include: ["password"] },
+      //   },
+      // },
     }
   );
   return Client;

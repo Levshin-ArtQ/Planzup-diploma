@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        rate: {
+          type: DataTypes.FLOAT
+        },
         description: {
           type: DataTypes.STRING
         },
