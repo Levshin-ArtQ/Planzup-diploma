@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useApi from '../hooks/useApi';
 import axios from 'axios';
 import PrettyJson from '../devutils/PrettyJson';
+import PushNotificationButton from './PushNotificationButton';
 
 const SampleFetching = () => {
   const { data, error, loading, fetchData, contextHolder } = useApi(); 
@@ -23,10 +24,11 @@ const SampleFetching = () => {
 
   useEffect(() => {
     // Загрузка данных
-    fetchData(`/api/${request}`, {method: requestType});
+    fetchData(`${request}`, {method: requestType});
   }, [request]);
   return (
     <div>
+      <PushNotificationButton style={{width:'100px', height:'30px'}}/>
       {contextHolder}
       <input type="text" onChange={(e) => setRequest(e.target.value)}/>
       http query type options <br />

@@ -248,15 +248,15 @@ const associations = async () => {
   });
 
   // NOTIFICATION ASSOCIATIONS
-  // notification to service many-to-many TODO: not necessary
-  Notification.belongsToMany(Service, {
-    through: "notification_services",
+  // notification to appointment many-to-many 
+  Notification.belongsToMany(Appointment, {
+    through: "appointment_notifications",
     foreignKey: "notificationId",
-    otherKey: "serviceId",
+    otherKey: "apointmentId",
   });
-  Service.belongsToMany(Notification, {
-    through: "notification_services",
-    foreignKey: "serviceId",
+  Appointment.belongsToMany(Notification, {
+    through: "appointment_notifications",
+    foreignKey: "apointmentId",
     otherKey: "notificationId",
     allowNull: false, // notification cannot exist without service
   });
@@ -283,17 +283,23 @@ const associations = async () => {
 
   // db.ROLES = ["user", "admin", "moderator", "master"];
   Settings.prototype.validPassword = async function (password) {
+    console.log("password: " + password)
+    console.log("this.password: " + this.password)
     return await bcrypt
       .compare(password, this.password)
       .then((result) => {
-        console.log(this.password);
-        console.log(password);
+        console.log(result);
         return result;
       })
       .catch((err) => {
         console.log(err);
+        return false
+        
       });
   };
+  // Settings.prototype.getUser = async function () {
+  //   const userModel = this.userType === "master" ? Master : "manager" ? Manager : "client" ? Client : null;
+  // };
 
 };
 

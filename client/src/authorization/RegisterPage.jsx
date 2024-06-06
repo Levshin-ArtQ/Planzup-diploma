@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Tabs } from "antd";
+import { Button, Checkbox, Form, Input, Tabs, message } from "antd";
 import "./LoginPage.css";
 import AuthService from "../services/auth.service";
 import WebApp from "@twa-dev/sdk";
@@ -9,12 +9,19 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const { previous } = useParams();
   const [message, setMessage] = useState("");
+  // const [messageApi, contextHolder] = message.useMessage();
+
   const onFinish = (values, userType) => {
     userType = userType === "клиент" ? "client" : userType === "мастер" ? "master" : "manager";
     console.log("Received values of form: ", values);
     AuthService.register(values.username, values.email, values.password, userType).then(
       () => {
-        previous ? navigate(previous) : navigate("/");
+        AuthService.login(values.username, values.password);
+        previous ? navigate(previous) : navigate("/login");
+        // messageApi.open({
+        //   type: "success",
+        //   content: "Регистрация прошла успешно!",
+        // });
         console.log("Пользователь авторизован успешно");
       },
       (error) => {
@@ -31,6 +38,7 @@ const RegisterPage = () => {
   };
   return (
     <div className="login_wrapper">
+      
     <h1>Зарегистрироваться </h1>
     <Tabs 
       defaultActiveKey="клиент"
@@ -50,7 +58,7 @@ const RegisterPage = () => {
             onFinish={(event) => onFinish(event, id)}
           >
             <Form.Item
-              name="nickname"
+              name="username"
               rules={[
                 {
                   required: true,
@@ -65,7 +73,7 @@ const RegisterPage = () => {
               />
             </Form.Item>
             <Form.Item
-              name="username"
+              name="email"
               rules={[
                 {
                   required: true,

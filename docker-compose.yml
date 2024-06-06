@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 x-postgres-common:
   &postgres-common
   image: postgres:14-alpine
@@ -31,32 +31,40 @@ services:
       -c hot_standby_feedback=on
     volumes:
       - ./00_init.sql:/docker-entrypoint-initdb.d/00_init.sql
+      - postgres_primary_data:/var/lib/postgresql/data
 
   postgres_replica:
     <<: *postgres-common
     ports:
       - 5433:5432
     environment:
-      PGDATA: /var/lib/postgresql/data/db-files
+      PGDATA: /var/lib/postgresql/data/dbfiles_
       PGUSER: replicator
       PGPASSWORD: replicator_password
     command: |
       bash -c "
-      until pg_basebackup --pgdata=/var/lib/postgresql/data/db-files -R --slot=replication_slot --host=postgres_primary --port=5432
-      do
-      echo 'Waiting for primary to connect...'
-      sleep 1s
-      done
-      echo 'Backup done, starting replica...'
-      chmod 0700 /var/lib/postgresql/data/db-files
+      if [ ! -s /var/lib/postgresql/data/dbfiles_/PG_VERSION ]; then
+        rm -rf /var/lib/postgresql/data/dbfiles_/*
+        until pg_basebackup --pgdata=/var/lib/postgresql/data/dbfiles_ -R --slot=replication_slot --host=postgres_primary --port=5432
+        do
+        echo 'Waiting for primary to connect...'
+        sleep 1s
+        done
+        echo 'Backup done, starting replica...'
+        chmod 0700 /var/lib/postgresql/data/dbfiles_
+      fi
       postgres
       "
     depends_on:
       - postgres_primary
+    volumes:
+      - postgres_replica_data:/var/lib/postgresql/data
+
   nginx:
     depends_on:
       - api
       - client
+      - notifications
     restart: always
     build:
       dockerfile: Dockerfile.dev
@@ -77,6 +85,28 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
       - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4
+    depends_on:
+      postgres_primary:
+        condition: service_healthy
+
+  notifications:
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./notifications-worker"
+    volumes:
+      - /app/node_modules
+      - ./notifications-worker:/app
+    environment:
+      - PGUSER=replicator
+      - PGHOST=postgres_primary
+      - PGDATABASE=postgres
+      - PGPASSWORD=replicator_password
+      - PGPORT=5433
+      - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4
+    depends_on:
+      postgres_primary:
+        condition: service_healthy
+
   bot:
     build:
       dockerfile: Dockerfile.dev
@@ -90,7 +120,8 @@ services:
       - PGDATABASE=postgres
       - PGPASSWORD=replicator_password
       - PGPORT=5433
-      - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4 
+      - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4
+
   client:
     stdin_open: true
     environment:
@@ -101,3 +132,7 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+
+volumes:
+  postgres_primary_data:
+  postgres_replica_data:

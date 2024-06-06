@@ -18,9 +18,9 @@ module.exports = function (app) {
     ],
     controller.signup
   );
-  app.get("/api/values/all", (req, res, next) => {
+  app.get("/values/all", (req, res, next) => {
     res.status(200).json({ values: "simple answer" });
   });
 
-  app.post("/api/auth/signin", controller.signin);
+  app.post("/auth/signin", controller.signin);
 };

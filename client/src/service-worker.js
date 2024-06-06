@@ -125,3 +125,50 @@ message.addEventListener('message', function(event) {
     });
   }
 });
+
+// service-worker.js
+self.addEventListener('push', event => {
+  const data = event.data.json();
+  self.registration.showNotification(data.title, {
+    body: data.body,
+    icon: data.icon
+  });
+});
+
+// main React component (например, App.js)
+const urlBase64ToUint8Array = (base64String) => {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
+
+};
+
+// TODO: HIDE
+const publicVapidKey = 'BOSSP8ivAMvDHHMvMM_aX6kr70eDrKaiZ6ZU7QN6ftXeHC1HnGFrPvrJUgF04QExxCCNsK_Hdp83yFJNAbJSQik';
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(async registration => {
+      const subscription = await registration.pushManager.getSubscription();
+      if (subscription) {
+        return subscription;
+      }
+      return registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+      });
+    })
+    .catch(error => console.error('Error during service worker registration:', error))
+    // .then(subscription => {
+    //   // Отправьте информацию о подписке на ваш сервер
+    //   fetch('notifications/subscribe', {
+    //     method: 'POST',
+    //     body: JSON.stringify(subscription),
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    // })
+    // .catch(error => console.error('Error during service worker registration:', error));
+}

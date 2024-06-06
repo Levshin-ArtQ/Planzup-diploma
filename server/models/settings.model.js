@@ -28,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       usertype: {
         type: DataTypes.ENUM("master", "client", "manager", "admin", "администратор", "менеджер", "мастер"),
+        defaultValue: "client",
+        allowNull: false,
       },
       push_token: {
         type: DataTypes.STRING,

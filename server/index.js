@@ -32,7 +32,7 @@ require("./routes/user.routes")(app);
 require("./routes/appointment.routes")(app);
 require("./routes/super.routes")(app);
 require("./routes/service.routes")(app);
-app.use("/reservations", require("./routes/reservations"));
+// app.use("/reservations", require("./routes/reservations"));
 
 
 const db = require("./models");

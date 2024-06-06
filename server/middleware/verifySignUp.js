@@ -5,7 +5,7 @@ const Master = db.master;
 const Client = db.client;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
-  console.log(req);
+  console.log(req.body);
   // Username
   Settings.findOne({
     where: {
