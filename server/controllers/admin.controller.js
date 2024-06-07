@@ -105,7 +105,7 @@ exports.signin = (req, res) => {
         return res.status(401).send({ message: "Неверный пароль!" });
       } 
 
-      const token = jwt.sign({ id: data.id }, process.env.SECRET_KEY, {
+      const token = jwt.sign({ UID: data.UID }, process.env.SECRET_KEY, {
         expiresIn: 86400, // 24 hours
       });
       res.status(200).send({

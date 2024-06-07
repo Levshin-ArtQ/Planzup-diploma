@@ -32,11 +32,13 @@ this is from jsconfig for more understandable routing of imports
 ## `Postgres image` ##
 
 psql -h postgres -U postgres
-\d - Чтобы посмотреть все таблицы и записи 
+psql -U user --dbname=postgres
+\d - Чтобы посмотреть все таблицы и записи
 \dt - только таблицы
 
 
-## `код запуска отдельного сервиса ` ##
+## `код запуска отдельного сервиса` ##
+
 docker-compose stop -t 1 nginx 
 docker-compose build nginx
 docker-compose up --no-start nginx

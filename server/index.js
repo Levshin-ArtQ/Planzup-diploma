@@ -28,7 +28,6 @@ app.use((req, res, next) => {
 
 // routes
 require("./routes/auth.routes")(app);
-require("./routes/user.routes")(app);
 require("./routes/appointment.routes")(app);
 require("./routes/super.routes")(app);
 require("./routes/service.routes")(app);

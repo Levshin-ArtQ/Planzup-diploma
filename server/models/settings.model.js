@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "client",
         allowNull: false,
       },
+      shardingSchedule: {
+        type: DataTypes.BOOLEAN,
+      },
       push_token: {
         type: DataTypes.STRING,
       },
@@ -62,14 +65,31 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       hooks: {
-        // beforeCreate: function (settings) {
-        //    //whatever number you want
-        //    console.log(settings.password);
-        //   settings.password = bcrypt.hashSync(settings.password, 10);
-        // },
+        beforeCreate: function (settings, options) {
+          if (!settings?.dataValues?.password) {
+            console.log('password is empty in ' + settings?.dataValues?.name);
+            // reject if password is empty
+            Promise.reject('password is empty in ' + settings?.dataValues?.name);
+          } else {
+            settings.dataValues.password = bcrypt.hashSync(settings.dataValues.password, 10);
+          }
+        
+        },
+        // the same as beforeCreate but with beforeBulkCreate
+        beforeBulkCreate: async (settings) => {
+          for (let i = 0; i < settings.length; i++) {
+            if (!settings[i]?.dataValues?.password) {
+              console.log('password is empty in ' + settings[i]?.dataValues?.name);
+              // reject if password is empty
+              Promise.reject('password is empty in ' + settings[i]?.dataValues?.name);
+            } else {
+              settings[i].dataValues.password = bcrypt.hashSync(settings[i].dataValues.password, 10);
+            }
+          }
+        },
         beforeSave: async (settings) => {
           if (settings.changed("password")) {
-            settings.password = bcrypt.hashSync(settings.password, 10);
+            settings.dataValues.password = bcrypt.hashSync(settings.dataValues.password, 10);
           }
         },
       },

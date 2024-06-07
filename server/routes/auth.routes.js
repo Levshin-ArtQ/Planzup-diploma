@@ -18,9 +18,7 @@ module.exports = function (app) {
     ],
     controller.signup
   );
-  app.get("/values/all", (req, res, next) => {
-    res.status(200).json({ values: "simple answer" });
-  });
+  app.get("/auth/verifyToken", controller.verifyToken);
 
   app.post("/auth/signin", controller.signin);
 };

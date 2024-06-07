@@ -26,6 +26,7 @@ import WeatherApp from "./testComponents/WeatherApp";
 import Page from "./main_page/Page";
 import SampleFetching from "./testComponents/SampleFetching";
 import ServicePage from "./components/BookingPages/ServicePage";
+import ClientAppointments from "./pages/ClientAppointments";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path={"/page"} element={<Page />}></Route>
             <Route path={"/home"} element={<ClientHome />}></Route>
             <Route index element={<ClientHome />} />
+            <Route path={"/client/appointments"} element={<ClientAppointments />}></Route>
             <Route path={"/booking"} element={<BookingTable />}></Route>
             <Route path={"/form"} element={<Form />} />
             <Route path={"/register"} element={<RegisterPage />} />

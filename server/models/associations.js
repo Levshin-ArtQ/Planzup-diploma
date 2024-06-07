@@ -30,27 +30,17 @@ const associations = async () => {
   // client to masters many-to-many
   Client.belongsToMany(Master, {
     through: "client_masters",
-    foreignKey: "clientId",
-    otherKey: "masterId",
-    as: "favouriteMasters",
   });
   Master.belongsToMany(Client, {
     through: "client_masters",
-    foreignKey: "masterId",
-    otherKey: "clientId",
-    as: "masterFans",
   });
   // client to service many-to-many
   Service.belongsToMany(Client, {
     through: "client_services",
-    foreignKey: "serviceId",
-    otherKey: "clientId",
     as: "favouriteServices",
   });
   Client.belongsToMany(Service, {
     through: "client_services",
-    foreignKey: "clientId",
-    otherKey: "serviceId",
     as: "serviceFans",
   });
   // client to settings one-to-one
@@ -69,39 +59,34 @@ const associations = async () => {
   // master to salons many-to-many
   await Master.belongsToMany(Salon, {
     through: "master_salons",
-    foreignKey: "masterId",
-    otherKey: "salonId",
+    // foreignKey: "masterId",
+    // otherKey: "salonId",
     allowNull: false,
   });
   await Salon.belongsToMany(Master, {
     through: "master_salons",
-    foreignKey: "salonId",
-    otherKey: "masterId",
+    // foreignKey: "salonId",
+    // otherKey: "masterId",
   });
   // master to service many-to-many
   await Service.belongsToMany(Master, {
     through: "master_services",
-    foreignKey: "serviceId",
-    otherKey: "masterId",
   });
   await Master.belongsToMany(Service, {
     through: "master_services",
-    foreignKey: "masterId",
-    otherKey: "serviceId",
   });
   // master to schedule one-to-one
-  Master.hasOne(Schedule);
+  Master.hasOne(Schedule );
   Schedule.belongsTo(Master);
   // master to notification one-to-many
   Master.hasMany(Notification);
   Notification.belongsTo(Master, {
-    foreignKey: "masterId",
     as: "Master",
   });
   // master to report one-to-many
   Master.hasMany(Report);
   Report.belongsTo(Master, {
-    foreignKey: "masterId",
+    // foreignKey: "masterId",
     as: "Master",
   });
 
@@ -111,18 +96,13 @@ const associations = async () => {
   // admin to salon many-to-many
   await Admin.belongsToMany(Salon, {
     through: "admin_salons",
-    foreignKey: "adminId",
-    otherKey: "salonId",
   });
   await Salon.belongsToMany(Admin, {
     through: "admin_salons",
-    foreignKey: "salonId",
-    otherKey: "adminId",
   });
   // admin to notification one-to-many
   Admin.hasMany(Notification);
   Notification.belongsTo(Admin, {
-    foreignKey: "adminId",
     as: "Admin",
   });
   // admin to settings one-to-one
@@ -135,7 +115,6 @@ const associations = async () => {
   // manager to notification one-to-many
   Manager.hasMany(Notification);
   Notification.belongsTo(Manager, {
-    foreignKey: "managerId",
     as: "Manager",
   });
   // manager to salon many-to-many
@@ -159,46 +138,46 @@ const associations = async () => {
   // salon to schedule many-to-many
   Salon.belongsToMany(Schedule, {
     through: "salon_schedules",
-    foreignKey: "salonId",
-    otherKey: "scheduleId",
+    // foreignKey: "salonId",
+    // otherKey: "scheduleId",
   });
   Schedule.belongsToMany(Salon, {
     through: "salon_schedules",
-    foreignKey: "scheduleId",
-    otherKey: "salonId",
+    // foreignKey: "scheduleId",
+    // otherKey: "salonId",
   });
   // salon to service many-to-many
   Service.belongsToMany(Salon, {
     through: "salon_services",
-    foreignKey: "serviceId",
-    otherKey: "salonId",
+    // foreignKey: "serviceId",
+    // otherKey: "salonId",
   });
   Salon.belongsToMany(Service, {
     through: "salon_services",
-    foreignKey: "salonId",
-    otherKey: "serviceId",
+    // foreignKey: "salonId",
+    // otherKey: "serviceId",
   });
   // salon to clientbase many-to-many
   Clientbase.belongsToMany(Salon, {
     through: "salon_clientbases",
-    foreignKey: "clientbaseId",
-    otherKey: "salonId",
+    // foreignKey: "clientbaseId",
+    // otherKey: "salonId",
   });
   Salon.belongsToMany(Clientbase, {
     through: "salon_clientbases",
-    foreignKey: "salonId",
-    otherKey: "clientbaseId",
+    // foreignKey: "salonId",
+    // otherKey: "clientbaseId",
   });
   // salon to report many-to-many
   Report.belongsToMany(Salon, {
     through: "salon_reports",
-    foreignKey: "reportId",
-    otherKey: "salonId",
+    // foreignKey: "reportId",
+    // otherKey: "salonId",
   });
   Salon.belongsToMany(Report, {
     through: "salon_reports",
-    foreignKey: "salonId",
-    otherKey: "reportId",
+    // foreignKey: "salonId",
+    // otherKey: "reportId",
   });
 
   // SCHEDULE ASSOCIATIONS
@@ -212,13 +191,13 @@ const associations = async () => {
   // clientbase to clientcard many-to-many
   Clientbase.belongsToMany(Clientcard, {
     through: "clientbase_clientcards",
-    foreignKey: "clientbaseId",
-    otherKey: "clientcardId",
+    // foreignKey: "clientbaseId",
+    // otherKey: "clientcardId",
   });
   Clientcard.belongsToMany(Clientbase, {
     through: "clientbase_clientcards",
-    foreignKey: "clientcardId",
-    otherKey: "clientbaseId",
+    // foreignKey: "clientcardId",
+    // otherKey: "clientbaseId",
   });
   
 
@@ -227,23 +206,23 @@ const associations = async () => {
   // appointment to service many-to-many
   Appointment.belongsToMany(Service, {
     through: "appointment_services",
-    foreignKey: "appointmentId",
-    otherKey: "serviceId",
+    // foreignKey: "appointmentId",
+    // otherKey: "serviceId",
   });
   Service.belongsToMany(Appointment, {
     through: "appointment_services",
-    foreignKey: "serviceId",
-    otherKey: "appointmentId",
+    // foreignKey: "serviceId",
+    // otherKey: "appointmentId",
     allowNull: false, // appointment cannot exist without service
   });
   // appointments to schedule many-to-many
   Schedule.belongsToMany(Appointment, {
     through: "schedule_appointments",
-    foreignKey: "scheduleId",
+    // foreignKey: "scheduleId",
   });
   Appointment.belongsToMany(Schedule, {
     through: "schedule_appointments",
-    foreignKey: "appointmentId",
+    // foreignKey: "appointmentId",
     onDelete: "SET NULL",
   });
 
@@ -251,13 +230,13 @@ const associations = async () => {
   // notification to appointment many-to-many 
   Notification.belongsToMany(Appointment, {
     through: "appointment_notifications",
-    foreignKey: "notificationId",
-    otherKey: "apointmentId",
+    // foreignKey: "notificationId",
+    // otherKey: "apointmentId",
   });
   Appointment.belongsToMany(Notification, {
     through: "appointment_notifications",
-    foreignKey: "apointmentId",
-    otherKey: "notificationId",
+    // foreignKey: "apointmentId",
+    // otherKey: "notificationId",
     allowNull: false, // notification cannot exist without service
   });
   

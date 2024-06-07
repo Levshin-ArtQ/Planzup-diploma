@@ -165,7 +165,7 @@ const ClientHome = () => {
             Предстоящих записей: {data}
           </span>
           <div className="peek">
-            <Link className="subheading nav-link peek-link">Посмотреть</Link>
+            <Link className="subheading nav-link peek-link" to="/client/appointments">Посмотреть</Link>
           </div>
         </div>
       </div>

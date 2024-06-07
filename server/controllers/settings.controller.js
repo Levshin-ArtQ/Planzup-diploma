@@ -34,7 +34,7 @@ exports.editSettins = (req, res) => {
   }
   const settings = req.body.newSettings;
   Settings.update(settings, {
-    where: { id: req.params.settingsId }
+    where: { UID: req.params.settingsId }
   })
     .then(num => {
       if (num == 1) {

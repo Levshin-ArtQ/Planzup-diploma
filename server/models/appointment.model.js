@@ -15,8 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
 
-    time: {
-      type: DataTypes.TIME,
+    start: {
+      type: DataTypes.DATE,
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+    },
+    end: {
+      type: DataTypes.DATE,
     },
     service: {
       type: DataTypes.STRING,

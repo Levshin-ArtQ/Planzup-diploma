@@ -11,8 +11,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     type : {
-      type: DataTypes.ENUM('busy', 'free', 'holiday'),
+      type: DataTypes.ENUM('busy', 'available', 'holiday', 'forVIP'),
       defaultValue: 'busy'
+    },
+    available: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return this.type === 'available';
+      },
+      set(value) {
+        if (value) {
+          this.type = 'available';
+        } else {
+          this.type = 'busy';
+        }
+      }
     },
     start: {
       type: DataTypes.DATE,
@@ -28,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         let type = 'morning';
-        let hour = this.start.getHours();
+        let hour = this?.start?.getHours();
 
         if (hour >= 12) {
           type = 'afternoon';
@@ -51,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeBulkCreate: async (periods) => {
         // console.log('periods', periods)
-        console.log('bulk creating periods');
+        // console.log('bulk creating periods');
         for (let i = 0; i < periods.length; i++) {
           if (!periods[i].start) {
             return Promise.reject(new Error('Не указано время начала периода, слот не создан'));
@@ -65,35 +78,38 @@ module.exports = (sequelize, DataTypes) => {
           }
 
           if (periods[i].end && !periods[i].durationMinutes) {
-            periods[i].durationMinutes = periods[i].end - periods[i].start;
+            // console.log('checking period duration: ', periods[i].end, periods[i].start)
+            // console.log(Math.round((periods[i].end - periods[i].start) / 60000));
+            periods[i].durationMinutes = Math.round((periods[i].end - periods[i].start) / 60000);
           }
 
           if (!periods[i].end && periods[i].durationMinutes) {
             periods[i].end = periods[i].start + periods[i].durationMinutes;
           }
-          try {
-            console.log('checking period')
-            Period.findAll({
-              where: {
-                start: {
-                  [Op.between]: [periods[i].start, periods[i].end]
-                },
-                end: {
-                  [Op.between]: [periods[i].start, periods[i].end]
-                }
-              }
-            }).then ((found) => {
-              if (found.length > 0) {
-                return Promise.reject({message: 'Период занят, слот не создан', conflictingPeriods: found, initialPeriod: periods[i]});
-              }
-            }).catch((error) => {
-              console.log(error)
-              return Promise.reject(error);
-            });
+          // try {
+          //   console.log('checking period for scheduleUID', scheduleUID_passed)
+          //   Period.findAll({
+          //     where: {
+          //       start: {
+          //         [Op.between]: [periods[i].start, periods[i].end]
+          //       },
+          //       end: {
+          //         [Op.between]: [periods[i].start, periods[i].end]
+          //       },
+          //       scheduleUID: scheduleUID_passed
+          //     }
+          //   }).then ((found) => {
+          //     if (found.length > 0) {
+          //       return Promise.reject({message: 'Период занят, слот не создан', conflictingPeriod: found.dataValues, initialPeriod: periods[i]});
+          //     }
+          //   }).catch((error) => {
+          //     console.log(error)
+          //     return Promise.reject(error);
+          //   });
   
-          } catch (error) {
-            return Promise.reject(new Error('Ошибка в формате даты периода, слот не создан'));
-          }
+          // } catch (error) {
+          //   return Promise.reject(new Error('Ошибка в формате даты периода, слот не создан'));
+          // }
 
 
         }
@@ -128,7 +144,7 @@ module.exports = (sequelize, DataTypes) => {
             }
           }).then ((periods) => {
             if (periods.length > 0) {
-              return Promise.reject({message: 'Период занят, слот не создан', conflictingPeriods: periods, initialPeriod: period});
+              return Promise.reject({message: 'Период занят dj, слот не создан', conflictingPeriods: periods, initialPeriod: period});
             }
           }).catch((error) => {
             return Promise.reject(error);

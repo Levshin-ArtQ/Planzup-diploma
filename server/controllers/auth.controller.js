@@ -7,6 +7,7 @@ const Manager = db.manager;
 const Master = db.master;
 const Client = db.client;
 const Schedule = db.schedule;
+const Admin = db.admin;
 
 const Op = db.Sequelize.Op;
 
@@ -96,6 +97,10 @@ exports.signin = async (req, res) => {
           model: Manager,
           as: "manager",
         },
+        {
+          model: Admin,
+          as: "admin",
+        },
       ],
     })
     .then((settings) => {
@@ -113,10 +118,10 @@ exports.signin = async (req, res) => {
               message: "Неверный пароль!",
             });
           } else {
-            const token = jwt.sign({ id: settings.UID }, config.secret, {
+            const token = jwt.sign({ UID: settings.UID }, config.secret, {
               algorithm: "HS256",
               allowInsecureKeySizes: true,
-              expiresIn: 86400, // 24 hours
+              expiresIn: 86400, // 24 hours TODO: lower for tests
             });
 
             let user = {};
@@ -133,7 +138,7 @@ exports.signin = async (req, res) => {
 
             if (user) {
               res.status(200).send({
-                id: user.id,
+                UID: user.UID,
                 username: user.firstName,
                 status: user.status,
                 accessToken: token,
@@ -157,3 +162,7 @@ exports.signin = async (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+exports.verifyToken = (req, res, next) => {
+  res.status(200).send({ message: "Токен валиден, вы" + req.body.userType });
+}

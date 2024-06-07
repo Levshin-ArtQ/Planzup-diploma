@@ -1,7 +1,11 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
-const User = db.user;
+// const User = db.user;
+const Admin = db.admin;
+const Manager = db.manager;
+const Master = db.master;
+const Client = db.client;
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -20,72 +24,153 @@ verifyToken = (req, res, next) => {
                   message: "Пользователь не авторизован!",
                 });
               }
-              req.userId = decoded.id;
-              next(req, res);
+              req.body.userId = decoded.UID;
+              next();
             });
 };
 // TODO: Проверку на роль изменить на свои сущности
-isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
-          next();
-          return;
-        }
-      }
-
-      res.status(403).send({
-        message: "Require Admin Role!"
+const isAdmin = (req, res, next) => {
+  Admin.findByPk(req.userId).then(user => {
+    if (!user) {
+      return res.status(404).send({
+        message: "Пользователь не найден"
       });
-      return;
-    });
+    }
+    const token = req.headers["x-access-token"];
+    if (!token) {
+      return res.status(403).send({
+        message: "Токен авторизации не был предоставлен!"
+      });
+    }
+    jwt.verify(token,
+              config.secret,
+              (err, decoded) => {
+                if (err) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                if (user.UID !== decoded.UID) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                req.body.adminId = decoded.UID;
+                next();
+              });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
   });
 };
 
-isModerator = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
-          next();
-          return;
-        }
-      }
-
-      res.status(403).send({
-        message: "Require Moderator Role!"
+const isManager = (req, res, next) => {
+  Manager.findByPk(req.userId).then(user => {
+    if (!user) {
+      return res.status(404).send({
+        message: "Пользователь не найден"
       });
-    });
+    }
+    const token = req.headers["x-access-token"];
+    if (!token) {
+      return res.status(403).send({
+        message: "Токен авторизации не был предоставлен!"
+      });
+    }
+    jwt.verify(token,
+              config.secret,
+              (err, decoded) => {
+                if (err) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                if (user.UID !== decoded.UID) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                req.body.managerId = decoded.UID;
+                next();
+              });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
   });
 };
 
-isModeratorOrAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
-          next();
-          return;
-        }
-
-        if (roles[i].name === "admin") {
-          next();
-          return;
-        }
-      }
-
-      res.status(403).send({
-        message: "Require Moderator or Admin Role!"
+const isMaster = (req, res, next) => {
+  Master.findByPk(req.userId).then(user => {
+    if (!user) {
+      return res.status(404).send({
+        message: "Пользователь не найден"
       });
-    });
+    }
+    const token = req.headers["x-access-token"];
+    if (!token) {
+      return res.status(403).send({
+        message: "Токен авторизации не был предоставлен!"
+      });
+    }
+    jwt.verify(token,
+              config.secret,
+              (err, decoded) => {
+                if (err) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                if (user.UID !== decoded.UID) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                req.body.masterId = decoded.UID;
+                next();
+              });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
   });
 };
+
+const isClient = (req, res, next) => {
+  Client.findByPk(req.userId).then(user => {
+    if (!user) {
+      return res.status(404).send({
+        message: "Пользователь не найден"
+      });
+    }
+    const token = req.headers["x-access-token"];
+    if (!token) {
+      return res.status(403).send({
+        message: "Токен авторизации не был предоставлен!"
+      });
+    }
+    jwt.verify(token,
+              config.secret,
+              (err, decoded) => {
+                if (err) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                if (user.UID !== decoded.UID) {
+                  return res.status(401).send({
+                    message: "Пользователь не авторизован!",
+                  });
+                }
+                req.body.clientId = decoded.UID;
+                next();
+              });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
+};
+
 
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
-  isModerator: isModerator,
-  isModeratorOrAdmin: isModeratorOrAdmin
+  isMaster: isMaster,
+  isManager: isManager,
+  isClient: isClient
 };
 module.exports = authJwt;
