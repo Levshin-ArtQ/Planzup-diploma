@@ -123,7 +123,8 @@ const group = {
 const count = 3;
 const ClientHome = () => {
   // const { user } = useTelegram();
-  const { user } = WebApp.initDataUnsafe;
+  // const { user } = WebApp.initDataUnsafe;
+  const [user, setUser] = useState({});
   const [produts, setServices] = useState([]);
   const [filters, setFilters] = useState('all');
   const { data, error, loading, fetchData, contextHolder } = useApi();
@@ -136,7 +137,8 @@ const ClientHome = () => {
 //   ] = useApi();
 
   useEffect(() => {
-    fetchData("/clients/appointments/count");
+    localStorage.getItem("user") && setUser(JSON.parse(localStorage.getItem("user")));
+    fetchData("/client/appointments/count");
   }, []);
 
   const getAllServices = useCallback(async () => {
@@ -158,7 +160,7 @@ const ClientHome = () => {
       {contextHolder}
       <div className="hat dfc client_hat">
         <span className="greeting heading">
-          Добрый вечер{user ? ", " + user?.first_name : ""}
+          Добрый вечер{user ? ", " + user?.username : ""}
         </span>
         <div className="count_line dfс">
           <span className="subheading count_text">

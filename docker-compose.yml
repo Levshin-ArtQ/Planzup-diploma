@@ -98,13 +98,13 @@ services:
       - ./notifications-worker:/app
     environment:
       - PGUSER=replicator
-      - PGHOST=postgres_primary
+      - PGHOST=postgres_replica
       - PGDATABASE=postgres
       - PGPASSWORD=replicator_password
       - PGPORT=5433
       - TGBOTTOKEN=6451579789:AAGc0DThN5YKKLBL5FoXDdAlvnm1k9TmSi4
     depends_on:
-      postgres_primary:
+      postgres_replica:
         condition: service_healthy
 
   bot:
@@ -116,7 +116,7 @@ services:
       - ./bot:/app
     environment: 
       - PGUSER=replicator
-      - PGHOST=postgres
+      - PGHOST=postgres_replica
       - PGDATABASE=postgres
       - PGPASSWORD=replicator_password
       - PGPORT=5433

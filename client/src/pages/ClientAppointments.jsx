@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useApi from "../hooks/useApi";
 import AppointmentCard from "./AppointmentCard";
 import { List, Avatar, Button, Space, Calendar } from "antd";
+import PrettyJson from "../devutils/PrettyJson";
 
 const ClientAppointments = () => {
   // fetch client appointments using useApi()
@@ -43,7 +44,7 @@ const ClientAppointments = () => {
   ];
 
   useEffect(() => {
-    fetchData("/client/appointments");
+    fetchData("/auth/login", "POST", { username: "admin", password: "admin" });
   }, []);
 
   return (
@@ -56,6 +57,7 @@ const ClientAppointments = () => {
           <AppointmentCard appointment={item} />
         ))}
       </div>
+      <PrettyJson data={data} />
     </div>
   );
 };

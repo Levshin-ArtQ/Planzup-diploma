@@ -3,7 +3,67 @@
 
 const webPush = require('web-push');
 const express = require('express');
+const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const dbRead = require('./models');
+
+
+dbRead.sequelize
+  .sync()
+  .then((result) => {
+    console.log("Database dropped resynced and connected");
+  })
+  .catch((err) => console.log(err));
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.mail.ru",
+  port: 465,
+  secure: true, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: "planzup@mail.ru",
+    pass: "hkmBDvfWtViqAfY1gjWJ", // TODO: hide to env
+  },
+});
+
+
+// async..await is not allowed in global scope, must use a wrapper
+async function main() {
+  // FIXME: use async/await
+  // send mail with defined transport object
+  // const info = await transporter.sendMail({
+  //   from: '"Уведомление от PlanzUp 🗓️" <planzup@mail.ru>', // sender address
+  //   to: "levshin.a74@mail.ru, planzup.team@gmail.com", // list of receivers
+  //   subject: "PlanzUp будет присылать только уведомления о записях", // Subject line
+  //   text: "Hello world?", // plain text body
+  //   html: "<b>Hello world?</b>", // html body
+  // });
+  // FIXME:
+
+  // const notifs = await dbRead.sequelize.query('SELECT * FROM notifications', {
+  //   model: dbRead.notification,
+  //   mapToModel: true, // pass true here if you have any mapped fields
+  // });
+  const notifs = await dbRead.notification.findAll({
+    where: {
+      status: 'pending',
+      targetDate: {
+        [dbRead.Sequelize.Op.gte]: new Date(),
+        [dbRead.Sequelize.Op.lt]: new Date(new Date().setMinutes(new Date().getDate() + 5)),
+      }
+    }
+  });
+  const notifs2 = await dbRead.notification.findAll({
+    where: {
+      UID: 'af5bb25e-9088-4ed7-b8e9-d7fab9216093',
+    }
+  })
+  console.log(notifs2);
+
+  // console.log("Message sent: %s", info.messageId);
+  // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+}
+
+main().catch(console.error);
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,6 +83,8 @@ webPush.setVapidDetails(
   vapidKeys.publicKey,
   vapidKeys.privateKey
 );
+
+
 
 // Хранение подписок в массиве (или базе данных)
 const subscriptions = [];

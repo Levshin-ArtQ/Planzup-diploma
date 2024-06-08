@@ -31,6 +31,7 @@ require("./routes/auth.routes")(app);
 require("./routes/appointment.routes")(app);
 require("./routes/super.routes")(app);
 require("./routes/service.routes")(app);
+require("./routes/client.routes")(app);
 // app.use("/reservations", require("./routes/reservations"));
 
 
