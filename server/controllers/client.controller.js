@@ -5,6 +5,7 @@ const Notification = db.notification;
 const Settings = db.settings;
 const Schedule = db.schedule;
 const Period = db.period;
+const Op = db.Sequelize.Op;
 
 
 exports.getClient = (req, res) => {
@@ -160,23 +161,31 @@ exports.getClientSchedule = (req, res) => {
 
 exports.getUpcomingAppointments = (req, res) => {
 
-    if (!req.body || !req.body.clientId) {
-        return res.status(400).json({
+    console.log('getUpcomingAppointments - start');
+    console.log('getUpcomingAppointments - req.body', req.body);
+
+    if (!req.body || !req.body.userId) {
+        console.log('getUpcomingAppointments - не предоставлен идентификатор клиента');
+        return res.status(401).json({
             message: 'Идентификатор клиента не предоставлен',
         });
     }
 
-    Client.findOne({ where: { UID: req.body.clientId } })
+    Client.findOne({ where: { UID: req.body.userId } })
         .then((client) => {
 
             if (!client) {
-                return res.status(404).json({
+                console.log('getUpcomingAppointments - клиент не найден');
+                return res.status(401).json({
                     message: 'Клиент не найден. Пожалуйста, попробуйте войти снова',
                 });
             }
 
+            console.log('getUpcomingAppointments - клиент найден');
+
             return client.getSchedule()
                 .then(schedule => {
+                    console.log('getUpcomingAppointments - расписание клиента получено');
                     return schedule.getAppointments({
                         where: {
                             start: { [Op.gte]: new Date() },
@@ -197,12 +206,11 @@ exports.getUpcomingAppointments = (req, res) => {
 
         })
         .then((appointments) => {
-            res.status(200).json({
-                message: 'Записи успешно получены',
-                data: appointments,
-            });
+            console.log('getUpcomingAppointments - записи клиента получены');
+            res.status(200).send(appointments);
         })
         .catch((err) => {
+            console.log('getUpcomingAppointments - ошибка при получении записей клиента', err);
             res.status(500).json({
                 message:
                     err.message || 'Произошла ошибка при получении записей клиента',
@@ -213,18 +221,21 @@ exports.getUpcomingAppointments = (req, res) => {
 
 
 exports.getUpcomingAppointmentsCount = (req, res) => {
+  console.log('getUpcomingAppointmentsCount');
 
-  if (!req.body || !req.body.clientId) {
+  if (!req.body || !req.body.userId) {
     return res.status(400).json({
       message: 'Идентификатор клиента не предоставлен',
     });
   }
+  console.log("req?.body?.userId", req?.body?.userId)
+  Client.findOne({ where: { UID: req.body.userId } })
 
-  Client.findOne({ where: { UID: req.body.clientId } })
     .then((client) => {
 
       if (!client) {
-        return res.status(404).json({
+        console.log('client not found');
+        return res.status(404).send({
           message: 'Клиент не найден. Пожалуйста, попробуйте войти снова',
         });
       }
@@ -241,14 +252,14 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
             where: {
               [Op.and]: [
                 { start: { [Op.gte]: new Date() } },
-                {
-                  status: {
-                    [Op.in]: [
-                      'pending',
-                      'accepted'
-                    ]
-                  }
-                }
+                // {
+                //   status: {
+                //     [Op.in]: [
+                //       'pending',
+                //       'accepted'
+                //     ]
+                //   }
+                // }
               ]
             }
           });
@@ -260,6 +271,7 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
           });
         })
         .catch((err) => {
+          console.log(err);
           res.status(500).json({
             message:
               err.message || 'Произошла ошибка при получении количества записей клиента',
@@ -268,10 +280,8 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
 
     })
     .catch((err) => {
-      res.status(500).json({
-        message:
-          err.message || 'Произошла ошибка при получении данных клиента',
-      });
+      console.log(err);
+      res.status(500).send('Произошла ошибка при получении данных клиента');
     });
 
 }

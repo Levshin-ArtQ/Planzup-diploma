@@ -17,6 +17,7 @@ import ProgressBar from "../components/ProgressBar/ProgressBar.jsx";
 import axios from "axios";
 import WebApp from "@twa-dev/sdk";
 import useApi from "../hooks/useApi";
+import useFromAPI from "../hooks/fromAPI.jsx";
 
 // import YandMaps from '../components/YandMaps/YandMaps.jsx';
 
@@ -127,18 +128,12 @@ const ClientHome = () => {
   const [user, setUser] = useState({});
   const [produts, setServices] = useState([]);
   const [filters, setFilters] = useState('all');
-  const { data, error, loading, fetchData, contextHolder } = useApi();
-//   const [
-//     dataServices,
-//     loadingServices,
-//     errorServices,
-//     fetchDataServices,
-//     contextHolderServices,
-//   ] = useApi();
+  const { data, error, loading, fetchData, contextHolder } = useFromAPI();
 
   useEffect(() => {
     localStorage.getItem("user") && setUser(JSON.parse(localStorage.getItem("user")));
-    fetchData("/client/appointments/count");
+    fetchData("/api/client/appointments/count");
+    fetchData("/api");
   }, []);
 
   const getAllServices = useCallback(async () => {
@@ -164,7 +159,7 @@ const ClientHome = () => {
         </span>
         <div className="count_line dfс">
           <span className="subheading count_text">
-            Предстоящих записей: {data}
+            Предстоящих записей: {data?.data}
           </span>
           <div className="peek">
             <Link className="subheading nav-link peek-link" to="/client/appointments">Посмотреть</Link>

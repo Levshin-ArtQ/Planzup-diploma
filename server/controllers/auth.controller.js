@@ -73,7 +73,6 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  console.log(req?.body);
   if (!req?.body?.username || !req?.body?.password) {
     return res
       .status(404)
@@ -118,11 +117,7 @@ exports.signin = async (req, res) => {
               message: "Неверный пароль!",
             });
           } else {
-            const token = jwt.sign({ UID: settings.UID }, config.secret, {
-              algorithm: "HS256",
-              allowInsecureKeySizes: true,
-              expiresIn: 86400, // 24 hours TODO: lower for tests
-            });
+            
 
             let user = {};
 
@@ -137,6 +132,11 @@ exports.signin = async (req, res) => {
             }
 
             if (user) {
+              const token = jwt.sign({ UID: user.UID }, config.secret, {
+                algorithm: "HS256",
+                allowInsecureKeySizes: true,
+                expiresIn: 86400, // 24 hours TODO: lower for tests
+              });
               res.status(200).send({
                 UID: user.UID,
                 username: user.firstName,
@@ -164,5 +164,6 @@ exports.signin = async (req, res) => {
 };
 
 exports.verifyToken = (req, res, next) => {
+
   res.status(200).send({ message: "Токен валиден, вы" + req.body.userType });
 }

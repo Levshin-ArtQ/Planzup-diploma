@@ -36,6 +36,8 @@ psql -U user --dbname=postgres
 \d - Чтобы посмотреть все таблицы и записи
 \dt - только таблицы
 
+есть реплика она делает бэкап основной базы данных, предоставляет досттолько одному юзеру репликатор 
+
 
 ## `код запуска отдельного сервиса` ##
 
@@ -43,4 +45,11 @@ docker-compose stop -t 1 nginx
 docker-compose build nginx
 docker-compose up --no-start nginx
 docker-compose start nginx 
+
+
+## notifications-worker ##
+https://nodemailer.com
+https://dzen.ru/video/watch/65cc83b712728b7e2a8b06c4?rid=1813541948.841.1717824047571.23455&t=4&utm_referrer=dzen.ru
+у него есть только select доступ к бд
+использую smpt host от mail.ru c паролем для сторонних приложений
 

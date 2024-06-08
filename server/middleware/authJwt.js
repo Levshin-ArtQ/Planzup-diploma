@@ -7,8 +7,10 @@ const Manager = db.manager;
 const Master = db.master;
 const Client = db.client;
 
-verifyToken = (req, res, next) => {
+module.exports.verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
+  console.log("my headers:", req.headers);
+
 
   if (!token) {
     return res.status(403).send({
@@ -27,16 +29,46 @@ verifyToken = (req, res, next) => {
               req.body.userId = decoded.UID;
               next();
             });
-};
+}
 // TODO: Проверку на роль изменить на свои сущности
-const isAdmin = (req, res, next) => {
+module.exports.verifyClient = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    return res.status(403).send({
+      message: "Токен авторизации не был предоставлен!"
+    });
+  }
+  jwt.verify(token,
+            config.secret,
+            (err, decoded) => {
+              if (err) {
+                return res.status(401).send({
+                  message: "Пользователь не авторизован!",
+                });
+              }
+              Client.findByPk(decoded.UID).then(user => {
+                if (!user) {
+                  return res.status(404).send({
+                    message: "Пользователь не найден"
+                  });
+                }
+                req.body.clientId = decoded.UID;
+                next();
+              });
+            });
+}
+module.exports.isAdmin = (req, res, next) => {
+
   Admin.findByPk(req.userId).then(user => {
+    console.log(user);
     if (!user) {
+      
       return res.status(404).send({
         message: "Пользователь не найден"
       });
     }
     const token = req.headers["x-access-token"];
+    console.log(req.headers);
     if (!token) {
       return res.status(403).send({
         message: "Токен авторизации не был предоставлен!"
@@ -63,7 +95,7 @@ const isAdmin = (req, res, next) => {
   });
 };
 
-const isManager = (req, res, next) => {
+module.exports.isManager = (req, res, next) => {
   Manager.findByPk(req.userId).then(user => {
     if (!user) {
       return res.status(404).send({
@@ -97,7 +129,7 @@ const isManager = (req, res, next) => {
   });
 };
 
-const isMaster = (req, res, next) => {
+module.exports.isMaster = (req, res, next) => {
   Master.findByPk(req.userId).then(user => {
     if (!user) {
       return res.status(404).send({
@@ -131,46 +163,38 @@ const isMaster = (req, res, next) => {
   });
 };
 
-const isClient = (req, res, next) => {
-  Client.findByPk(req.userId).then(user => {
-    if (!user) {
-      return res.status(404).send({
-        message: "Пользователь не найден"
-      });
-    }
-    const token = req.headers["x-access-token"];
-    if (!token) {
-      return res.status(403).send({
-        message: "Токен авторизации не был предоставлен!"
-      });
-    }
-    jwt.verify(token,
-              config.secret,
-              (err, decoded) => {
-                if (err) {
-                  return res.status(401).send({
-                    message: "Пользователь не авторизован!",
-                  });
-                }
-                if (user.UID !== decoded.UID) {
-                  return res.status(401).send({
-                    message: "Пользователь не авторизован!",
-                  });
-                }
-                req.body.clientId = decoded.UID;
-                next();
-              });
-  }).catch(err => {
-    res.status(500).send({ message: err.message });
-  });
-};
+// module.exports.isClient = (req, res, next) => {
+//   Client.findByPk(req.userId).then(user => {
+//     if (!user) {
+//       return res.status(404).send({
+//         message: "Пользователь не найден"
+//       });
+//     }
+//     const token = req.headers["x-access-token"];
+//     if (!token) {
+//       return res.status(403).send({
+//         message: "Токен авторизации не был предоставлен!"
+//       });
+//     }
+//     jwt.verify(token,
+//               config.secret,
+//               (err, decoded) => {
+//                 if (err) {
+//                   return res.status(401).send({
+//                     message: "Пользователь не авторизован!",
+//                   });
+//                 }
+//                 if (user.UID !== decoded.UID) {
+//                   return res.status(401).send({
+//                     message: "Пользователь не авторизован!",
+//                   });
+//                 }
+//                 req.body.clientId = decoded.UID;
+//                 next();
+//               });
+//   }).catch(err => {
+//     res.status(500).send({ message: err.message });
+//   });
+// };
 
 
-const authJwt = {
-  verifyToken: verifyToken,
-  isAdmin: isAdmin,
-  isMaster: isMaster,
-  isManager: isManager,
-  isClient: isClient
-};
-module.exports = authJwt;

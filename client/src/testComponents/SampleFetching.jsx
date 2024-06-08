@@ -4,9 +4,10 @@ import useApi from '../hooks/useApi';
 import axios from 'axios';
 import PrettyJson from '../devutils/PrettyJson';
 import PushNotificationButton from './PushNotificationButton';
+import useFromAPI from '../hooks/fromAPI';
 
 const SampleFetching = () => {
-  const { data, error, loading, fetchData, contextHolder } = useApi(); 
+  const { data, error, loading, fetchData, contextHolder } = useFromAPI(); 
   const [answer, setAnswer ] = useState();
   const [request , setRequest] = useState();
   const [requestType , setRequestType] = useState();
@@ -24,7 +25,7 @@ const SampleFetching = () => {
 
   useEffect(() => {
     // Загрузка данных
-    fetchData(`${request}`, {method: requestType});
+    fetchData(`${request}`, {method: "get"});
   }, [request]);
   return (
     <div>

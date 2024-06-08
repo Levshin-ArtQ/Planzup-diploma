@@ -15,16 +15,18 @@ const useApi = () => {
     
     setLoading(true);
     try {
-      const userId = localStorage.getItem('userId');
+
+      const userId = JSON.parse(localStorage.getItem('user')).UID;
+      console.log('userId: ' + userId)
       const response = await axios({
         ...options,
         url: endpoint,
         headers: {
-          ...authHeader()['x-access-token'],
+          ...authHeader(),
+          'Content-Type': 'application/json',
         },
         params: {
-          ...options.params,
-          userId, // Добавление userId в параметры запроса, если это необходимо
+          ...options.params, // Добавление в параметры запроса, если это необходимо
         },
       });
       setData(response.data);
@@ -44,21 +46,21 @@ const useApi = () => {
       if (err.response?.status === 403 && !error) {
         messageApi.open({
           type: 'error',
-          content: 'Доступ запрещен.',
+          content: err?.message || 'Доступ запрещен.',
           duration: 10,
         }) 
       }
       if (err.response?.status === 500 && !error) {
         messageApi.open({
           type: 'error',
-          content: 'Сервер не отвечает. Попробуйте позже.',
+          content: err?.message || 'Сервер не отвечает. Попробуйте позже.',
           duration: 10,
         }) 
       }
       if (err.response?.status === 404 && !error) {
         messageApi.open({
           type: 'error',
-          content: '404', // TODO: test message and set normal status of error
+          content: '404 - некоректное обращение к серверу', // TODO: test message and set normal status of error
           duration: 10,
         }) 
       }

@@ -24,13 +24,18 @@ const Role = require("../models/role.model");
 
 module.exports.init = async () => {
   for (let index = 0; index < 10; index++) {
+    try{
     let appointment = await Appointment.create({
       name: "appointment " + index,
+      start: new Date('2023-09-19T16:00:00.000Z'),
+      end: new Date('2023-09-19T19:00:00.000Z'),
       service: "service " + index,
       master: "master " + index,
       client: "client " + index,
     });
-
+  } catch (err){
+    console.log(err)
+  }
     let master = await Master.create({
       name: "master " + index,
       firstName: "master " + index,
@@ -108,6 +113,7 @@ module.exports.init = async () => {
 
     let settings = await Settings.create({
       name: "настройки " + index,
+      username: "пользователь " + index,
       description: "описание настроек " + index,
       password: "123456",
     });
@@ -124,8 +130,8 @@ module.exports.init = async () => {
     master.addSalon(salon, index);
     // appointment.addMaster(master, index);
     // master.addAppointment(appointment, index);
-    appointment.addService(service, index);
-    appointment.addSchedule(schedules, index);
+    // appointment.addService(service, index);
+    // appointment.addSchedule(schedules, index);
     // clientcard.addClientbase(clientbase, index);
     // clientcard.addClientbase(clientbase);
     clientcard.setClient(client, index);
@@ -456,6 +462,8 @@ async function bulkCreateTest() {
   const appointments = await Appointment.bulkCreate(
     Array.from({ length: appointmentCount }, (_, index) => ({
       name: "запись " + index,
+      start: "2024-12-12T10:00:00.000Z",
+      end: "2024-12-12T18:00:00.000Z",
       service: "услуга " + index,
       master: "мастер " + index,
       client: "клиент " + index,
@@ -468,6 +476,9 @@ async function bulkCreateTest() {
 
   await Promise.all(
     clients.map((client, index) => client.setSchedule(clientSchedules[index % clientCount]))
+  )
+  await Promise.all(
+    clientSchedules.map((schedule, index) => schedule.addAppointments(appointments))
   )
   await Promise.all(
     clients.map((client, index) => client.setSetting(clientSettings[index % clientCount]))
