@@ -11,36 +11,40 @@ import {
   FullscreenOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
+import './AppointmentCard.css';
 
 const AppointmentCard = ({ appointment, onClick, showOptions = true }) => {
-
   return (
-    <div
-      className="appointmentCard"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: "24px",
-        margin: "10px",
-        backgroundColor: "#fff",
-        borderRadius: "12px",
-      }}
-    >
-      <span style={{ fontWeight: "bold" }}>{appointment?.status}</span>
-      <span>{parseDate(appointment?.start)}</span>
-      {appointment?.cost && <span>{appointment?.cost} руб</span>}
-      <span>{appointment?.master}</span>
-      <div className="period">
-
-        <span>{parseTime(appointment?.start)}</span>-
-        <span>{parseTime(appointment?.end)}</span>
-        <span>{parseTimezone(appointment?.end)}</span>
-        <span>{parseMinutes(appointment?.durationMinutes)}</span>
-        
+    <div className="appointment-card">
+      <div className="appointment-card__header">
+        <span className={`appointment-card__status ${appointment?.status}`}>
+          {appointment?.status}
+        </span>
+        <span className="appointment-card__date">
+          {parseDate(appointment?.start)}
+        </span>
       </div>
-
+      <div className="appointment-card__body">
+        <div className="appointment-card__image">
+          {/* Placeholder for image */}
+        </div>
+        <div className="appointment-card__details">
+          <h2 className="appointment-card__master">{appointment?.master}</h2>
+          {appointment?.cost && (
+            <p className="appointment-card__cost">{appointment?.cost} руб</p>
+          )}
+          <div className="appointment-card__time">
+            <span>{parseTime(appointment?.start)}</span> -{" "}
+            <span>{parseTime(appointment?.end)}</span>{" "}
+            <span>{parseTimezone(appointment?.end)}</span>
+            <span className="appointment-card__duration">
+              ({parseMinutes(appointment?.durationMinutes)})
+            </span>
+          </div>
+        </div>
+      </div>
       {showOptions && (
-        <div className="options_string" style={{ display: "flex" }}>
+        <div className="appointment-card__options">
           <Button type="text" icon={<UndoOutlined />}>
             Перенести
           </Button>
@@ -57,4 +61,3 @@ const AppointmentCard = ({ appointment, onClick, showOptions = true }) => {
 };
 
 export default AppointmentCard;
-

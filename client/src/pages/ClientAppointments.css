@@ -1,0 +1,51 @@
+/* src/components/ClientAppointments.css */
+
+.client-appointments {
+  padding: 24px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.appointments-calendar {
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.appointments-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .appointments-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .appointments-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ant-modal .ant-modal-content {
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.ant-modal .ant-modal-header {
+  border-bottom: none;
+}
+
+.ant-modal .ant-modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.ant-modal .ant-modal-footer {
+  border-top: none;
+}
