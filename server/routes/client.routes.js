@@ -10,11 +10,11 @@ module.exports = function (app) {
     );
     next();
   });
-  app.get("/client", clientController.getClient);
-  app.put("/client/:clientId", clientController.updateClient);
-  app.get("/client/schedule/:clientId", clientController.getClientSchedule);
-  app.get("/client/schedule", clientController.getClientSchedule);
-  app.get("/client/appointments/count", [verifyToken], clientController.getUpcomingAppointmentsCount);
-  app.get("/client/appointments", [verifyToken], clientController.getUpcomingAppointments);
-  app.delete("/client/appointments/:appointmentId", [verifyToken], clientController.deleteAppointment);
+  app.get("/api/client", clientController.getClient);
+  app.put("/api/client/:clientId", clientController.updateClient);
+  app.get("/api/client/schedule/:clientId", clientController.getClientSchedule);
+  app.get("/api/client/schedule", clientController.getClientSchedule);
+  app.get("api/client/appointments/count", [verifyToken], clientController.getUpcomingAppointmentsCount);
+  app.get("/api/client/appointments", [verifyToken], clientController.getUpcomingAppointments);
+  app.delete("/api/client/appointments/:appointmentId", [verifyToken], clientController.deleteAppointment);
 }

@@ -32,6 +32,11 @@ require("./routes/appointment.routes")(app);
 require("./routes/super.routes")(app);
 require("./routes/service.routes")(app);
 require("./routes/client.routes")(app);
+app.get("/api/auth/telegram", (req, res) => {
+  // FIXME: add telegram auth https://edisonchee.com/writing/telegram-login-with-node.js/#bot-code
+  console.log(req.query);
+  res.redirect('/').status(200).send('successful got query'); // CONSIDER: redirect to https://t.me/PlanzUp_bot/PlanzUp_mini
+})
 // app.use("/reservations", require("./routes/reservations"));
 
 
@@ -59,8 +64,8 @@ db.sequelize
   .then((result) => {
     console.log("Database dropped resynced and connected");
     initial();
-    app.listen(5000);
-    console.log("Listening port 5000");
+    app.listen(5007);
+    console.log("Listening port 5007");
   })
   .catch((err) => console.log(err));
 

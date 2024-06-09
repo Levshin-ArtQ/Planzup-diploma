@@ -70,8 +70,8 @@
 
 .filter_button {
     font-size: medium;
-    background-color: #1890ff;
-    color: white;
+    color: #616da3 !important;
+    color: white !important;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;

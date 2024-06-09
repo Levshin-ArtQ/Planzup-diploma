@@ -28,7 +28,18 @@ module.exports = (sequelize, DataTypes) => {
         price: {
           type: DataTypes.FLOAT
         },
-        
+        duration: {
+          type: DataTypes.FLOAT
+        },
+        type: {
+          type: DataTypes.STRING
+        },
+        category: {
+          type: DataTypes.STRING
+        },
+        subcategory: {
+          type: DataTypes.STRING
+        },
       }
   );
   return Service;

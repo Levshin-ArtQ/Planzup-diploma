@@ -27,6 +27,7 @@ import Page from "./main_page/Page";
 import SampleFetching from "./testComponents/SampleFetching";
 import ServicePage from "./components/BookingPages/ServicePage";
 import ClientAppointments from "./pages/ClientAppointments";
+import MasterSetup from "./authorization/MasterSetup";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
 function App() {
@@ -51,6 +52,8 @@ function App() {
             <Route path={"/fast_book"} element={<ManagerSchedule />}></Route>
             <Route path={"/salon_register"} element={<ServiceWidget />}></Route>
             {/* мастер */}
+            <Route path={"/master/:id"} element={<MasterProfile />}></Route>
+            <Route path={"/master/login"} element={<MasterSetup />}></Route>
             {/* клиентская сторона */}
             <Route path={"/page"} element={<Page />}></Route>
             <Route path={"/home"} element={<ClientHome />}></Route>

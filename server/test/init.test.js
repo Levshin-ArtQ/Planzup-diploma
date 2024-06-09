@@ -462,8 +462,9 @@ async function bulkCreateTest() {
   const appointments = await Appointment.bulkCreate(
     Array.from({ length: appointmentCount }, (_, index) => ({
       name: "запись " + index,
-      start: "2024-12-12T10:00:00.000Z",
-      end: "2024-12-12T18:00:00.000Z",
+      start: `2024-07-02T10:00:00.000Z`,
+      end: `2024-07-02T18:00:00.000Z`,
+      cost: 1000 + index * 150,
       service: "услуга " + index,
       master: "мастер " + index,
       client: "клиент " + index,

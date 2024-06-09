@@ -34,7 +34,8 @@ module.exports = (TelegramBot, botToken) => {
         }
       );
     } else if (text === "/info") {
-      bot.sendMessage(chatId, 
+      bot.sendMessage(
+        chatId,
         "PlanzUp — современный веб-сервис для онлайн-записи на услуги.В нашем решении используются технологии PWA и мини-приложений. Мини-приложение работает внутри мессенджера, например, как это в Telegram, и предоставляет пользователям быстрый и удобный доступ к определенным функциям. Например, вы сможете быстро забронировать услугу, узнать о наличии свободных мест или получить консультацию и напоминания прямо в мессенджере, где уже общаетесь с друзьями или коллегами. Также это может увеличить охват и улучшить доступность, так как многие люди проводят много времени в соцсетях.",
         {
           reply_markup: {
@@ -42,7 +43,9 @@ module.exports = (TelegramBot, botToken) => {
               [
                 {
                   text: "Запустить личный какбинет",
-                  web_app: { url: 'https://planz-up-sample.vercel.app/' + param_string },
+                  web_app: {
+                    url: "https://planz-up-sample.vercel.app/" + param_string,
+                  },
                 },
               ], // web_app - так указывается ссылка на мини приложение
             ],
@@ -50,22 +53,34 @@ module.exports = (TelegramBot, botToken) => {
         }
       );
     } else if (text === "/link") {
-      await bot.sendMessage(
-        chatId,
-        "Под этим сообщением появится кнопка, по ней можно зайти в личный кабинет",
-        {
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Запустить личный какбинет",
-                  web_app: { url: 'https://planz-up-sample.vercel.app/profile' + param_string },
-                },
-              ], // web_app - так указывается ссылка на мини приложение
-            ],
-          },
-        }
-      );
+      try {
+        await bot.sendMessage(
+          chatId,
+          "Под этим сообщением появится кнопка, по ней можно зайти в личный кабинет",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Запустить личный какбинет",
+                    login_url: {
+                      url:
+                        "https://ff30-5-79-244-189.ngrok-free.app/api/auth/telegram",
+                      
+
+                    },
+                    web_app: {
+                      url: "https://planz-up-sample.vercel.app/" + param_string,
+                    },
+                  },
+                ], // web_app - так указывается ссылка на мини приложение
+              ],
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       bot.sendMessage(chatId, "Неизвестная команда");
     }

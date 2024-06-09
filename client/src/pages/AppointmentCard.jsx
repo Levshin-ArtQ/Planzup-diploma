@@ -11,11 +11,15 @@ import {
   FullscreenOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
-import './AppointmentCard.css';
+import "./AppointmentCard.css";
 
-const AppointmentCard = ({ appointment, onClickCancel, showOptions = true }) => {
+const AppointmentCard = ({
+  appointment,
+  onClickCancel,
+  showOptions = true,
+}) => {
   return (
-    <div className="appointment-card" >
+    <div className="appointment-card">
       <div className="appointment-card__header">
         <span className={`appointment-card__status ${appointment?.status}`}>
           {appointment?.status}
@@ -45,14 +49,19 @@ const AppointmentCard = ({ appointment, onClickCancel, showOptions = true }) => 
       </div>
       {showOptions && (
         <div className="appointment-card__options">
-          <Button type="text" icon={<UndoOutlined />}>
+          {/*<Button type="text" icon={<UndoOutlined />}>
             Перенести
+      </Button>*/}
+          <Button
+            type="text"
+            onClick={() => onClickCancel(appointment)}
+            icon={<CloseOutlined />}
+            danger
+          >
+            Отменить
           </Button>
           <Button type="primary" icon={<FullscreenOutlined />}>
             Подробнее
-          </Button>
-          <Button type="text" onClick={() => onClickCancel(appointment)} icon={<CloseOutlined />} danger>
-            Отменить
           </Button>
         </div>
       )}

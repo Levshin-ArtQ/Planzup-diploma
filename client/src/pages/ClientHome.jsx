@@ -156,7 +156,7 @@ const ClientHome = () => {
       {contextHolder}
       <div className="hat dfc client_hat">
         <span className="greeting heading">
-          {greetUserByTime()} { user ? ", " + user?.username : ""}
+          {greetUserByTime()}{ user ? ", " + user?.username : ""}
         </span>
         <div className="count_line dfс">
           <span className="subheading count_text">

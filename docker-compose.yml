@@ -88,6 +88,8 @@ services:
     depends_on:
       postgres_primary:
         condition: service_healthy
+    ports:
+      - "5007:5007" # Expose the API port
 
   notifications:
     build:
@@ -106,6 +108,8 @@ services:
     depends_on:
       postgres_replica:
         condition: service_healthy
+    ports:
+      - "3002:3002"
 
   bot:
     build:

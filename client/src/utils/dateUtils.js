@@ -68,11 +68,11 @@ export const greetUserByTime = () => {
   const date = new Date();
   const hours = date.getHours();
   let message = '';
-  if (hours < 6) {
+  if (hours > 6) {
     message = 'Доброго утра';
-  } else if (hours < 12) {
-    message = 'Доброго дня, ';
-  } else if (hours < 18) {
+  } else if (hours > 12) {
+    message = 'Доброго дня';
+  } else if (hours > 18 && hours < 22) {
     message = 'Доброго вечера';
   } else {
     message = 'Доброй ночи';
