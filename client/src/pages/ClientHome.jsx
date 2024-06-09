@@ -18,6 +18,7 @@ import axios from "axios";
 import WebApp from "@twa-dev/sdk";
 import useApi from "../hooks/useApi";
 import useFromAPI from "../hooks/fromAPI.jsx";
+import { greetUserByTime } from "../utils/dateUtils.js";
 
 // import YandMaps from '../components/YandMaps/YandMaps.jsx';
 
@@ -155,7 +156,7 @@ const ClientHome = () => {
       {contextHolder}
       <div className="hat dfc client_hat">
         <span className="greeting heading">
-          Добрый вечер{user ? ", " + user?.username : ""}
+          {greetUserByTime()} { user ? ", " + user?.username : ""}
         </span>
         <div className="count_line dfс">
           <span className="subheading count_text">

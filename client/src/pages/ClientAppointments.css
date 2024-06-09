@@ -11,13 +11,73 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+}
+
+.ant-picker-calendar-full .ant-picker-panel {
+  border-radius: 12px;
+}
+
+.ant-picker-calendar-full .ant-picker-content th {
+  color: #595959;
+  font-weight: bold;
+  padding: 8px;
+  text-transform: uppercase;
+}
+
+.ant-picker-calendar-full .ant-picker-cell {
+  padding: 12px;
+}
+
+.ant-picker-calendar-full .ant-picker-cell-in-view {
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.ant-picker-calendar-full .ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-calendar-full .ant-picker-cell-selected .ant-picker-cell-inner:hover,
+.ant-picker-calendar-full .ant-picker-cell-inner:hover {
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.calendar-cell {
+  padding: 5px;
+}
+
+.calendar-appointment {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.calendar-appointment:hover {
+  background-color: #bae7ff;
+}
+
+.calendar-appointment .appointment-time {
+  font-size: 0.85rem;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.calendar-appointment .appointment-master {
+  font-size: 0.75rem;
+  color: #595959;
 }
 
 .appointments-list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+}
+
+.appointments-list > div {
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {

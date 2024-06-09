@@ -64,3 +64,18 @@ export const parseMinutes = (minutes) => {
   return `${hours}ч${minutesString}`;
 };
 
+export const greetUserByTime = () => {
+  const date = new Date();
+  const hours = date.getHours();
+  let message = '';
+  if (hours < 6) {
+    message = 'Доброго утра';
+  } else if (hours < 12) {
+    message = 'Доброго дня, ';
+  } else if (hours < 18) {
+    message = 'Доброго вечера';
+  } else {
+    message = 'Доброй ночи';
+  }
+  return message;
+};
