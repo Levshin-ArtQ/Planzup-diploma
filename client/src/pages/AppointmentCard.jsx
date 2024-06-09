@@ -13,9 +13,9 @@ import {
 } from "@ant-design/icons";
 import './AppointmentCard.css';
 
-const AppointmentCard = ({ appointment, onClick, showOptions = true }) => {
+const AppointmentCard = ({ appointment, onClickCancel, showOptions = true }) => {
   return (
-    <div className="appointment-card">
+    <div className="appointment-card" >
       <div className="appointment-card__header">
         <span className={`appointment-card__status ${appointment?.status}`}>
           {appointment?.status}
@@ -51,7 +51,7 @@ const AppointmentCard = ({ appointment, onClick, showOptions = true }) => {
           <Button type="primary" icon={<FullscreenOutlined />}>
             Подробнее
           </Button>
-          <Button type="text" onClick={() => onClick(appointment)} icon={<CloseOutlined />} danger>
+          <Button type="text" onClick={() => onClickCancel(appointment)} icon={<CloseOutlined />} danger>
             Отменить
           </Button>
         </div>

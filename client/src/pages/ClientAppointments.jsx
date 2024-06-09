@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../hooks/useApi";
 import AppointmentCard from "./AppointmentCard";
-import { Calendar, Modal, Spin, Alert } from "antd";
+import { Calendar, Modal, Spin, Alert, Badge } from "antd";
 import PrettyJson from "../devutils/PrettyJson";
+import moment from "moment";
 import './ClientAppointments.css';
 
 const ClientAppointments = () => {
@@ -35,14 +36,29 @@ const ClientAppointments = () => {
     setAppointmentToCancel(null);
   };
 
+  const dateCellRender = (value) => {
+    const dateStr = value.format("YYYY-MM-DD");
+    const appointmentsForDay = data.filter(appointment => moment(appointment.start).format("YYYY-MM-DD") === dateStr);
+
+    return (
+      <div>
+        {appointmentsForDay.length > 0 && (
+          <Badge count={appointmentsForDay.length} style={{ backgroundColor: '#52c41a' }} />
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="client-appointments">
-      {loading ? <Spin tip="Loading..."/> : <Calendar fullscreen={false} className="appointments-calendar" />}
-      <div className="appointments-list">
-        {data.map((item) => (
-          <AppointmentCard key={item.UID} appointment={item} onClick={onCancel} />
-        ))}
-      </div>
+      {loading ? <Spin tip="Loading..."/> : <Calendar fullscreen={true} className="appointments-calendar" dateCellRender={dateCellRender} />}
+      {error ? null : (
+        <div className="appointments-list">
+          {data.map((item) => (
+            <AppointmentCard key={item.UID} appointment={item} onClick={onCancel} />
+          ))}
+        </div>
+      )}
 
       <Modal
         title="Отмена записи"

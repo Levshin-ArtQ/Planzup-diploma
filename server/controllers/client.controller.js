@@ -286,6 +286,98 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
 
 }
 
+module.exports.deleteAppointment = (req, res) => {
+  console.log('deleteAppointment');
+
+  if (!req.body || !req.body.userId || !req.params.appointmentId) {
+    return res.status(400).json({
+      message: 'Идентификатор клиента или записи не предоставлен',
+    });
+  }
+
+  Client.findOne({ where: { UID: req.body.userId } })
+    .then((client) => {
+
+      if (!client) {
+        console.log('client not found');
+        return res.status(401).send({
+          message: 'Клиент не найден. Пожалуйста, попробуйте войти снова',
+        });
+
+      }
+      Appointment.findByPk(req.params.appointmentId, { include: [Schedule] })
+        .then((appointment) => {
+          if (!appointment) {
+            console.log('appointment not found');
+            return res.status(404).send({
+              message: 'Запись не найдена. Пожалуйста, попробуйте войти снова',
+            });
+          }
+          appointment.update({ status: 'canceled' })
+            .then(() => {
+              appointment.save().then(() => {
+                res.status(200).json({
+                  message: 'Запись успешно отменена',
+                });
+              });
+              res.status(200).json({
+                message: 'Запись успешно отменена',
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json({
+                message:
+                  err.message || 'Произошла ошибка при отмене записи',
+              });
+            });
+        })
+      
+
+    })
+}
+
+module.exports.CancelAppointment = (req, res) => {
+  console.log('CancelAppointment');
+  let foundClient;
+  let foundAppointment;
+
+  if (!req.body || !req.body.userId || !req.params.appointmentId) {
+    return res.status(400).json({
+      message: 'Идентификатор клиента или записи не предоставлен',
+    });
+  }
+
+  Client.findOne({ where: { UID: req.body.userId } })
+    .then((client) => {
+
+      if (!client) {
+        console.log('client not found');
+        return res.status(401).send({
+          message: 'Клиент не найден. Пожалуйста, попробуйте войти снова',
+        });
+      }
+
+      foundClient = client;
+
+      return Appointment.findByPk(req.params.appointmentId, { include: [Schedule] })
+    })
+
+    .then((appointment) => {
+      if (!appointment) {
+        console.log('appointment not found');
+        return res.status(404).send({
+          message: 'Запись не найдена. Пожалуйста, попробуйте войти снова',
+        });
+      }
+      foundAppointment = appointment;
+      return appointment.update({ status: 'canceled' })
+    })
+
+}
+
+
+
 
 
 
