@@ -174,3 +174,77 @@ exports.getManagers = (req, res) => {
   }
   // TODO:
 }
+exports.getAdmins = async (req, res) => {
+  const admins = await Admin.findAll({
+    include: [
+      { model: Salon, through: { attributes: ["id", "title"] } },
+    ],
+  });
+  res.status(200).json(admins);
+};
+
+exports.getAdmin = async (req, res) => {
+  const adminId = req.params.adminId;
+  const admin = await Admin.findByPk(adminId, {
+    include: [
+      { model: Salon, through: { attributes: ["id", "title"] } },
+    ],
+  });
+  if (!admin) {
+    return res.status(404).send({ message: "Администратор не найден" });
+  }
+  res.status(200).json(admin);
+};
+
+exports.getAdminWithSettings = async (req, res) => {
+  const adminId = req.params.adminId;
+  const admin = await Admin.findByPk(adminId, {
+    include: [
+      { model: Settings, attributes: ["setting1", "setting2", "setting3"] },
+    ],
+  });
+  if (!admin) {
+    return res.status(404).send({ message: "Администратор не найден" });
+  }
+  res.status(200).json(admin);
+};
+
+exports.updateAdmin = async (req, res) => {
+  const adminId = req.params.adminId;
+  const { firstName, lastName, patronymic } = req.body;
+  const admin = await Admin.findByPk(adminId);
+  if (!admin) {
+    return res.status(404).send({ message: "Администратор не найден" });
+  }
+  await admin.update({ firstName, lastName, patronymic });
+  res.status(200).send({ message: "Администратор обновлен" });
+};
+
+exports.createSalon = async (req, res) => {
+  const { title, address } = req.body;
+  const adminId = req.params.adminId;
+  const admin = await Admin.findByPk(adminId);
+  if (!admin) {
+    return res.status(404).send({ message: "Администратор не найден" });
+  }
+  const salon = await Salon.create({ title, address });
+  await admin.addSalon(salon);
+  res.status(201).json(salon);
+};
+
+exports.bulkCreateSalons = async (req, res) => {
+  const { salons } = req.body;
+  const adminId = req.params.adminId;
+  const admin = await Admin.findByPk(adminId);
+  if (!admin) {
+    return res.status(404).send({ message: "Администратор не найден" });
+  }
+  let createdSalons = [];
+  for (let i = 0; i < salons.length; i++) {
+    const { title, address } = salons[i];
+    const newSalon = await Salon.create({ title, address });
+    await admin.addSalon(newSalon);
+    createdSalons.push(newSalon);
+  }
+  res.status(201).json(createdSalons);
+};

@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       shardingSchedule: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       push_token: {
         type: DataTypes.STRING,

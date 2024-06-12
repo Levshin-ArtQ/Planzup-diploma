@@ -1,0 +1,763 @@
+digraph models_diagram {
+	graph [bb="0,0,5067.1,5134.1",
+		nodesep=.5,
+		overlap=false,
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2
+	];
+	node [fontsize=10,
+		label="\N"
+	];
+	edge [color=black,
+		concentrate=true,
+		penwidth=1
+	];
+	users	 [height=2.4444,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>users</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">userName: STRING</td></tr>
+<tr><td port="3" align="left">lastName: STRING</td></tr>
+<tr><td port="4" align="left">password: STRING</td></tr>
+<tr><td port="5" align="left">createdAt: DATE</td></tr>
+<tr><td port="6" align="left">updatedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="2557.8,3228.2",
+		shape=none,
+		width=1.2639];
+	roles	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>roles</b></td></tr>
+    <tr><td port="0" align="left"><u>id</u>: NUMBER</td></tr>
+<tr><td port="1" align="left">name: STRING</td></tr>
+<tr><td port="2" align="left">createdAt: DATE</td></tr>
+<tr><td port="3" align="left">updatedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="1925.8,1939.2",
+		shape=none,
+		width=1.1528];
+	clients	 [height=5.1944,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>clients</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">lastName: STRING</td></tr>
+<tr><td port="3" align="left">phone: STRING</td></tr>
+<tr><td port="4" align="left">occupation: STRING</td></tr>
+<tr><td port="5" align="left">email: STRING</td></tr>
+<tr><td port="6" align="left">telegram: STRING</td></tr>
+<tr><td port="7" align="left">password: STRING</td></tr>
+<tr><td port="8" align="left">address: STRING</td></tr>
+<tr><td port="9" align="left">loyaltyPoints: NUMBER</td></tr>
+<tr><td port="10" align="left">favoriteMasters: STRING</td></tr>
+<tr><td port="11" align="left">appointments: ARRAY</td></tr>
+<tr><td port="12" align="left">favoriteServices: ARRAY</td></tr>
+<tr><td port="13" align="left">createdAt: DATE</td></tr>
+<tr><td port="14" align="left">updatedAt: DATE</td></tr>
+<tr><td port="15" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="125.76,2261.8",
+		shape=none,
+		width=1.5972];
+	client_masters	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>client_masters</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>clientUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>masterUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="125.76,2816.6",
+		shape=none,
+		width=1.1667];
+	clients -> client_masters	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,125.76,2761.6 125.76,2448.9 125.76,2536.4 125.76,2637.5 125.76,2711.5"];
+	client_services	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>client_services</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>serviceUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>clientUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="1813.6,250.33",
+		shape=none,
+		width=1.1944];
+	clients -> client_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,1770.3,301.88 183.37,2193.2 436.71,1891.2 1451.8,681.53 1738.1,340.33"];
+	admins	 [height=4.2778,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>admins</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">lastName: STRING</td></tr>
+<tr><td port="3" align="left">patronymic: STRING</td></tr>
+<tr><td port="4" align="left">phone: STRING</td></tr>
+<tr><td port="5" align="left">email: STRING</td></tr>
+<tr><td port="6" align="left">telegram: STRING</td></tr>
+<tr><td port="7" align="left">rights: ARRAY</td></tr>
+<tr><td port="8" align="left">address: STRING</td></tr>
+<tr><td port="9" align="left">notification_settings: JSON</td></tr>
+<tr><td port="10" align="left">createdAt: DATE</td></tr>
+<tr><td port="11" align="left">updatedAt: DATE</td></tr>
+<tr><td port="12" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="4329.1,4075",
+		shape=none,
+		width=1.6667];
+	admin_salons	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>admin_salons</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>adminUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>salonUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="3445.2,4733",
+		shape=none,
+		width=1.1528];
+	admins -> admin_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3486.9,4701.9 4269,4119.7 4114.6,4234.6 3703.6,4540.7 3527.3,4671.9"];
+	masters	 [height=3.6667,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>masters</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">lastName: STRING</td></tr>
+<tr><td port="3" align="left">phone: STRING</td></tr>
+<tr><td port="4" align="left">occupation: STRING</td></tr>
+<tr><td port="5" align="left">service_count: NUMBER</td></tr>
+<tr><td port="6" align="left">rights: ARRAY</td></tr>
+<tr><td port="7" align="left">address: STRING</td></tr>
+<tr><td port="8" align="left">createdAt: DATE</td></tr>
+<tr><td port="9" align="left">updatedAt: DATE</td></tr>
+<tr><td port="10" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="859.25,4277.1",
+		shape=none,
+		width=1.5694];
+	masters -> client_masters	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,153.57,2871.9 802.61,4164.3 663.79,3887.9 308.32,3180.1 176.21,2917"];
+	master_salons	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>master_salons</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>masterUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>salonUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="1304.2,4608.3",
+		shape=none,
+		width=1.1667];
+	masters -> master_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,1262,4576.9 916.06,4319.3 993.53,4377 1132.8,4480.7 1221.8,4546.9"];
+	master_services	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>master_services</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>serviceUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>masterUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="3445.2,345.36",
+		shape=none,
+		width=1.1944];
+	masters -> master_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3408.8,400.65 915.97,4190.8 1256,3673.8 3021.7,989.18 3381.2,442.57"];
+	managers	 [height=3.6667,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>managers</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">lastName: STRING</td></tr>
+<tr><td port="3" align="left">phone: STRING</td></tr>
+<tr><td port="4" align="left">occupation: STRING</td></tr>
+<tr><td port="5" align="left">service_count: NUMBER</td></tr>
+<tr><td port="6" align="left">rights: ARRAY</td></tr>
+<tr><td port="7" align="left">address: STRING</td></tr>
+<tr><td port="8" align="left">createdAt: DATE</td></tr>
+<tr><td port="9" align="left">updatedAt: DATE</td></tr>
+<tr><td port="10" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="4823.7,3090.2",
+		shape=none,
+		width=1.5694];
+	manager_salons	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>manager_salons</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>salonUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>managerUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="4633.9,3611.5",
+		shape=none,
+		width=1.2778];
+	managers -> manager_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4654,3556.4 4775.6,3222.4 4743.1,3311.5 4701,3427.3 4671.1,3509.4"];
+	salons	 [height=6.7222,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>salons</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">main_image: STRING</td></tr>
+<tr><td port="2" align="left">images: ARRAY</td></tr>
+<tr><td port="3" align="left">name: STRING</td></tr>
+<tr><td port="4" align="left">slogan: STRING</td></tr>
+<tr><td port="5" align="left">description: STRING</td></tr>
+<tr><td port="6" align="left">address: STRING</td></tr>
+<tr><td port="7" align="left">latitude: NUMBER</td></tr>
+<tr><td port="8" align="left">longitude: NUMBER</td></tr>
+<tr><td port="9" align="left">phone: STRING</td></tr>
+<tr><td port="10" align="left">email: STRING</td></tr>
+<tr><td port="11" align="left">website: STRING</td></tr>
+<tr><td port="12" align="left">instagram: STRING</td></tr>
+<tr><td port="13" align="left">telegram: STRING</td></tr>
+<tr><td port="14" align="left">facebook: STRING</td></tr>
+<tr><td port="15" align="left">vk: STRING</td></tr>
+<tr><td port="16" align="left">master_count: NUMBER</td></tr>
+<tr><td port="17" align="left">client_count: NUMBER</td></tr>
+<tr><td port="18" align="left">createdAt: DATE</td></tr>
+<tr><td port="19" align="left">updatedAt: DATE</td></tr>
+<tr><td port="20" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="2913.7,4892.1",
+		shape=none,
+		width=1.5417];
+	salons -> master_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,1346.5,4615.8 2857.9,4882.3 2620.3,4840.4 1692.6,4676.8 1396,4624.5"];
+	salons -> admin_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3403.6,4745.5 2969.6,4875.4 3061.5,4847.9 3245.2,4792.9 3355.4,4759.9"];
+	salons -> manager_salons	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4587.6,3646 2969.5,4850.6 3219.9,4664.2 4241.5,3903.7 4547.1,3676.1"];
+	salon_schedules	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>salon_schedules</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>salonUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>scheduleUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="502.67,3852.1",
+		shape=none,
+		width=1.2917];
+	salons -> salon_schedules	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,549.29,3872.2 2858,4868.1 2543.6,4732.5 992.34,4063.3 595.34,3892.1"];
+	salon_services	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>salon_services</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>serviceUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>salonUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="2913.7,186.26",
+		shape=none,
+		width=1.1944];
+	salons -> salon_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,2913.7,241.29 2913.7,4649.8 2913.7,3786.6 2913.7,881.46 2913.7,291.36"];
+	salon_clientbases	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>salon_clientbases</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>clientbasisUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>salonUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="859.25,801.33",
+		shape=none,
+		width=1.3889];
+	salons -> salon_clientbases	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,887,856.57 2858.1,4781.4 2563.8,4195.3 1190.6,1461 909.56,901.5"];
+	schedules	 [height=2.75,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>schedules</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">name: STRING</td></tr>
+<tr><td port="2" align="left">type: ENUM</td></tr>
+<tr><td port="3" align="left">description: STRING</td></tr>
+<tr><td port="4" align="left">createdAt: DATE</td></tr>
+<tr><td port="5" align="left">updatedAt: DATE</td></tr>
+<tr><td port="6" align="left"><u><i>clientUID</i></u>: UUID</td></tr>
+<tr><td port="7" align="left"><u><i>masterUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="253.7,3356.4",
+		shape=none,
+		width=1.3194];
+	schedules -> clients	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="242.12,3257.3 220.79,3074.8 174.98,2682.9 147.64,2449"];
+	schedules -> masters	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="301.21,3428.6 411.42,3596.2 684.03,4010.6 802.63,4191"];
+	schedules -> salon_schedules	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,474.96,3796.9 301.26,3451.1 344.57,3537.3 408.3,3664.2 452.43,3752.1"];
+	schedule_appointments	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>schedule_appointments</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>scheduleUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>appointmentUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="4633.9,1466.9",
+		shape=none,
+		width=1.5];
+	schedules -> schedule_appointments	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4579.6,1490.3 301.4,3335.8 730.44,3150.7 3923.2,1773.5 4533.3,1510.3"];
+	clientbases	 [height=3.0556,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>clientbases</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">owner_name: STRING</td></tr>
+<tr><td port="2" align="left">phone: STRING</td></tr>
+<tr><td port="3" align="left">email: STRING</td></tr>
+<tr><td port="4" align="left">password: NUMBER</td></tr>
+<tr><td port="5" align="left">telegram: STRING</td></tr>
+<tr><td port="6" align="left">createdAt: DATE</td></tr>
+<tr><td port="7" align="left">updatedAt: DATE</td></tr>
+<tr><td port="8" align="left">deletedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="1304.2,470.05",
+		shape=none,
+		width=1.4306];
+	clientbases -> salon_clientbases	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,909.47,763.94 1252.3,508.7 1178.1,563.92 1040.8,666.17 949.7,733.99"];
+	clientbase_clientcards	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>clientbase_clientcards</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>clientbasisUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>clientcardUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="502.67,1226.3",
+		shape=none,
+		width=1.3889];
+	clientbases -> clientbase_clientcards	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,552.77,1179 1252.6,518.8 1118.1,645.67 756.11,987.17 589.17,1144.7"];
+	clientcards	 [height=5.8056,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>clientcards</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">firstName: STRING</td></tr>
+<tr><td port="2" align="left">lastName: STRING</td></tr>
+<tr><td port="3" align="left">phone: STRING</td></tr>
+<tr><td port="4" align="left">status: ENUM</td></tr>
+<tr><td port="5" align="left">occupation: STRING</td></tr>
+<tr><td port="6" align="left">email: STRING</td></tr>
+<tr><td port="7" align="left">telegram: STRING</td></tr>
+<tr><td port="8" align="left">password: STRING</td></tr>
+<tr><td port="9" align="left">tags: ARRAY</td></tr>
+<tr><td port="10" align="left">address: STRING</td></tr>
+<tr><td port="11" align="left">loyaltyPoints: NUMBER</td></tr>
+<tr><td port="12" align="left">favoriteMasters: STRING</td></tr>
+<tr><td port="13" align="left">favoriteServices: ARRAY</td></tr>
+<tr><td port="14" align="left">createdAt: DATE</td></tr>
+<tr><td port="15" align="left">updatedAt: DATE</td></tr>
+<tr><td port="16" align="left">deletedAt: DATE</td></tr>
+<tr><td port="17" align="left"><u><i>clientUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="253.7,1722",
+		shape=none,
+		width=1.5972];
+	clientcards -> clients	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="204.14,1931.1 192.93,1978.4 181.1,2028.3 170.12,2074.6"];
+	clientcards -> clientbase_clientcards	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,474.93,1281.5 311.29,1607.4 353.96,1522.4 411.55,1407.7 452.38,1326.4"];
+	notifications	 [height=5.1944,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>notifications</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">title: STRING</td></tr>
+<tr><td port="2" align="left">description: STRING</td></tr>
+<tr><td port="3" align="left">targetDate: DATE</td></tr>
+<tr><td port="4" align="left">targetTime: TIME</td></tr>
+<tr><td port="5" align="left">targetUsers: ARRAY</td></tr>
+<tr><td port="6" align="left">status: ENUM</td></tr>
+<tr><td port="7" align="left">createdAt: DATE</td></tr>
+<tr><td port="8" align="left">updatedAt: DATE</td></tr>
+<tr><td port="9" align="left"><u><i>clientUID</i></u>: UUID</td></tr>
+<tr><td port="10" align="left"><u><i>masterUID</i></u>: UUID</td></tr>
+<tr><td port="11" align="left"><u><i>MasterUID</i></u>: UUID</td></tr>
+<tr><td port="12" align="left"><u><i>adminUID</i></u>: UUID</td></tr>
+<tr><td port="13" align="left"><u><i>AdminUID</i></u>: UUID</td></tr>
+<tr><td port="14" align="left"><u><i>managerUID</i></u>: UUID</td></tr>
+<tr><td port="15" align="left"><u><i>ManagerUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="4888.1,2539.2",
+		shape=none,
+		width=1.3194];
+	notifications -> clients	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,4840.6,2536.4 4790.4,2533.5 4159.9,2496.8 675.67,2293.8 183.56,2265.2"];
+	notifications -> admins	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,4840.5,2669.8 4823.3,2717.1 4712.8,3020.8 4489.5,3634.3 4385.2,3920.9"];
+	notifications -> masters	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,4840.4,2559.8 4794.4,2579.6 4236.1,2820.4 1356.8,4062.4 915.93,4252.6"];
+	notifications -> managers	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,4866.2,2726.5 4860.4,2776.2 4853.1,2838.6 4845.5,2903.6 4839.1,2958.1"];
+	client_notifications	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>client_notifications</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>notificationUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>clientUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="5015.1,2539.2",
+		shape=none,
+		width=1.4444];
+	notifications -> client_notifications	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4962.9,2539.2 4935.7,2539.2 4935.9,2539.2 4936,2539.2 4936.1,2539.2"];
+	appointment_notifications	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>appointment_notifications</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>notificationUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>appointmentUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="4823.7,1988.2",
+		shape=none,
+		width=1.5833];
+	notifications -> appointment_notifications	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4830.1,2043.4 4866.2,2351.9 4856.1,2265.5 4844.5,2166.2 4835.9,2093.2"];
+	appointments	 [height=4.2778,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>appointments</b></td></tr>
+    <tr><td port="0" align="left">version: NUMBER</td></tr>
+<tr><td port="1" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="2" align="left">date: DATE</td></tr>
+<tr><td port="3" align="left">cost: NUMBER</td></tr>
+<tr><td port="4" align="left">start: DATE</td></tr>
+<tr><td port="5" align="left">durationMinutes: NUMBER</td></tr>
+<tr><td port="6" align="left">end: DATE</td></tr>
+<tr><td port="7" align="left">service: STRING</td></tr>
+<tr><td port="8" align="left">master: STRING</td></tr>
+<tr><td port="9" align="left">client: STRING</td></tr>
+<tr><td port="10" align="left">status: STRING</td></tr>
+<tr><td port="11" align="left">createdAt: DATE</td></tr>
+<tr><td port="12" align="left">updatedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="4329.1,1003.4",
+		shape=none,
+		width=1.7222];
+	appointment_services	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>appointment_services</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>appointmentUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>serviceUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="3925.6,622.73",
+		shape=none,
+		width=1.5];
+	appointments -> appointment_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3979.7,673.82 4266.9,944.77 4199.9,881.56 4092.7,780.34 4016.2,708.26"];
+	appointments -> schedule_appointments	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4597.7,1411.9 4391.2,1097.8 4443.3,1177 4517.5,1289.9 4570.1,1369.9"];
+	appointments -> appointment_notifications	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,4796,1933.1 4391.2,1127.1 4490.4,1324.6 4682.5,1707.1 4773.5,1888.4"];
+	periods	 [height=3.6667,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>periods</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">name: STRING</td></tr>
+<tr><td port="2" align="left">type: ENUM</td></tr>
+<tr><td port="3" align="left">available: VIRTUAL</td></tr>
+<tr><td port="4" align="left">start: DATE</td></tr>
+<tr><td port="5" align="left">durationMinutes: NUMBER</td></tr>
+<tr><td port="6" align="left">end: DATE</td></tr>
+<tr><td port="7" align="left">daypart: VIRTUAL</td></tr>
+<tr><td port="8" align="left">createdAt: DATE</td></tr>
+<tr><td port="9" align="left">updatedAt: DATE</td></tr>
+<tr><td port="10" align="left"><u><i>scheduleUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="62,3426.1",
+		shape=none,
+		width=1.7222];
+	periods -> schedules	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,124.24,3403.5 171.41,3386.3 183.51,3381.9 195.32,3377.6 206.04,3373.7"];
+	services	 [height=4.2778,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>services</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">main_image: STRING</td></tr>
+<tr><td port="2" align="left">images: ARRAY</td></tr>
+<tr><td port="3" align="left">name: STRING</td></tr>
+<tr><td port="4" align="left">rate: NUMBER</td></tr>
+<tr><td port="5" align="left">description: STRING</td></tr>
+<tr><td port="6" align="left">price: NUMBER</td></tr>
+<tr><td port="7" align="left">duration: NUMBER</td></tr>
+<tr><td port="8" align="left">type: STRING</td></tr>
+<tr><td port="9" align="left">category: STRING</td></tr>
+<tr><td port="10" align="left">subcategory: STRING</td></tr>
+<tr><td port="11" align="left">createdAt: DATE</td></tr>
+<tr><td port="12" align="left">updatedAt: DATE</td></tr>
+  </table>>,
+		margin=0,
+		pos="2359.9,154",
+		shape=none,
+		width=1.3889];
+	services -> client_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,1856.6,242.75 2309.5,162.89 2217.8,179.06 2022.5,213.5 1906.2,234"];
+	services -> master_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3402.2,337.78 2410.1,162.85 2579.5,192.72 3132,290.14 3352.8,329.07"];
+	services -> salon_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,2870.7,183.75 2410,156.92 2502.8,162.32 2702.6,173.96 2820.7,180.84"];
+	services -> appointment_services	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,3871.5,606.53 2410.2,169.06 2631.4,235.29 3520,501.29 3823.4,592.14"];
+	posts	 [height=3.3611,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>posts</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">title: STRING</td></tr>
+<tr><td port="2" align="left">content: STRING</td></tr>
+<tr><td port="3" align="left">image: STRING</td></tr>
+<tr><td port="4" align="left">author: STRING</td></tr>
+<tr><td port="5" align="left">date: DATE</td></tr>
+<tr><td port="6" align="left">createdAt: DATE</td></tr>
+<tr><td port="7" align="left">updatedAt: DATE</td></tr>
+<tr><td port="8" align="left"><u><i>salonUID</i></u>: UUID</td></tr>
+<tr><td port="9" align="left"><u><i>masterUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="1813.6,4828.1",
+		shape=none,
+		width=1.1667];
+	posts -> masters	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,1771.4,4803.7 1728,4778.6 1536.4,4668 1076.9,4402.7 916.03,4309.8"];
+	posts -> salons	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,1855.7,4830.5 1905.9,4833.4 2126.8,4846.3 2680.7,4878.6 2858.1,4888.9"];
+	settings	 [height=6.1111,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>settings</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">name: STRING</td></tr>
+<tr><td port="2" align="left">password: STRING</td></tr>
+<tr><td port="3" align="left">username: STRING</td></tr>
+<tr><td port="4" align="left">email: STRING</td></tr>
+<tr><td port="5" align="left">usertype: ENUM</td></tr>
+<tr><td port="6" align="left">shardingSchedule: BOOLEAN</td></tr>
+<tr><td port="7" align="left">push_token: STRING</td></tr>
+<tr><td port="8" align="left">prefers_telegram: BOOLEAN</td></tr>
+<tr><td port="9" align="left">prefers_email: BOOLEAN</td></tr>
+<tr><td port="10" align="left">prefers_push: BOOLEAN</td></tr>
+<tr><td port="11" align="left">prefers_: ARRAY</td></tr>
+<tr><td port="12" align="left">createdAt: DATE</td></tr>
+<tr><td port="13" align="left">updatedAt: DATE</td></tr>
+<tr><td port="14" align="left">deletedAt: DATE</td></tr>
+<tr><td port="15" align="left"><u><i>clientUID</i></u>: UUID</td></tr>
+<tr><td port="16" align="left"><u><i>masterUID</i></u>: UUID</td></tr>
+<tr><td port="17" align="left"><u><i>adminUID</i></u>: UUID</td></tr>
+<tr><td port="18" align="left"><u><i>managerUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="3925.6,4455.7",
+		shape=none,
+		width=1.8611];
+	settings -> clients	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="3858.4,4416.9 3390.2,4146.5 618.85,2546.5 183.35,2295.1"];
+	settings -> admins	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="3992.7,4392.4 4069.7,4319.7 4194.8,4201.7 4268.8,4131.9"];
+	settings -> masters	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="3858.3,4451.7 3448.6,4427.9 1293.5,4302.4 915.79,4280.4"];
+	settings -> managers	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="3992.7,4353.6 4162.9,4094.8 4609.1,3416.5 4767.1,3176.1"];
+	reports	 [height=3.6667,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>reports</b></td></tr>
+    <tr><td port="0" align="left"><u>UID</u>: UUID</td></tr>
+<tr><td port="1" align="left">name: STRING</td></tr>
+<tr><td port="2" align="left">description: STRING</td></tr>
+<tr><td port="3" align="left">date: DATE</td></tr>
+<tr><td port="4" align="left">time: TIME</td></tr>
+<tr><td port="5" align="left">graphs: ARRAY</td></tr>
+<tr><td port="6" align="left">createdAt: DATE</td></tr>
+<tr><td port="7" align="left">updatedAt: DATE</td></tr>
+<tr><td port="8" align="left"><u><i>masterUID</i></u>: UUID</td></tr>
+<tr><td port="9" align="left"><u><i>MasterUID</i></u>: UUID</td></tr>
+<tr><td port="10" align="left"><u><i>salonUID</i></u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="2359.9,4924.4",
+		shape=none,
+		width=1.3194];
+	reports -> masters	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,2312.1,4903.8 2266,4883.9 1982.6,4761.6 1142.3,4399.2 915.95,4301.5"];
+	reports -> salons	 [arrowhead=none,
+		arrowsize=5,
+		arrowtail=crow,
+		dir=both,
+		pos="s,2407.6,4921.6 2457.7,4918.7 2574.2,4911.9 2764.6,4900.8 2858.2,4895.4"];
+	salon_reports	 [height=1.5278,
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="lightblue"><b>salon_reports</b></td></tr>
+    <tr><td port="0" align="left">createdAt: DATE</td></tr>
+<tr><td port="1" align="left">updatedAt: DATE</td></tr>
+<tr><td port="2" align="left"><u>reportUID</u>: UUID</td></tr>
+<tr><td port="3" align="left"><u>salonUID</u>: UUID</td></tr>
+  </table>>,
+		margin=0,
+		pos="2352.5,5051.2",
+		shape=none,
+		width=1.1528];
+	reports -> salon_reports	 [arrowhead=crow,
+		arrowsize=5,
+		arrowtail=none,
+		dir=both,
+		pos="e,2352.5,5051.1 2352.5,5051.1 2352.5,5051.1 2352.5,5051.1 2352.5,5051.1"];
+}

@@ -2,6 +2,8 @@
 const config = require("../config/db.config.js");
 const bcrypt = require("bcryptjs");
 const { Sequelize, DataTypes, where } = require("sequelize");
+const { writeFileSync } = require("fs");
+const sequelizeErd = require("sequelize-erd");
 
 const Admin = require("../models").admin;
 const Appointment = require("../models").appointment;
@@ -24,18 +26,18 @@ const Role = require("../models/role.model");
 
 module.exports.init = async () => {
   for (let index = 0; index < 10; index++) {
-    try{
-    let appointment = await Appointment.create({
-      name: "appointment " + index,
-      start: new Date('2023-09-19T16:00:00.000Z'),
-      end: new Date('2023-09-19T19:00:00.000Z'),
-      service: "service " + index,
-      master: "master " + index,
-      client: "client " + index,
-    });
-  } catch (err){
-    console.log(err)
-  }
+    try {
+      let appointment = await Appointment.create({
+        name: "appointment " + index,
+        start: new Date("2023-09-19T16:00:00.000Z"),
+        end: new Date("2023-09-19T19:00:00.000Z"),
+        service: "service " + index,
+        master: "master " + index,
+        client: "client " + index,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     let master = await Master.create({
       name: "master " + index,
       firstName: "master " + index,
@@ -83,15 +85,38 @@ module.exports.init = async () => {
       price: 1000,
       owner_name: "владелец базы " + index,
     });
-    const salonManager = await manager.addSalon(salon);
+
+    
+
     // console.log(salonManager);
-    let client = await Client.create({
-      name: "клиент " + index,
-      firstName: "клиент " + index,
-      email: "клиент " + index + "@gmail.com",
-      password: "123456",
-      roles: 3,
-    });
+    let client = await Client.create(
+      {
+        name: "клиент " + index,
+        firstName: "клиент " + index,
+        email: "клиент " + index + "@gmail.com",
+        password: "123456",
+        roles: 3,
+        notifications: [
+          {
+            name: "уведомление " + index,
+            description: "описание rhf " + index,
+
+          },
+          {
+            name: "уведомление " + index,
+            description: "описание уведомления " + index,
+          },
+        ]
+      },
+      {
+        include: [Notification]
+        // include: [
+        //   {
+        //     association: Master,
+        //   },
+        // ]
+      }
+    );
     let admin = await Admin.create({
       name: "админ " + index,
       firstName: "админ " + index,
@@ -125,20 +150,13 @@ module.exports.init = async () => {
       time: "10:00",
     });
     schedules.setClient(client);
-    admin.addSalon(salon, index);
-    salon.addService(service, index);
-    master.addSalon(salon, index);
-    // appointment.addMaster(master, index);
-    // master.addAppointment(appointment, index);
-    // appointment.addService(service, index);
-    // appointment.addSchedule(schedules, index);
-    // clientcard.addClientbase(clientbase, index);
-    // clientcard.addClientbase(clientbase);
-    clientcard.setClient(client, index);
-    // const client_appointments = await client.getAppointments({attributes: ['id']});
 
-    // const client_appointments = await appointment.getClients();
-    // console.log('clientSettings: ', JSON.stringify(client_appointments, null, 3));
+    salon.addService(service, index);
+    admin.addSalon(salon, index);
+    master.addSalon(salon, index);
+    const salonManager = await manager.addSalon(salon);
+    client.getMasters().then((data) => console.log(data));
+    appointmentTest()
   }
   bulkCreateTest()
     .then(() => console.log("bulkCreateTest done"))
@@ -209,6 +227,59 @@ module.exports.init = async () => {
 };
 
 // create bulks of sample objects of settings, salons, managers, admins, clientbases, clientcards, services, masters, clients, schedules, appointments. using built in sequelize set and add methods make associations between these objects that are described in ../models/index.js file. Make concise and good Values for models' fields use Russian language
+async function appointmentTest() {
+  // create master with schedule and with periods in schedule
+  const master = await Master.create({
+    name: "Ефросиния",
+    firstName: "Ефросиния",
+    description: "описание мастера",
+    photo: "https://s3.amazonaws.com/uifaces/faces/twitter/olegiv555/128.jpg",
+    schedule: {
+      name: "Расписнаия мастера Ефросиния",
+      type: "master",
+      description: "рассписание мастера",
+    },
+    settings: {
+      name: "default",
+      usertype: "master",
+      username: "master",
+      password: "123456",
+    },
+  },
+  {
+    include: [Schedule],
+  },)
+  
+
+  Period.bulkCreate([
+      {
+        name: "период 1",
+        start: new Date('2025-02-02 12:00'),
+        type: "available",
+        durationMinutes: 60,
+      },
+      {
+        name: "период 2",
+        start: new Date('2025-02-02 13:00'),
+        type: "available",
+        durationMinutes: 60,
+      },
+      {
+        name: "период 3",
+        start: new Date('2025-02-02 14:00'),
+        type: "available",
+        durationMinutes: 60,
+      },
+      {
+        name: "период 4",
+        start: new Date('2025-02-02 15:00'),
+        type: "busy",
+        durationMinutes: 60,
+      },
+    ],
+  )
+  // associate periods to schedule
+}
 
 async function bulkCreateTest() {
   // db.clientcard.belongsToMany(db.master, { through: "clientcard_master" });
@@ -348,16 +419,16 @@ async function bulkCreateTest() {
 
   const masterSettings = await Setting.bulkCreate(
     Array.from({ length: masterCount }, (_, index) => ({
-      shardingSchedule: index%2 === 0 ? true : false,
+      shardingSchedule: index % 2 === 0 ? true : false,
       name: "настройка " + index,
       username: "loginMaster" + index,
       usertype: "master",
       description: "описание настройки " + index,
       password: "password" + index,
       name: "имя " + index,
-      prefers_telegram: index%2 === 0 ? true : false,
+      prefers_telegram: index % 2 === 0 ? true : false,
     }))
-  ) 
+  );
 
   const clients = await Client.bulkCreate(
     Array.from({ length: clientCount }, (_, index) => ({
@@ -440,16 +511,16 @@ async function bulkCreateTest() {
 
   const clientSettings = await Setting.bulkCreate(
     Array.from({ length: clientCount }, (_, index) => ({
-      shardingSchedule: index%2 === 0 ? true : false,
+      shardingSchedule: index % 2 === 0 ? true : false,
       name: "настройка " + index,
       username: "loginClient" + index,
       usertype: "client",
       description: "описание настройки " + index,
       password: "password" + index,
       name: "имя " + index,
-      prefers_telegram: index%2 === 0 ? true : false,
+      prefers_telegram: index % 2 === 0 ? true : false,
     }))
-  )
+  );
 
   const schedules = await Schedule.bulkCreate(
     Array.from({ length: scheduleCount }, (_, index) => ({
@@ -476,23 +547,33 @@ async function bulkCreateTest() {
   // }
 
   await Promise.all(
-    clients.map((client, index) => client.setSchedule(clientSchedules[index % clientCount]))
-  )
+    clients.map((client, index) =>
+      client.setSchedule(clientSchedules[index % clientCount])
+    )
+  );
   await Promise.all(
-    clientSchedules.map((schedule, index) => schedule.addAppointments(appointments))
-  )
+    clientSchedules.map((schedule, index) =>
+      schedule.addAppointments(appointments)
+    )
+  );
   await Promise.all(
-    clients.map((client, index) => client.setSetting(clientSettings[index % clientCount]))
-  )
+    clients.map((client, index) =>
+      client.setSetting(clientSettings[index % clientCount])
+    )
+  );
   // await Promise.all(
   //   masterSchedules.map((schedule, index) => index%2 === 0 ? schedule.addPeriods(periodsMasters2) : schedule.addPeriods(periodsMasters))
   // )
   await Promise.all(
-    masters.map((master, index) => master.setSchedule(masterSchedules[index % masterCount]))
-  )
+    masters.map((master, index) =>
+      master.setSchedule(masterSchedules[index % masterCount])
+    )
+  );
   await Promise.all(
-    masters.map((master, index) => master.setSetting(masterSettings[index % clientCount]))
-  )
+    masters.map((master, index) =>
+      master.setSetting(masterSettings[index % clientCount])
+    )
+  );
   await Promise.all(
     admins.map((admin, index) => {
       admin.addSalon(salons[index % salonCount]);
@@ -535,8 +616,22 @@ async function bulkCreateTest() {
       appointment.addSchedule(schedules[index % scheduleCount])
     )
   );
-  
+
   db.sequelize.sync();
+  const svg = await sequelizeErd({
+    source: db.sequelize,
+    format: "svg",
+    engine: "dot",
+    // arrowShapes: {  // Any of the below 4 options formatted ['startShape', 'endShape']. If excluded, the default is used.
+    //   BelongsToMany: ['none', 'none'],  // Default: ['none', 'crow']
+    //   BelongsTo: ['none', 'none'], // Default: ['crow', 'none']
+    //   HasMany: ['none', 'none'], // Default: ['none', 'crow']
+    //   HasOne: ['none', 'none'], // Default: ['none', 'none']
+    // },
+    arrowSize: 5, // Default: 0.6
+    lineWidth: 1, // Default: 0.75
+  }); // sequelizeErd() returns a Promise
+  writeFileSync("./db_diagramm.svg", svg);
 
   // const settingsgot = await clients[0].getSetting({
   //   where: {

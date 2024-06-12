@@ -211,7 +211,7 @@ exports.getUpcomingAppointments = (req, res) => {
         })
         .catch((err) => {
             console.log('getUpcomingAppointments - ошибка при получении записей клиента', err);
-            res.status(500).json({
+            res.status(500).send({
                 message:
                     err.message || 'Произошла ошибка при получении записей клиента',
             });
@@ -229,7 +229,7 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
     });
   }
   console.log("req?.body?.userId", req?.body?.userId)
-  Client.findOne({ where: { UID: req.body.userId } })
+  Settings.findOne({ where: { UID: req.body.userId } })
 
     .then((client) => {
 
@@ -348,7 +348,7 @@ module.exports.CancelAppointment = (req, res) => {
     });
   }
 
-  Client.findOne({ where: { UID: req.body.userId } })
+  Settings.findOne({ where: { UID: req.body.userId } })
     .then((client) => {
 
       if (!client) {

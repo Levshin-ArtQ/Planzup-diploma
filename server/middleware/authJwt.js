@@ -6,6 +6,7 @@ const Admin = db.admin;
 const Manager = db.manager;
 const Master = db.master;
 const Client = db.client;
+const Settings = db.settings;
 
 module.exports.verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -30,6 +31,23 @@ module.exports.verifyToken = (req, res, next) => {
               next();
             });
 }
+
+module.exports.verifyAdmin = (req, res, next) => {
+  const settingsId = req.body.userId;
+  Settings.findByPk(settingsId, { include: [Admin] }).then(settings => {
+    if (!settings) {
+      return res.status(404).send({
+        message: "Настройки не были предоставлены"
+      });
+    }
+    if (!settings.admin) {
+      return res.status(404).send({
+        message: "Администратор не был предоставлен"
+      });
+    }
+    next();
+  })
+};
 // TODO: Проверку на роль изменить на свои сущности
 module.exports.verifyClient = (req, res, next) => {
   const token = req.headers["x-access-token"];

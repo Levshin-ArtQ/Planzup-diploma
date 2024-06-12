@@ -1,7 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const User = db.user;
-const Role = db.role;
+// const User = db.user;
+// const Role = db.role;
 const Settings = db.settings;
 const Manager = db.manager;
 const Master = db.master;
@@ -73,11 +73,13 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = async (req, res) => {
+  console.log('signin in');
   if (!req?.body?.username || !req?.body?.password) {
     return res
       .status(404)
       .send({ message: "Пользователь или пароль не были предоставлены" });
   }
+  console.log('has required fields');
   Settings.scope("withPassword")
     .findOne({
       where: {
@@ -132,7 +134,7 @@ exports.signin = async (req, res) => {
             }
 
             if (user) {
-              const token = jwt.sign({ UID: user.UID }, config.secret, {
+              const token = jwt.sign({ UID: settings.UID }, config.secret, {
                 algorithm: "HS256",
                 allowInsecureKeySizes: true,
                 expiresIn: 86400, // 24 hours TODO: lower for tests
@@ -159,6 +161,7 @@ exports.signin = async (req, res) => {
       // }
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).send({ message: err.message });
     });
 };

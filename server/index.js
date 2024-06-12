@@ -1,5 +1,6 @@
 const keys = require("./keys");
-
+const { writeFileSync } = require("fs");
+const sequelizeErd = require("sequelize-erd");
 // Express Application setup
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,14 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(bodyParser.urlencoded({ extended: false }));
 // routes
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", true);
-  
+
   next();
 });
 
@@ -35,24 +35,21 @@ require("./routes/client.routes")(app);
 app.get("/api/auth/telegram", (req, res) => {
   // FIXME: add telegram auth https://edisonchee.com/writing/telegram-login-with-node.js/#bot-code
   console.log(req.query);
-  res.redirect('/').status(200).send('successful got query'); // CONSIDER: redirect to https://t.me/PlanzUp_bot/PlanzUp_mini
-})
+  res.redirect("/").status(200).send("successful got query"); // CONSIDER: redirect to https://t.me/PlanzUp_bot/PlanzUp_mini
+});
 // app.use("/reservations", require("./routes/reservations"));
-
 
 const db = require("./models");
 const main = async () => {
   const associationsAnswer = await associations()
-    .then(() => {
-      console.log("associations done");
-    })
+    .then(
+      console.log("associations done"),
+    )
     .catch((err) => {
       console.log("associations failed");
       console.log(err);
     });
-    
-  
-}
+};
 main();
 // async part of code
 
@@ -69,24 +66,44 @@ db.sequelize
   })
   .catch((err) => console.log(err));
 
+
 function initial() {
-  Role.create({
-    id: 1,
-    name: "user",
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator",
-  });
-
-  Role.create({
-    id: 3,
-    name: "admin",
-  });
   const { init } = require("./test/init.test");
-  init().catch((err) => console.log(err));
+  init().then(
+    db.admin.create({
+      username: "admin",
+      firstName: "admin",
+      password: "admin",
+      role: "admin",  
+    }).then((admin) => {
+      db.salon.findAll().then((salons) => {
+        admin.addSalons(salons)
+          .then(() => {
+            console.log('salons added to admin: ' + salons);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      console.log("admin created");
+    })
+  ).catch((err) => console.log(err));
 }
+
+
+// //test route
+app.get("/", (req, res, next) => {
+  res.send("Planzup listening");
+});
+
+//error handling
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
+
 // Postgres client setup
 // const { Pool } = require("pg");
 // const pgClient = new Pool({
@@ -101,37 +118,4 @@ function initial() {
 //   client
 //     .query("CREATE TABLE IF NOT EXISTS values (number INT)")
 //     .catch(err => console.log("PG ERROR", err));
-// });
-
-// //test route
-app.get("/", (req, res, next) => {
-  res.send("Planzup listening");
-});
-
-// //error handling
-// app.use((error, req, res, next) => {
-//   console.log(error);
-//   const status = error.statusCode || 500;
-//   const message = error.message;
-//   res.status(status).json({ message: message });
-// });
-
-// // get the values
-// app.get("/values/all", async (req, res) => {
-//   const values = await pgClient.query("SELECT * FROM values");
-
-//   res.send(values);
-// });
-
-// // now the post -> insert value
-// app.post("/values", async (req, res) => {
-//   if (!req.body.value) res.send({ working: false });
-
-//   pgClient.query("INSERT INTO values(number) VALUES($1)", [req.body.value]);
-
-//   res.send({ working: true });
-// });
-
-// app.listen(5000, err => {
-//   console.log("Listening");
 // });

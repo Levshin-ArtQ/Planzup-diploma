@@ -16,11 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     targetDate: {
       type: DataTypes.DATE
     },
-    targetTime: {
+    appointmentTime: {
       type: DataTypes.TIME
-    },
-    targetUsers: {
-      type: DataTypes.ARRAY(DataTypes.STRING) //TODO: it should lower computation time
     },
     status: {
       type: DataTypes.ENUM('pending', 'done'),
