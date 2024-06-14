@@ -28,6 +28,8 @@ import SampleFetching from "./testComponents/SampleFetching";
 import ServicePage from "./components/BookingPages/ServicePage";
 import ClientAppointments from "./pages/ClientAppointments";
 import MasterSetup from "./authorization/MasterSetup";
+import SchedulePlanner from "./components/SchedulePlanner";
+import PlannerApp from "./pages/PlannerApp";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
             <Route path={"/sample"} element={<SampleFetching />} />
+            <Route path={"/schedule"} element={<SchedulePlanner />} />
+            <Route path={"/planner"} element={<PlannerApp />} />
             {/* менеджер */}
             <Route path={"manager/dashboard"} element={<ManagerSchedule />} />
             <Route path={"/fast_book"} element={<ManagerSchedule />}></Route>

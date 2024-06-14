@@ -152,13 +152,6 @@ exports.signin = async (req, res) => {
             }
           }
         });
-      // console.log('passwordIsValid', passwordIsValid)
-      // if (!passwordIsValid) {
-      //   return res.status(401).send({
-      //     accessToken: null,
-      //     message: "Invalid Password!"
-      //   });
-      // }
     })
     .catch((err) => {
       console.log(err);

@@ -12,9 +12,19 @@ const RegisterPage = () => {
   // const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = (values, userType) => {
-    userType = userType === "клиент" ? "client" : userType === "мастер" ? "master" : "manager";
+    userType =
+      userType === "клиент"
+        ? "client"
+        : userType === "мастер"
+        ? "master"
+        : "manager";
     console.log("Received values of form: ", values);
-    AuthService.register(values.username, values.email, values.password, userType).then(
+    AuthService.register(
+      values.username,
+      values.email,
+      values.password,
+      userType
+    ).then(
       () => {
         AuthService.login(values.username, values.password);
         previous ? navigate(previous) : navigate("/login");
@@ -38,91 +48,90 @@ const RegisterPage = () => {
   };
   return (
     <div className="login_wrapper">
-      
-    <h1>Зарегистрироваться </h1>
-    <Tabs 
-      defaultActiveKey="клиент"
-      type="card"
-      items={['клиент', 'мастер', 'менеджер'].map((key, userType) => {
-        const id = key;
-        return {
-          label: `Как ${id}`,
-          key: id,
-          children: (
-            <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={(event) => onFinish(event, id)}
-          >
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Как к вам обращаться?",
-                  // type: 'email',
-                },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Ваше имя"
-              />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, введите вашу почту!",
-                  type: "email",
-                },
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined className="site-form-item-icon" />}
-                placeholder="Ваша почта"
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, введите ваш пароль!",
-                },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-    
-            <Form.Item style={{ marginLeft: "auto" }}>
-              <Button
-                style={{ marginRight: "4px" }}
-                size="large"
-                zoom={2}
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
+      <h1>Зарегистрироваться </h1>
+      <Tabs
+        defaultActiveKey="клиент"
+        type="card"
+        items={["клиент", "мастер", "менеджер"].map((key, userType) => {
+          const id = key;
+          return {
+            label: `Как ${id}`,
+            key: id,
+            children: (
+              <Form
+                name="normal_login"
+                className="login-form"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={(event) => onFinish(event, id)}
               >
-                Зарегистрироваться
-              </Button>
-              или <Link to="/login">Войти</Link>
-            </Form.Item>
-    
-            <div>{message}</div>
-          </Form>
-          )
-        }
-      })}></Tabs>
-      
+                <Form.Item
+                  name="username"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Как к вам обращаться?",
+                      // type: 'email',
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder="Ваше имя"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Пожалуйста, введите вашу почту!",
+                      type: "email",
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={<MailOutlined className="site-form-item-icon" />}
+                    placeholder="Ваша почта"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Пожалуйста, введите ваш пароль!",
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                  />
+                </Form.Item>
+
+                <Form.Item style={{ marginLeft: "auto" }}>
+                  <Button
+                    style={{ marginRight: "4px" }}
+                    size="large"
+                    zoom={2}
+                    type="primary"
+                    htmlType="submit"
+                    className="login-form-button"
+                  >
+                    Зарегистрироваться
+                  </Button>
+                  или <Link to="/login">Войти</Link>
+                </Form.Item>
+
+                <div>{message}</div>
+              </Form>
+            ),
+          };
+        })}
+      ></Tabs>
     </div>
   );
 };

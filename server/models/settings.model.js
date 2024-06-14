@@ -4,16 +4,12 @@ module.exports = (sequelize, DataTypes) => {
   const Settings = sequelize.define(
     "settings",
     {
-      // Здесь определяются атрибуты модели
       UID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         allowNull: false,
       },
-      // async validPassword(password) { 
-      //   return await bcrypt.compare(password, this.password);
-      // },
       name: {
         type: DataTypes.STRING,
       },
@@ -96,8 +92,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   );
-  // Settings.prototipe.validPassword = async function (password) {
-  //   return await bcrypt.compare(password, this.password);
-  // };
   return Settings;
 };

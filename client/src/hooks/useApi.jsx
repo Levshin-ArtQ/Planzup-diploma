@@ -9,13 +9,9 @@ const useApi = () => {
   const [messageApi, contextHolder] = message.useMessage();
   // limit timeout
   const timeout = 30000;
-  
-
   const fetchData = async (endpoint, options = {}) => {
-    
     setLoading(true);
     try {
-
       const userId = JSON.parse(localStorage.getItem('user')).UID;
       console.log('userId: ' + userId)
       const response = await axios({

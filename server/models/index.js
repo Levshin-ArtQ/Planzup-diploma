@@ -7,8 +7,8 @@ const sequelize = new Sequelize(
     process.env.PGUSER,
     process.env.PGPASSWORD,
     {
-        host: process.env.PGHOST, //better through to config and check why it is postgres and not localhost
-        dialect: 'postgres', //better through to config
+        host: process.env.PGHOST, 
+        dialect: 'postgres', 
         pool: {
             max: config.pool.max,
             min: config.pool.min,
@@ -24,9 +24,8 @@ let db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+
 // actors
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.client = require("../models/client.model.js")(sequelize, Sequelize);
 db.admin = require("../models/admin.model.js")(sequelize, Sequelize);
 db.master = require("../models/master.model.js")(sequelize, Sequelize);

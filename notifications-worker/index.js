@@ -6,12 +6,13 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const dbRead = require('./models');
+const schedule = require('node-schedule')
 
 
 dbRead.sequelize
   .sync()
   .then((result) => {
-    console.log("Database dropped resynced and connected");
+    console.log("Database resynced and connected");
   })
   .catch((err) => console.log(err));
 
@@ -25,6 +26,27 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+const sendNotifications = async () => {
+  console.log("sending notifications...");
+  const now = new Date();
+  const notifications = await dbRead.notification.findAll({
+    where: {
+      status: "pending",
+      targetDate: {
+        [dbRead.Sequelize.Op.lt]: now,
+      },
+    },
+  });
+  for (const notification of notifications) {
+
+    // TODO: send notification
+  }
+
+  console.log("notifications sent" + notifications.length);
+} 
+
+const job = schedule.scheduleJob(`*/${3} * * * *`, sendNotifications);
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {

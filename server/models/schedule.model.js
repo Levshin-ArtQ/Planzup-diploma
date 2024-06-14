@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     type : {
-      type: Sequelize.ENUM('master', 'client', 'salon')
+      type: Sequelize.ENUM('master', 'client')
     },
     description: {
       type: Sequelize.STRING

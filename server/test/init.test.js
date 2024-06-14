@@ -249,7 +249,7 @@ async function appointmentTest() {
   {
     include: [Schedule],
   },)
-  
+
 
   Period.bulkCreate([
       {
@@ -432,7 +432,7 @@ async function bulkCreateTest() {
 
   const clients = await Client.bulkCreate(
     Array.from({ length: clientCount }, (_, index) => ({
-      firstName: "имя клиента " + index,
+      firstName:  "Ольга",
       name: "клиент " + index,
       surname: "фамилия клиента " + index,
       phone: "телефон клиента " + index,

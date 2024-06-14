@@ -26,8 +26,8 @@ module.exports = function (app) {
   // услуги
   app.get("/api/services", mainController.getServices);
   app.get("/api/services/:serviceId", mainController.getServiceById); 
-  app.post("/api/services/:serviceId", [verifyToken], mainController.getServiceById); 
-  app.post("/api/services", [verifyToken, verifyAdminOrManager], mainController.createService);
+  app.post("/api/services/:serviceId", mainController.getServiceById); 
+  app.post("/api/services", [verifyToken, verifyAdmin], mainController.createService);
   app.put("/api/services/:serviceId", [verifyToken, verifyAdminOrManager], mainController.updateService);
 
   // мастера
@@ -40,11 +40,12 @@ module.exports = function (app) {
 
   // userType is a current user - extra layer of security
   // app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.getAppointments); 
-  app.post("/api/:userType/appointment", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
-  app.put("/api/:userType/appointment/:appointmentId", [verifyToken, checkUserType], mainController.update); // decline or postpone
+  app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
+  app.post("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
+  app.put("/api/:userType/appointments/:appointmentId", [verifyToken, checkUserType], mainController.update); // decline or postpone
   // get update schedule
-  app.get("/api/:userType/schedule", [verifyToken, checkUserType], mainController.getSchedule);
-  app.put("/api/:userType/schedule/:scheduleId", [verifyToken, checkUserType], mainController.updateSchedule); // user
+  // app.get("/api/:userType/schedules", [verifyToken, checkUserType], mainController.getSchedule);
+  // app.put("/api/:userType/schedules/:scheduleId", [verifyToken, checkUserType], mainController.updateSchedule); // user
   // app.put("/api/:userType/period/:periodId", [verifyToken], mainController.updatePeriod);
   app.get("/api/:userType/notifications", [verifyToken, checkUserType], mainController.getNotifications);
   app.put("/api/:userType/notifications/:notificationId", [verifyToken, checkUserType], mainController.updateNotification);

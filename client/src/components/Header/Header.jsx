@@ -55,7 +55,7 @@ const Header = () => {
 
       {!isAppInstalled ? (
         <Button className="pwa-install-button" onClick={promptToInstall}>
-          Установить
+          Обновить страницу
         </Button>
       ) : (
         <div>PlanzUp</div>

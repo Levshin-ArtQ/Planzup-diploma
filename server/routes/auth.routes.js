@@ -13,14 +13,17 @@ module.exports = function (app) {
     next();
   });
 
-  app.post(
+  app.put(
     "/api/auth/signup/:userType",
-    [
-      verifySignUp.checkDuplicateUsernameOrEmail,
-    ],
+    [verifySignUp.checkDuplicateUsernameOrEmail,],
     controller.signup
   );
-  app.get("/api/auth/verifyToken", [verifyToken], controller.verifyToken);
-
-  app.post("/api/auth/signin",  controller.signin);
+  app.post("/api/auth/verifyToken", 
+    [verifyToken], 
+    controller.verifyToken
+  );
+  app.post(
+    "/api/auth/signin",  
+    controller.signin
+  );
 };
