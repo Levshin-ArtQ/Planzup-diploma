@@ -1,53 +1,49 @@
-import React, { useState } from 'react';
-import { List, Button, Card, Modal } from 'antd';
+import React from 'react';
+import { List, Card, Row, Col, Typography } from 'antd';
 import moment from 'moment';
+import 'moment/locale/ru';
 import './MasterSchedule.css';
 
+const { Title } = Typography;
+
+const groupByWeek = (schedule) => {
+  const weeks = {};
+  schedule
+    // .filter(period => period.type === 'available')
+    .forEach(period => {
+      const week = moment(period.start).startOf('isoWeek').format('YYYY-MM-DD');
+      if (!weeks[week]) {
+        weeks[week] = [];
+      }
+      weeks[week].push(period);
+    });
+  return weeks;
+};
+
 const MasterSchedule = ({ schedule }) => {
-  const [selectedSlot, setSelectedSlot] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleBookClick = (slot) => {
-    setSelectedSlot(slot);
-    setIsModalVisible(true);
-  };
-
-  const handleModalOk = () => {
-    // Логика записи на прием
-    setIsModalVisible(false);
-  };
-
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
-  };
+  const weeks = groupByWeek(schedule);
 
   return (
-    <div>
-      <List
-        dataSource={schedule}
-        renderItem={slot => (
-          <List.Item>
-            <Card
-              className={`schedule-slot ${slot.type}`}
-              title={`С ${moment(slot.start).format('HH:mm')} до ${moment(slot.end).format('HH:mm')}`}
-            >
-              <p>Тип: {slot.type}</p>
-              {slot.type === 'available' && (
-                <Button type="primary" onClick={() => handleBookClick(slot)}>Записаться</Button>
-              )}
-            </Card>
-          </List.Item>
-        )}
-      />
-
-      <Modal
-        title="Запись на прием"
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
-      >
-        <p>Вы хотите записаться на {moment(selectedSlot?.start).format('HH:mm')} - {moment(selectedSlot?.end).format('HH:mm')}</p>
-      </Modal>
+    <div className="master-schedule">
+      {Object.keys(weeks).map(week => (
+        <div key={week} className="week-schedule">
+          <Title level={4}>Неделя: {moment(week).format('DD MMMM YYYY')}</Title>
+          <Row gutter={[16, 16]}>
+            {weeks[week].map(period => (
+              <Col xs={24} sm={12} md={8} lg={6} key={period.UID}>
+                <Card
+                  className={`schedule-card ${period.type === 'available' ? 'available' : 'busy'}`}
+                  title={moment(period.start).format('dddd, HH:mm')}
+                >
+                  <p>Длительность: {period.durationMinutes} мин.</p>
+                  <p>Тип: {period.type}</p>
+                  {period.available && <button className="book-button">Записаться</button>}
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      ))}
     </div>
   );
 };

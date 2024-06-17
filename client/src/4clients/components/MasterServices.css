@@ -1,48 +1,46 @@
-/* Стили для карточек услуг */
-.ant-card {
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+.master-schedule {
+  margin: 20px 0;
 }
 
-.ant-card:hover {
+.week-schedule {
+  margin-bottom: 40px;
+}
+
+.schedule-card {
+  transition: transform 0.3s;
+}
+
+.schedule-card.available {
+  border-left: 5px solid #52c41a;
+}
+
+.schedule-card.busy {
+  border-left: 5px solid #ff4d4f;
+}
+
+.schedule-card:hover {
   transform: scale(1.05);
 }
 
-/* Заголовок карточки */
-.ant-card-head {
-  background-color: #f0f2f5;
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Контент карточки */
-.ant-card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Цена и длительность услуги */
-.ant-card-body p {
-  margin: 5px 0;
-  font-size: 16px;
-}
-
-/* Кнопка записи на услугу */
 .book-button {
-  margin-top: 10px;
-  padding: 5px 20px;
   background-color: #1890ff;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s;
 }
 
 .book-button:hover {
   background-color: #40a9ff;
+}
+
+@media (max-width: 576px) {
+  .week-schedule {
+    margin-bottom: 20px;
+  }
+
+  .schedule-card {
+    margin-bottom: 20px;
+  }
 }

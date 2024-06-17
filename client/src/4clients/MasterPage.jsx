@@ -28,7 +28,15 @@ const MasterPage = () => {
 
     const fetchedSchedule = [
       { start: "2024-06-20T09:00:00", end: "2024-06-20T10:00:00", type: "available" },
-      { start: "2024-06-20T10:00:00", end: "2024-06-20T11:00:00", type: "busy" }
+      { start: "2024-06-20T10:00:00", end: "2024-06-20T11:00:00", type: "busy" },
+      { start: "2024-06-21T09:00:00", end: "2024-06-21T10:00:00", type: "available" },
+      { start: "2024-06-21T10:00:00", end: "2024-06-21T11:00:00", type: "busy" },
+      { start: "2024-06-22T09:00:00", end: "2024-06-22T10:00:00", type: "available" },
+      { start: "2024-06-22T10:00:00", end: "2024-06-22T11:00:00", type: "busy" },
+      { start: "2024-06-23T09:00:00", end: "2024-06-23T10:00:00", type: "available" },
+      { start: "2024-06-23T10:00:00", end: "2024-06-23T11:00:00", type: "busy" },
+      { start: "2024-06-24T09:00:00", end: "2024-06-24T10:00:00", type: "available" },
+      { start: "2024-06-24T10:00:00", end: "2024-06-24T11:00:00", type: "busy" },
     ];
 
     setMaster(fetchedMaster);
