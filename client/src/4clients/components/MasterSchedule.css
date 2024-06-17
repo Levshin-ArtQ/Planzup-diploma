@@ -1,0 +1,26 @@
+.schedule-slot {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.schedule-slot:hover {
+  transform: scale(1.05);
+}
+
+.schedule-slot.available {
+  background-color: #e0ffe0;
+}
+
+.schedule-slot.busy {
+  background-color: #ffe0e0;
+}
+
+.schedule-slot.holiday {
+  background-color: #e0f7ff;
+}
+
+.schedule-slot.forVIP {
+  background-color: #fff0e0;
+}

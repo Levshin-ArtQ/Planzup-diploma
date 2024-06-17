@@ -58,19 +58,15 @@ exports.getSchedule = (req, res) => {
   }
   const isOldSchedule = req?.body?.old;
   const userType = req.params.userType;
-
   const dateOperator = Op.gte;
-
   if (isOldSchedule) {
     dateOperator = Op.lt;
   }
-
   if (!userType) {
     return res.status(400).send({
       message: "Тип пользователя не предоставлен",
     });
   }
-
   const model =
     userType === "client"
       ? Client

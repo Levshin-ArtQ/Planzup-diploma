@@ -16,7 +16,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import ProgressBar from "../components/ProgressBar/ProgressBar.jsx";
 import axios from "axios";
 import WebApp from "@twa-dev/sdk";
-import useApi from "../hooks/useApi";
+import useApi from "../hooks/useApi.jsx";
 import useFromAPI from "../hooks/fromAPI.jsx";
 import { greetUserByTime } from "../utils/dateUtils.js";
 

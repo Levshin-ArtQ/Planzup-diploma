@@ -10,7 +10,6 @@ x-postgres-common:
     timeout: 5s
     retries: 5
 
-
 services:
   postgres_primary:
     <<: *postgres-common

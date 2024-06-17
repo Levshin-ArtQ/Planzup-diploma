@@ -17,11 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
       },
+      description: {
+        type: DataTypes.STRING,
+      },
+      preferences: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
       phone: {
         type: DataTypes.STRING,
       },
       status: {
-        type: DataTypes.ENUM('VIP', 'regular', 'deleted'),
+        type: DataTypes.ENUM('VIP', 'regular', 'deleted', 'banned', 'new'),
       },
       occupation: {
         type: DataTypes.STRING,
@@ -47,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       favoriteMasters: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
       favoriteServices: {
         type: DataTypes.ARRAY(DataTypes.STRING),
