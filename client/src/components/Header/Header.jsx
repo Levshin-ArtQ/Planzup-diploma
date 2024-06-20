@@ -65,7 +65,7 @@ const Header = () => {
         {user} 
       </span>
 
-      <Link to="/profile">
+      <Link to="/settings">
         <div className="user_icon round_icon df">
           <span style={{ margin: "auto" }}>{user?.charAt(0)}</span>
         </div>

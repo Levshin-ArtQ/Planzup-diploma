@@ -81,6 +81,9 @@
 .filter_button:hover {
     background-color: #40a9ff;
 }
+.filter_button:active {
+    background-color: #096dd9;
+}
 
 .widgets_list {
     display: flex;

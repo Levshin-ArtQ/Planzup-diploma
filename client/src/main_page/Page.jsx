@@ -23,13 +23,14 @@ const Page = () => {
     {
       image: "colorful_hairstyle2.jpg",
       title: "Ксения М.",
+      
     },
   ]);
   const {data, error, loading, fetchData, contextHolder } = useApi();
 
   const handleFilters = (newFilters) => {
     setFilters(prevFilters => new Map([...prevFilters, Object.entries(newFilters)]));
-    fetchData('/services', {
+    fetchData('api/services', {
       params: {
         ...filters
       }

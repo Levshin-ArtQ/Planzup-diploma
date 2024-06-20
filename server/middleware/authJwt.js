@@ -14,7 +14,7 @@ module.exports.verifyToken = (req, res, next) => {
 
 
   if (!token) {
-    return res.status(403).send({
+    return res.status(401).send({
       message: "Токен авторизации не был предоставлен!"
     });
   }

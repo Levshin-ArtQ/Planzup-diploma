@@ -57,6 +57,7 @@
   }
   
   .closest {
+    font-size: 1.1em;
     color: var(--text-color);
     margin-bottom: 10px;
   }

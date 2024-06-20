@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 
 require("./routes/auth.routes")(app);
+require("./routes/main.routes")(app);
 require("./routes/appointment.routes")(app);
 require("./routes/super.routes")(app);
 require("./routes/service.routes")(app);
@@ -55,10 +56,11 @@ main();
 const Role = db.role;
 const sequelize = require("./util/database");
 //sync database
+// { force: true }
 db.sequelize
   .sync({ force: true })
   .then((result) => {
-    console.log("Database dropped resynced and connected");
+    console.log("Database resynced and connected");
     initial();
     app.listen(5007);
     console.log("Listening port 5007");

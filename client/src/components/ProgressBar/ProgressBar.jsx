@@ -15,6 +15,9 @@ const ProgressBar = (props) => {
         spinnerSpeed = 1
     } = props
 
+    const onClick = (props) => {
+      alert(`Вы посетили ${progress}% сеансов, до получения скидки в категории ${label}`)
+    }
     let hideLabel = (size < 100 || !label.length || spinnerMode) ? true : false
 
     const center = size / 2,
@@ -26,6 +29,7 @@ const ProgressBar = (props) => {
           <div
             className="svg-pi-wrapper"
             style={{ width: size, height: size }}
+            onClick={onClick}
           >
             <svg
               className="svg-pi" 

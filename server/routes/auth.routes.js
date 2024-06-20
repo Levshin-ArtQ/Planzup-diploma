@@ -13,7 +13,7 @@ module.exports = function (app) {
     next();
   });
 
-  app.put(
+  app.post(
     "/api/auth/signup/:userType",
     [verifySignUp.checkDuplicateUsernameOrEmail,],
     controller.signup

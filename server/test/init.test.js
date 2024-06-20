@@ -24,6 +24,291 @@ const db = require("../models/index");
 const Role = require("../models/role.model");
 // const Service = require("../models/service.model");
 
+
+async function initSalon() {
+  let adminSettings = await Settings.create({
+    name: "adminSettings",
+    email: "adminSettings.gmail.com",
+    password: "123456",
+    roles: 3,
+    prefers_email: true,
+    prefers_telegram: true,
+  })
+  let admin = await Admin.create({
+    firstName: "admin",
+    name: "admin",
+    email: "levshin.a74@mail.ru",
+    password: "123456",
+    roles: 1,
+  });
+
+  await admin.setSetting(adminSettings);
+  let salon = await Salon.create({
+    name: "salon",
+    email: "planzup.team@gmail.com",
+    password: "123456",
+    roles: 2,
+  });
+
+  await admin.addSalon(salon);
+
+  let services = await Service.bulkCreate([
+    { name: "Маникюр", description: "Маникюр с вниманием к каждому пальчику", catgory: "Маникюр", subcatgory: "Маникюр", price: 1000, duration: 60 },
+    { name: "Педикур", description: "с заботой о каждом пальчике", price: 1050, duration: 60 },
+    { name: "Стрижка", description: "Учтем ваш предыдущий опыт, подскажем какую стрижку вам выбрать в этот разы", price: 1000, duration: 60 },
+  ]);
+
+  await salon.addServices(services);
+  let clientbase = await Clientbase.create({
+    name: "clientbase",
+    owner_name: "admin.name",
+    email: "clientbase.gmail.com",
+    password: "123456",
+    roles: 4,
+  })
+
+  await salon.addClientbases(clientbase);
+
+  let clientcards = await Clientcard.bulkCreate([
+    {
+      firstName: 'Иван',
+      lastName: 'Иванов',
+      description: 'Важный клиент',
+      preferences: ['Массаж', 'Спа'],
+      phone: '123456789',
+      status: 'VIP',
+      occupation: 'Бизнесмен',
+      email: 'ivanov@example.com',
+      loyaltyPoints: 120,
+      favoriteMasters: ['Мастер 1'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Анна',
+      lastName: 'Смирнова',
+      description: 'Постоянный клиент',
+      preferences: ['Маникюр', 'Педикюр'],
+      phone: '987654321',
+      status: 'regular',
+      occupation: 'Учитель',
+      email: 'smirnova@example.com',
+      loyaltyPoints: 80,
+      favoriteMasters: ['Мастер 2'],
+      favoriteServices: ['Маникюр'],
+    },
+    {
+      firstName: 'Олег',
+      lastName: 'Петров',
+      description: 'Отдыхает в саду',
+      preferences: ['Сауна', 'Педикюр'],
+      phone: '555555555',
+      status: 'banned',
+      occupation: 'Директор',
+      email: 'petrov@example.com',
+      loyaltyPoints: 60,
+      favoriteMasters: ['Мастер 3'],
+      favoriteServices: ['Сауна'],
+    },
+    {
+      firstName: 'Елена',
+      lastName: 'Иванова',
+      description: 'Не любит купаться',
+      preferences: ['Массаж', 'Соляриум'],
+      phone: '666666666',
+      status: 'regular',
+      occupation: 'Дизайнер',
+      email: 'ivanova@example.com',
+      loyaltyPoints: 40,
+      favoriteMasters: ['Мастер 4'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Дмитрий',
+      lastName: 'Соколов',
+      description: 'Любитель роскоши',
+      preferences: ['Массаж', 'Спа'],
+      phone: '777777777',
+      status: 'VIP',
+      occupation: 'Менеджер',
+      email: 'sokolov@example.com',
+      loyaltyPoints: 140,
+      favoriteMasters: ['Мастер 5'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Екатерина',
+      lastName: 'Петрова',
+      description: 'Не очень умная, но лояльная',
+      preferences: ['Массаж', 'Спа'],
+      phone: '888888888',
+      status: 'regular',
+      occupation: 'Классическая балерина',
+      email: 'petrova@example.com',
+      loyaltyPoints: 100,
+      favoriteMasters: ['Мастер 6'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Олег',
+      lastName: 'Соколов',
+      description: 'Любитель роскоши',
+      preferences: ['Массаж', 'Спа'],
+      phone: '999999999',
+      status: 'VIP',
+      occupation: 'Менеджер',
+      email: 'sokolov@example.com',
+      loyaltyPoints: 160,
+      favoriteMasters: ['Мастер 7'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Елена',
+      lastName: 'Иванова',
+      description: 'Не очень умная, но лояльная',
+      preferences: ['Массаж', 'Спа'],
+      phone: '000000000',
+      status: 'regular',
+      occupation: 'Классическая балерина',
+      email: 'ivanova@example.com',
+      loyaltyPoints: 110,
+      favoriteMasters: ['Мастер 8'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Дмитрий',
+      lastName: 'Петров',
+      description: 'Любитель роскоши',
+      preferences: ['Массаж', 'Спа'],
+      phone: '111111111',
+      status: 'VIP',
+      occupation: 'Менеджер',
+      email: 'petrov@example.com',
+      loyaltyPoints: 130,
+      favoriteMasters: ['Мастер 9'],
+      favoriteServices: ['Массаж'],
+    },
+    {
+      firstName: 'Елена',
+      lastName: 'Соколова',
+      description: 'Не очень умная, но любит наслаждаться',
+      preferences: ['Массаж', 'Спа'],
+      phone: '222222222',
+      status: 'VIP',
+      occupation: 'Актриса',
+      email: 'sokolova@example.com',
+      loyaltyPoints: 150,
+      favoriteMasters: ['Мастер 10'],
+      favoriteServices: ['Массаж'],
+    },
+  ]);
+  for (let clientcard of clientcards) {
+    let client = await Client.create({
+      firstName: clientcard.firstName,
+      lastName: clientcard.lastName,
+      email: clientcard.email,
+      phone: clientcard.phone,
+      email: clientcard.email,
+      telegram: 'notg',
+      settings: {
+        firstName: clientcard.firstName,
+        lastName: clientcard.lastName,
+        email: clientcard.email,
+        password: '57575757',
+        phone: clientcard.phone,
+      },
+      schedule: {
+        name: 'График записей и занятости',
+        type: 'client',
+        description: 'График записей и занятости',
+      }
+    },
+    {
+      include: [Schedule, Settings],
+    });
+    let settings = await Settings.create({
+      firstName: clientcard.firstName,
+      lastName: clientcard.lastName,
+      email: clientcard.email,
+      password: '57575757',
+      phone: clientcard.phone,
+    });
+
+    clientcard.setClient(client);
+  }
+  
+
+
+  await clientbase.addClientcards(clientcards)
+  let masters = await Master.bulkCreate([
+    { firstName: "Иван", lastName: "Иванов", rating: 4.5, services: ["Стрижка"] },
+    { firstName: "Петр", lastName: "Петров", rating: 4.7, services: ["Маникюр"] },
+    { firstName: "Сидор", lastName: "Сидоров", rating: 4.2, services: ["Массаж"] },
+    { firstName: "Антон", lastName: "Антонов", rating: 4.8, services: ["Педикюр"] },
+    { firstName: "Василий", lastName: "Васильев", rating: 4.9, services: ["Массаж"] },
+  ]).then((masters) => {
+    masters.map(async (master) => {
+      console.log(master.dataValues.services)
+      let settigns = await Settings.create({
+        firstName: master.firstName,
+        lastName: master.lastName,
+        email: master.email,
+        password: '57575757',
+        phone: master.phone,
+  
+      })
+      services.map(async (service) => {
+        master.addService(service);
+      })
+    })
+  });
+
+  
+
+  for (let index = 0; index < 10; index++) {
+    let service = await Service.create({
+      name: "service " + index,
+      description: "описание услуги " + index,
+      price: 1000,
+    });
+  }
+  
+  for (let i = 0; i < 20; i++) {
+    const masterPeriods = await Period.bulkCreate([
+      {
+        start: new Date("2023-09-19T08:00:00.000Z"),
+        end: new Date("2023-09-19T10:00:00.000Z"),
+        available: false,
+      },
+      {
+        start: new Date("2023-09-19T10:00:00.000Z"),
+        end: new Date("2023-09-19T12:00:00.000Z"),
+        available: true,
+      },
+      {
+        start: new Date("2023-09-19T14:00:00.000Z"),
+        end: new Date("2023-09-19T16:00:00.000Z"),
+        available: true,
+      },
+      {
+        start: new Date("2023-09-19T18:00:00.000Z"),
+        end: new Date("2023-09-19T20:00:00.000Z"),
+        available: true,
+      },
+      {
+        start: new Date("2023-09-19T22:00:00.000Z"),
+        end: new Date("2023-09-20T00:00:00.000Z"),
+        available: false,
+      },
+    ]);
+    // await masterSchedules[i].addPeriods(masterPeriods);
+  }
+
+
+  return admin;
+}
+
+
+
 module.exports.init = async () => {
   for (let index = 0; index < 10; index++) {
     try {
@@ -158,72 +443,12 @@ module.exports.init = async () => {
     client.getMasters().then((data) => console.log(data));
     appointmentTest()
   }
-  bulkCreateTest()
-    .then(() => console.log("bulkCreateTest done"))
-    .catch((err) => console.log(err));
-  // const data = await Salon.findAll(
+  // bulkCreateTest()
+  //   .then(() => console.log("bulkCreateTest done"))
+  //   .catch((err) => console.log(err));
 
-  //   {
-  //     include: Appointment,
-
-  //   }
-  // );
-  // // const data2 = await data[0].getClients();
-
-  // console.log('DATA: ', JSON.stringify(data[0], null, 3));
-  // let settingsAdmin = await db.settings.create({
-  //     name: "default",
-  //     usertype: "admin",
-  //     username: "admin",
-  //     password: "123456",
-  //   });
-  //   console.log('password:      ', settingsAdmin.password);
-
-  // let admin = await db.settings.scope('withPassword').findAll({
-  //   where: {
-  //     name: "default",
-  //   }
-  // }).then((result) => {
-  //   return result;
-  // }).catch((err) => {
-  //   console.log('fetch failed')
-  //   console.log(err);
-  // });
-
-  // console.log('password2:      ', admin[0].password);
-  // // async () => await admin[0].validPassword("123456").then(result =>  console.log(result)).catch(err => console.log(err));
-  // const checkAdminPassword = await admin[0].validPassword("123456");
-  // const result = bcrypt.compareSync("123456", admin[0].password);
-  // console.log(result);
-  // console.log(checkAdminPassword);
-  // const appoints = await Appointment.findAll(
-  //   {
-  //     include: {all: true},
-  //   }
-  // )
-  // // console.log(JSON.stringify(appoints, null, 3));
-  // const users = await User.findAll(
-  //   {
-  //     include: {all: true},
-  //   }
-  // )
-  // console.log(JSON.stringify(users, null, 3));
-  // const notifications = await Notification.findAll(
-  //   {
-  //     include: {all: true},
-  //   }
-  // )
-  // // console.log('notifications ',JSON.stringify(notifications, null, 3));
-  // const posts = await Post.findAll()
-  // const clients = await Client.findAll(
-  //   {
-  //     include: {all: true},
-  //   }
-  // )
-  // console.log('clients ',JSON.stringify(clients[0], null, 3));
-
-  // create sample model entities for testing purposes, all models and connections between them
-  //
+  initSalon().then(() => console.log("initSalon done")).catch((err) => console.log(err));
+  
 };
 
 // create bulks of sample objects of settings, salons, managers, admins, clientbases, clientcards, services, masters, clients, schedules, appointments. using built in sequelize set and add methods make associations between these objects that are described in ../models/index.js file. Make concise and good Values for models' fields use Russian language

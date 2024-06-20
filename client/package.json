@@ -35,7 +35,8 @@
     "service-worker-mock": "^2.0.5",
     "url": "^0.11.3",
     "util": "^0.12.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "dev": "HTTPS=true HOST=pu.local PORT=3000 SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem react-scripts start",

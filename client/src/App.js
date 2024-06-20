@@ -1,5 +1,6 @@
 import "./App.css";
 import { lazy, Suspense } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import { Route, Routes, Router, useHistory } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
@@ -33,12 +34,13 @@ import PlannerApp from "./pages/PlannerApp";
 import ClientCardsPage from "./4managers/ClientCardsPage";
 import SalonPage from "./4clients/SalonPage";
 import MasterPage from "./4clients/MasterPage";
+
+import useApi from "./hooks/useApi";
+import SampleSalon from "./testComponents/SampleSalon";
 // <Route path={'/service'} element={<SalonProfile><ProductList /><ReservationForm></ReservationForm></SalonProfile>}></Route>
 
 function App() {
-  const queryParameters = new URLSearchParams(window.location.search);
-  const master = queryParameters.get("master");
-  console.log("master" + master);
+  
 
   return (
     <div className="App">
@@ -87,6 +89,7 @@ function App() {
             <Route path={"/weather"} element={<WeatherApp />}></Route>
             <Route path={"/form"} element={<Form />} />
           </Routes>
+          <SampleSalon/>
         </ConfigProvider>
       </Suspense>
     </div>
@@ -98,33 +101,3 @@ export default App;
 // git add .
 // git commit -m "commit name"
 // git push
-
-// import './App.css';
-// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-// import { Fragment } from 'react';
-
-// import OtherPage from './OtherPage';
-// import MainComponent from './MainComponent';
-
-// function App() {
-//   return (
-//     <Router>
-//       <Fragment>
-//         <header>
-//           <div>This is a multicontainer Application</div>
-//           <Link to="/">Home</Link>
-//           <Link to="/otherPage">Other Page</Link>
-//         </header>
-//         <div>
-//           <Routes>
-//             <Route exact path="/" element={<MainComponent />} />
-//             <Route exact path="/otherPage" element={<OtherPage />} />
-//           </Routes>
-//         </div>
-//       </Fragment>
-
-//     </Router>
-//   );
-// }
-
-// export default App;

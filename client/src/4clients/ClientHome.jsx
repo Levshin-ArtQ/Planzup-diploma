@@ -97,7 +97,7 @@ const products = [
   {
     id: "8",
     type: "care",
-    title: "Массаж лица",
+    title: "Косметический массаж",
     duration: 40,
     cost: 900,
     closest: "через 3 дня",
@@ -127,30 +127,37 @@ const ClientHome = () => {
   // const { user } = useTelegram();
   // const { user } = WebApp.initDataUnsafe;
   const [user, setUser] = useState({});
-  const [produts, setServices] = useState([]);
   const [filters, setFilters] = useState('all');
-  const { data, error, loading, fetchData, contextHolder } = useFromAPI();
+  const { data, error, loading, fetchData, contextHolder } = useApi();
+  const { data: salons, error: salonsError, loading: loadingSalons, fetchData: fetchSalons } = useApi();
 
+  const getCtaLink = (appointments) => {
+    if (appointments > 0) {
+      return "/client/appiontments";
+    } else {
+      return "/planner";
+    }
+    return "https://t.me/BeautyMasterBot";
+  };
+  
   useEffect(() => {
     localStorage.getItem("user") && setUser(JSON.parse(localStorage.getItem("user")));
+    // if not logged in, redirect to login page with
+    
     fetchData("/api/client/appointments/count");
-    fetchData("/api");
+    // fetchSalons("/api/salons");
   }, []);
 
-  const getAllServices = useCallback(async () => {
-    // we will use nginx to redirect it to the proper URL
-    console.log("requesting services");
-    let data = [];
-    try {
-      data = await axios.get("/api/values/all").catch();
-    } catch (e) {
-      console.log(e);
-    }
-    console.log(data);
-    setServices(data);
-    // setServices(data.data.rows?.map(row => row.number));
-    // setServices(data);
+  useEffect(() => {
+    // fetchData("/api/auth/verifyToken", {method: "POST"});
   }, []);
+
+
+  // useEffect(() => {
+  //   fetchData("/api/client/appointments/count");
+  //   fetchData("/api");
+  // }, []);
+
   return (
     <div className="wrapper">
       {contextHolder}
@@ -160,15 +167,15 @@ const ClientHome = () => {
         </span>
         <div className="count_line dfс">
           <span className="subheading count_text">
-            Предстоящих записей: {data?.data}
+            { data?.data && 'Предстоящих записей: ' + data?.data }
           </span>
           <div className="peek">
-            <Link className="subheading nav-link peek-link" to="/client/appointments">Посмотреть</Link>
+            <Link className="subheading nav-link peek-link" to={getCtaLink(data?.data)}>{ data?.data ? 'Посмотреть' + data?.data : "Календарь"}</Link>
           </div>
         </div>
       </div>
       <div className="progress_container">
-        <span className="subheading">Прогресс ваших занятий</span>
+        <span className="subheading">Прогресс ваших посещений</span>
       </div>
       <div className="progress_container df">
         <ProgressBar
@@ -177,6 +184,7 @@ const ClientHome = () => {
           indicatorColor="#4f5892"
           label="Красота"
           labelColor="#4f5892"
+          onClick={() => alert('Вы посетили 50% сеансов, до получения скидки в категории Красота')}
         />
         <ProgressBar
           size={100}
@@ -184,13 +192,15 @@ const ClientHome = () => {
           indicatorColor="#8bbd2d"
           label="Зоровье"
           labelColor="#8bbd2d"
+          onClick={() => alert('Вы посетили 70% сеансов, до получения скидки в категории Здоровье')}
         />
         <ProgressBar
           size={100}
-          progress={30}
+          progress={1}
           indicatorColor="#da565a"
           label="Фитнес"
           labelColor="#da565a"
+          onClick={() => alert('Вы посетили 1% сеансов, до получения скидки в категории Фитнес')}
         />
       </div>
       <div className="filter_block dfc">

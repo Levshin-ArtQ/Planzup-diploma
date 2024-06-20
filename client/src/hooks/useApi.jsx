@@ -2,10 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { message } from "antd";
 import authHeader from "../services/auth-header";
+import { useNavigate } from "react-router-dom";
 const useApi = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const fetchData = async (endpoint, options = {}) => {
     setLoading(true);
@@ -32,9 +34,9 @@ const useApi = () => {
         messageApi.open({
           type: "error",
           content: "Сессия истекла. Войдите заново.",
-          duration: 10,
+          duration: 4,
           onClose: () => {
-            window.location.reload();
+            navigate("/login");
           },
         });
       }

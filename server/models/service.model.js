@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING
         },
         category: {
-          type: DataTypes.STRING
+          type: DataTypes.ENUM("красота", "здоровье", "фитнес", "другое")
         },
         subcategory: {
           type: DataTypes.STRING

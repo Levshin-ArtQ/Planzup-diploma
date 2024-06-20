@@ -1,5 +1,5 @@
 const mainController = require("../controllers/main.controller");
-const { verifyToken, verifyClient } = require("../middleware/authJwt");
+const { verifyToken, verifyClient, verifyAdmin } = require("../middleware/authJwt");
 
 console.log("main routes")
 module.exports = function (app) {
@@ -18,42 +18,46 @@ module.exports = function (app) {
   // if params are in body by then by them, else by all: id, type, name, address, masterId
   // можно икскать по name or description or address
   app.get("/api/salons", mainController.getSalons);
-  app.get("/api/salons/:salonId", mainController.getSalonById); 
-  app.post("/api/salons/:salonId", [verifyToken], mainController.getSalonById); 
-  app.post("/api/salons", [verifyToken, verifyAdmin], mainController.createSalon);
-  app.put("/api/salons/:salonId", [verifyToken, verifyAdminOrManager], mainController.updateSalon);
+//   app.get("/api/salons/:salonId", mainController.getSalonById); 
+//   app.post("/api/salons/:salonId", [verifyToken], mainController.getSalonById); 
+//   app.post("/api/salons", [verifyToken, verifyAdmin], mainController.createSalon);
+//   app.put("/api/salons/:salonId", [verifyToken, verifyAdminOrManager], mainController.updateSalon);
 
-  // услуги
-  app.get("/api/services", mainController.getServices);
-  app.get("/api/services/:serviceId", mainController.getServiceById); 
-  app.post("/api/services/:serviceId", mainController.getServiceById); 
-  app.post("/api/services", [verifyToken, verifyAdmin], mainController.createService);
-  app.put("/api/services/:serviceId", [verifyToken, verifyAdminOrManager], mainController.updateService);
+//   // услуги
+//   app.get("/api/services", mainController.getServices);
+//   app.get("/api/services/:serviceId", mainController.getServiceById); 
+//   app.post("/api/services/:serviceId", mainController.getServiceById); 
+//   app.post("/api/services", [verifyToken, verifyAdmin], mainController.createService);
+//   app.put("/api/services/:serviceId", [verifyToken, verifyAdminOrManager], mainController.updateService);
 
-  // мастера
-  app.get("/api/masters", mainController.getSalons);
-  app.get("/api/masters/:masterId", mainController.getSalonById); 
-  app.get("/api/masters/:masterId/schedule", mainController.getSalonById);
-  app.post("/api/masters/:masterId", [verifyToken], mainController.getSalonById); 
-  app.post("/api/masters", [verifyToken, verifyAdmin], mainController.createSalon);
-  app.put("/api/masters/:masterId", [verifyToken, verifyAdminOrManager], mainController.updateSalon);
+//   // мастера
+//   app.get("/api/masters", mainController.getSalons);
+//   app.get("/api/masters/:masterId", mainController.getSalonById); 
+//   app.get("/api/masters/:masterId/schedule", mainController.getSalonById);
+//   app.post("/api/masters/:masterId", [verifyToken], mainController.getSalonById); 
+//   app.post("/api/masters", [verifyToken, verifyAdmin], mainController.createSalon);
+//   app.put("/api/masters/:masterId", [verifyToken, verifyAdminOrManager], mainController.updateSalon);
 
-  // userType is a current user - extra layer of security
-  // app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.getAppointments); 
-  app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
-  app.post("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
-  app.put("/api/:userType/appointments/:appointmentId", [verifyToken, checkUserType], mainController.update); // decline or postpone
-  // get update schedule
-  // app.get("/api/:userType/schedules", [verifyToken, checkUserType], mainController.getSchedule);
-  // app.put("/api/:userType/schedules/:scheduleId", [verifyToken, checkUserType], mainController.updateSchedule); // user
-  // app.put("/api/:userType/period/:periodId", [verifyToken], mainController.updatePeriod);
-  app.get("/api/:userType/notifications", [verifyToken, checkUserType], mainController.getNotifications);
-  app.put("/api/:userType/notifications/:notificationId", [verifyToken, checkUserType], mainController.updateNotification);
+//   // userType is a current user - extra layer of security
+//   app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
+//   app.post("/api/:userType/appointments", [verifyToken, checkUserType], mainController.createAppointment); // userType = client or master/manager
+//   app.put("/api/:userType/appointments/:appointmentId", [verifyToken, checkUserType], mainController.update); // decline or postpone
+//   app.get("/api/:userType/notifications", [verifyToken, checkUserType], mainController.getNotifications);
+//   app.put("/api/:userType/notifications/:notificationId", [verifyToken, checkUserType], mainController.updateNotification);
 
-  // get salons clientbase
-  app.get()
+app.post("/api/test/salon", mainController.createSalon);
+app.get("/api/test/salon/:salonId", mainController.getSalon);
 
 
-  // app.get("/api/:userType/period/:periodId", [verifyToken], mainController.getPeriod);
-  // app.delete("/api/:userType/appointment/:appointmentId", [verifyToken], mainController.deleteAppointment); // cascade delete notifications, create new ones
+//   // get salons clientbase
+//   app.get('/api/clientbase', mainController.getClientbase); // with login and password
+
+
+//   // get update schedule
+//   // app.get("/api/:userType/schedules", [verifyToken, checkUserType], mainController.getSchedule);
+//   // app.put("/api/:userType/schedules/:scheduleId", [verifyToken, checkUserType], mainController.updateSchedule); // user
+//   // app.put("/api/:userType/period/:periodId", [verifyToken], mainController.updatePeriod);
+// // app.get("/api/:userType/appointments", [verifyToken, checkUserType], mainController.getAppointments); 
+//   // app.get("/api/:userType/period/:periodId", [verifyToken], mainController.getPeriod);
+//   // app.delete("/api/:userType/appointment/:appointmentId", [verifyToken], mainController.deleteAppointment); // cascade delete notifications, create new ones
 }

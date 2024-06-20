@@ -86,7 +86,7 @@ exports.getClientSettings = (req, res) => {
 
       if (!data) {
         console.log('Error: client not found');
-        return res.status(404).json({
+        return res.status(401).json({
           message: 'Настройки не найдены. Пожалуйста, попробуйте войти снова',
         });
       }
@@ -235,7 +235,7 @@ exports.getUpcomingAppointmentsCount = (req, res) => {
 
       if (!client) {
         console.log('client not found');
-        return res.status(404).send({
+        return res.status(401).send({
           message: 'Клиент не найден. Пожалуйста, попробуйте войти снова',
         });
       }

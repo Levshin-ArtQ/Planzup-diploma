@@ -60,8 +60,6 @@ const associations = async () => {
   });
   await Salon.belongsToMany(Master, {
     through: "master_salons",
-    // foreignKey: "salonId",
-    // otherKey: "masterId",
   });
   // master to service many-to-many
   await Service.belongsToMany(Master, {
@@ -81,7 +79,6 @@ const associations = async () => {
   // master to report one-to-many
   await Master.hasMany(Report);
   await Report.belongsTo(Master, {
-    // foreignKey: "masterId",
     as: "Master",
   });
 
@@ -113,13 +110,9 @@ const associations = async () => {
   // manager to salon many-to-many
   await Salon.belongsToMany(Manager, {
     through: "manager_salons",
-    // foreignKey: "salonId",
-    // otherKey: "managerId"
   });
   await Manager.belongsToMany(Salon, {
     through: "manager_salons",
-    // foreignKey: "managerId",
-    // otherKey: "salonId"
   });
   // manager to settings one-to-one
   Manager.hasOne(Settings);
@@ -141,35 +134,23 @@ const associations = async () => {
   // salon to service many-to-many
   Service.belongsToMany(Salon, {
     through: "salon_services",
-    // foreignKey: "serviceId",
-    // otherKey: "salonId",
   });
   Salon.belongsToMany(Service, {
     through: "salon_services",
-    // foreignKey: "salonId",
-    // otherKey: "serviceId",
   });
   // salon to clientbase many-to-many
   await Clientbase.belongsToMany(Salon, {
     through: "salon_clientbases",
-    // foreignKey: "clientbaseId",
-    // otherKey: "salonId",
   });
   await Salon.belongsToMany(Clientbase, {
     through: "salon_clientbases",
-    // foreignKey: "salonId",
-    // otherKey: "clientbaseId",
   });
   // salon to report many-to-many
   await Report.belongsToMany(Salon, {
     through: "salon_reports",
-    // foreignKey: "reportId",
-    // otherKey: "salonId",
   });
   await Salon.belongsToMany(Report, {
     through: "salon_reports",
-    // foreignKey: "salonId",
-    // otherKey: "reportId",
   });
 
   // SCHEDULE ASSOCIATIONS

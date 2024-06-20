@@ -8,7 +8,8 @@ const Master = db.master;
 const Client = db.client;
 const Schedule = db.schedule;
 const Admin = db.admin;
-
+const Notification = db.notification;
+const Appointment = db.appointment;
 const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
@@ -16,6 +17,7 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   const userType = req.body.userType;
+  // определяю тип пользователя который регитрируется
   const userModel =
     userType === "master" ? Master : userType === "manager" ? Manager : Client;
   // Save User to Database
@@ -29,7 +31,9 @@ exports.signup = (req, res) => {
       userModel
         .create({
           name: req.body.name,
+          username: req.body.username,
           firstName: req.body.username,
+          lastName: req.body.username,
           email: req.body.email,
         })
         .then((user) => {
@@ -49,6 +53,18 @@ exports.signup = (req, res) => {
             name: req.body.username,
             type: userType,
             description: "рассписание " + req.body.username,
+            appointments: [
+              {
+                start: new Date(),
+                end: new Date(),
+                status: "pending",
+              },
+              {
+                start: new Date(),
+                end: new Date(),
+                status: "pending",
+              },
+            ],
           }).then((schedule) => {
             user.setSchedule(schedule);
             res.send({
@@ -137,7 +153,7 @@ exports.signin = async (req, res) => {
               const token = jwt.sign({ UID: settings.UID }, config.secret, {
                 algorithm: "HS256",
                 allowInsecureKeySizes: true,
-                expiresIn: 86400, // 24 hours TODO: lower for tests
+                expiresIn: 86400, // 24 hours 
               });
               res.status(200).send({
                 UID: user.UID,
@@ -160,6 +176,16 @@ exports.signin = async (req, res) => {
 };
 
 exports.verifyToken = (req, res, next) => {
+  if (!req.body.userId) {
+    return res.status(404).redirect("/login").send({ message: "Войдите в свой аккаунт" });
+  }
+  Settings.findOne({ where: { UID: req.body.userId } }).then ((settings) => {
+    if (!settings) {
+      return res.status(404).redirect("/login").send({ message: "Войдите в свой аккаунт" });
+    }
 
+  })
   res.status(200).send({ message: "Токен валиден, вы" + req.body.userType });
 }
+
+// user	{"UID":"7652f3e5-52c4-49e1-8e69-723de4560e35","username":"loginClient3","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiI0OWU4ZTgwNi05NjQwLTQyMjktYmZmMC1mYjBmM2U3NGYzYzkiLCJpYXQiOjE3MTg2ODMyNDcsImV4cCI6MTcxODc2OTY0N30.CSVGg53byWRBekskIRljcVK38_vHT_IxvPg8rt43gjY"}

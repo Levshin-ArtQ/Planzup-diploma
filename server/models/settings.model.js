@@ -84,11 +84,11 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
         },
-        beforeSave: async (settings) => {
-          if (settings.changed("password")) {
-            settings.dataValues.password = bcrypt.hashSync(settings.dataValues.password, 10);
-          }
-        },
+        // beforeSave: async (settings) => {
+        //   if (settings.changed("password")) {
+        //     settings.dataValues.password = bcrypt.hashSync(settings.dataValues.password, 10);
+        //   }
+        // },
       },
     }
   );

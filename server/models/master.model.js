@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       rating: {
         type: DataTypes.FLOAT
       },
+      services_names: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
+      email: {
+        type: DataTypes.STRING,
+      },
       phone: {
         type: DataTypes.STRING,
       },
@@ -27,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       service_count: {
         type: DataTypes.INTEGER,
+        set: () => {
+          this.services.size();
+        }
       },
       rights: {
         type: DataTypes.ARRAY(DataTypes.STRING),

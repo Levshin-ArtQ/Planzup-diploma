@@ -1,11 +1,12 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React from "react";
+import { Form, Input, Button } from "antd";
 
-const GeneralSettings = () => {
+const GeneralSettings = (settings) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log('Received values from form: ', values);
+    console.log("Received values from form: ", values);
+
     // Обработайте отправку данных
   };
 
@@ -14,21 +15,31 @@ const GeneralSettings = () => {
       <Form.Item
         name="name"
         label="Имя"
-        rules={[{ required: true, message: 'Пожалуйста, введите ваше имя' }]}
+        initialValue={settings?.data?.name}
+        // rules={[{ required: true, message: 'Пожалуйста, введите ваше имя' }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="username"
         label="Логин"
-        rules={[{ required: true, message: 'Пожалуйста, введите ваш логин' }]}
+        initialValue={settings?.data?.username}
+        rules={[
+          {
+            length: 5,
+            message: "Новое логин должен содержать не менее пяти символов",
+          },
+        ]}
+        // rules={[{ required: true, message: 'Пожалуйста, введите ваш логин' }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="email"
         label="Email"
-        rules={[{ required: true, message: 'Пожалуйста, введите ваш email' }]}
+        initialValue={settings?.data?.email}
+        rules={[{ type: "email", message: "Некорректный email" }]}
+        // rules={[{ required: true, message: 'Пожалуйста, введите ваш email' }]}
       >
         <Input />
       </Form.Item>
