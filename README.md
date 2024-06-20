@@ -21,6 +21,14 @@
 ![alt text](<Screenshot 2024-06-20 at 06.48.47.png>)
 интерфейс админинстрирования
 ![alt text](<Screenshot 2024-06-20 at 06.37.49.png>)
+интерфейс базы клиентов
+![alt text](<Screenshot 2024-06-20 at 07.01.37.png>)
+Поиск по базе
+![alt text](<Screenshot 2024-06-20 at 06.59.43.png>)
+Фильтрация 
+![alt text](<Screenshot 2024-06-20 at 06.58.56.png>)
+Редактирование clientcard
+![alt text](<Screenshot 2024-06-20 at 06.58.36.png>)
 
 - [server](server) - директория серверного приложения на Node.js
 - [docker-compose.yml](docker-compose.yml) - файл конфигурации для запуска приложения в Docker
