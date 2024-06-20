@@ -443,9 +443,9 @@ module.exports.init = async () => {
     client.getMasters().then((data) => console.log(data));
     appointmentTest()
   }
-  // bulkCreateTest()
-  //   .then(() => console.log("bulkCreateTest done"))
-  //   .catch((err) => console.log(err));
+  bulkCreateTest()
+    .then(() => console.log("bulkCreateTest done"))
+    .catch((err) => console.log(err));
 
   initSalon().then(() => console.log("initSalon done")).catch((err) => console.log(err));
   
