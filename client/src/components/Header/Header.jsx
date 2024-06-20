@@ -54,7 +54,7 @@ const Header = () => {
       </Button>
 
       {!isAppInstalled ? (
-        <Button className="pwa-install-button" onClick={promptToInstall}>
+        <Button className="pwa-install-button" onClick={() => window.location.reload(false)}>
           Обновить страницу
         </Button>
       ) : (

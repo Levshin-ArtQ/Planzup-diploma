@@ -3,10 +3,21 @@
 Данная инструкция поможет вам перемещаться по документу, содержащему информацию о проекте.
 
 можно подсветить директорию прожав клавишу command и нажава на соответствующий путь в круглых скобочках мышью
+проект запускается с помощью команды:
+```docker-compose up```
 
+Хотя проект может быть уже запущен, тогда его логи доступны в терминале VS Code. 
+![alt text](<Screenshot 2024-06-20 at 05.30.19.png>)
 ### Директории
 
 - [client](client) - директория клиентского приложения на React
+для проверки маршрутов использовалась тестовая директория
+![Тестовые запросы](<Screenshot 2024-06-20 at 05.31.40.png>)
+Пример работы с календарем клиента и мастера
+![календарь](<Screenshot 2024-06-20 at 06.26.18.png>)
+![alt text](<Screenshot 2024-06-20 at 06.27.23.png>)
+
+
 - [server](server) - директория серверного приложения на Node.js
 - [docker-compose.yml](docker-compose.yml) - файл конфигурации для запуска приложения в Docker
 - [nginx.conf](nginx.conf) - конфигурационный файл для Nginx
@@ -21,27 +32,22 @@
 - [client/src](client/src) - директория с исходным кодом клиентского приложения
   - [client/src/App.jsx](client/src/App.jsx) - главный компонент приложения
   - [client/src/components](client/src/components) - директория с компонентами
-    - [client/src/components/BentoboxMenu](client/src/components/BentoboxMenu) - директория с компонентом меню
-      - [client/src/components/BentoboxMenu/BentoboxMenu.jsx](client/src/components/BentoboxMenu/BentoboxMenu.jsx) - компонент меню
-    - [client/src/components/Form](client/src/components/Form) - директория с компонентом формы
-      - [client/src/components/Form/Form.jsx](client/src/components/Form/Form.jsx) - компонент формы
     - [client/src/components/Header](client/src/components/Header) - директория с компонентом заголовка
       - [client/src/components/Header/Header.jsx](client/src/components/Header/Header.jsx) - компонент заголовка
     - [client/src/components/ProgressBar](client/src/components/ProgressBar) - директория с компонентом прогресс-бара
       - [client/src/components/ProgressBar/ProgressBar.jsx](client/src/components/ProgressBar/ProgressBar.jsx) - компонент прогресс-бара
     - и т.д.
-  - [client/src/4clients](client/src/4clients) - директория с компонентами для разных типов клиентов
+  - [client/src/4clients](client/src/4clients) - директория с компонентами для клиентов
     - [client/src/4clients/ClientHome.jsx](client/src/4clients/ClientHome.jsx) - компонент главной страницы для клиента
     - [client/src/4clients/components](client/src/4clients/components) - директория с компонентами для клиентов
       - [client/src/4clients/components/MasterCards.jsx](client/src/4clients/components/MasterCards.jsx) - компонент с карточками мастера
       - [client/src/4clients/components/MasterSchedule.jsx](client/src/4clients/components/MasterSchedule.jsx) - компонент расписания мастера
       - и т.д.
   - [client/src/devutils](client/src/devutils) - директория с инструментами для разработчика
-    - [client/src/devutils/PrettyJson.jsx](client/src/devutils/PrettyJson.jsx) - компонент для красивого вывода JSON
+    - [client/src/devutils/PrettyJson.jsx](client/src/devutils/PrettyJson.jsx) - компонент для корректного вывода JSON
   - [client/src/hooks](client/src/hooks) - директория с хуками
-    - [client/src/hooks/useTelegram.jsx](client/src/hooks/useTelegram.jsx) - хук для работы с Telegram
+    - [client/src/hooks/useApi.jsx](client/src/hooks/useApi.jsx) - метод для создания запросов к серверу, автоматически передает jwt токен в заглоовках, для аутентификации пользователя
   - [client/src/serviceWorker.js](client/src/serviceWorker.js) - файл для регистрации service worker
-  - [client/src/setupProxy.js](client/src/setupProxy.js) - файл для настройки прокси
   - [client/src/App.css](client/src/App.css) - файл стилей главного приложения
   - [client/src/index.jsx](client/src/index.jsx) - главный файл приложения
   - [client/src/reportWebVitals.js](client/src/reportWebVitals.js) - файл для отчета о производительности

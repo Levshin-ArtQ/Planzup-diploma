@@ -171,7 +171,7 @@ exports.getUpcomingAppointments = (req, res) => {
         });
     }
 
-    Client.findOne({ where: { UID: req.body.userId } })
+    Settings.findOne({ where: { UID: req.body.userId } })
         .then((client) => {
 
             if (!client) {
@@ -183,7 +183,7 @@ exports.getUpcomingAppointments = (req, res) => {
 
             console.log('getUpcomingAppointments - клиент найден');
 
-            return client.getSchedule()
+            client.getClient().getSchedule()
                 .then(schedule => {
                     console.log('getUpcomingAppointments - расписание клиента получено');
                     return schedule.getAppointments({
